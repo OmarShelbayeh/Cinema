@@ -8,5 +8,4 @@ module.exports = (app) => {
   );
 
   app.post("/signup", usersController.signup);
-  app.post("/findUserById", usersController.findUserById);
 };
