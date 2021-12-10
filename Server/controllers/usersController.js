@@ -1,5 +1,5 @@
 const users = require("../models").users;
-const usersRepository = require("../Repository").users;
+const usersRepository = require("../Repository").usersRepository;
 const db = require("../models");
 
 const signup = async (req, res) => {

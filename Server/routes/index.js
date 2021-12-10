@@ -1,5 +1,3 @@
-const usersController = require("../controllers").users;
-
 module.exports = (app) => {
   app.get("/api", (req, res) =>
     res.status(200).send({
@@ -7,5 +5,5 @@ module.exports = (app) => {
     })
   );
 
-  app.post("/signup", usersController.signup);
+  require("./usersRoutes")(app);
 };
