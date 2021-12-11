@@ -5,14 +5,14 @@ const router = express.Router();
 require("../config/passport")(passport);
 const usersRepository = require("../Repository").usersRepository;
 
-router.post("/signup", async function signup(req, res) {
+router.post("/register", async function signup(req, res) {
   if (
     req.body.name &&
     req.body.surname &&
     req.body.password &&
     req.body.email
   ) {
-    if ((await usersRepository.findUserByEmail(req.body.email)).length === 0) {
+    if ((await usersRepository.findUserByEmail(req.body.email)).id === null) {
       await usersRepository.newUser(
         res,
         req.body.name,
@@ -28,7 +28,8 @@ router.post("/signup", async function signup(req, res) {
     res.status(500).send("missing data");
   }
 });
-router.post("/signin", function (req, res) {
+
+router.post("/login", async function (req, res) {
   usersRepository
     .findUserByEmail(req.body.email)
     .then((user) => {
