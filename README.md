@@ -9,15 +9,15 @@
 <a id="user"></a>
 ### User Info
 
-  Email: user@cinema.com <br />
-  Name: Hubert <br />
-  Surname: Szczepaniak <br />
-  Password: user <br />
+  + Email: user@cinema.com <br />
+  + Name: Hubert <br />
+  + Surname: Szczepaniak <br />
+  + Password: user <br />
 
 <a id="Admin"></a>
 ### Admin Info
 
-  Email: admin@cinema.com
-  Name: Omar
-  Surname: Shelbayeh
-  Password: admin
+  + Email: admin@cinema.com <br />
+  + Name: Omar <br />
+  + Surname: Shelbayeh <br />
+  + Password: admin <br />
