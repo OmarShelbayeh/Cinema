@@ -1,9 +1,9 @@
 # Cinema
 
 ## Intro
-** Test Users **
-[User](#user)
-[Admin](#admin)
+** Test Users ** <br /> 
+[User](#user) <br />
+[Admin](#admin) <br />
 
 ## Login info
 <a id="user"></a>
