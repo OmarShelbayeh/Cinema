@@ -10,8 +10,8 @@
 ### Public Endpoints
 Public endpoint don't require authentication.
 * `/`
-+ Login <span style="color:red">POST</span>. `/login` requires `email, password` 
-+ register <span style="color:red">POST</span> `/register` requries `email, name, surname, password`
++ Login (POST). `/login` requires `email, password` 
++ register (POST) `/register` requries `email, name, surname, password`
 
 ### [User](#user) and [Admin](#admin) Endpoints
 These endpoint require authentication
