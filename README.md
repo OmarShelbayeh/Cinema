@@ -9,10 +9,10 @@
 <a id="user"></a>
 ### User Info
 
-  Email: user@cinema.com
-  Name: Hubert
-  Surname: Szczepaniak
-  Password: user
+  Email: user@cinema.com <br />
+  Name: Hubert <br />
+  Surname: Szczepaniak <br />
+  Password: user <br />
 
 <a id="Admin"></a>
 ### Admin Info
