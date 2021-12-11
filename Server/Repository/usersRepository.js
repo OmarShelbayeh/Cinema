@@ -23,10 +23,29 @@ findUserByEmail = async (email) => {
       type: db.sequelize.QueryTypes.SELECT,
     }
   );
-  return User;
+  return new users(User[0]);
+};
+
+getAllUsers = async () => {
+  let allUsers;
+  allUsers = await db.sequelize.query("SELECT * FROM users ;", {
+    type: db.sequelize.QueryTypes.SELECT,
+  });
+  return allUsers;
+};
+
+findUserById = async (id) => {
+  let User;
+  User = await db.sequelize.query("SELECT * FROM users WHERE id = :id ;", {
+    replacements: { id: id },
+    type: db.sequelize.QueryTypes.SELECT,
+  });
+  return new users(User[0]);
 };
 
 module.exports = {
   newUser,
+  getAllUsers,
   findUserByEmail,
+  findUserById,
 };
