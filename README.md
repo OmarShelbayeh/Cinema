@@ -8,19 +8,19 @@
 ## Endpoints
 
 ### Public Endpoints
-* `(/)`
-+ Login (POST) `(/login)`
-+ register (POST) `(/register)`
+* `/`
++ Login (POST) `/login` requires `email, password` 
++ register (POST) `/register` requries `email, name, surname, password`
 
 ### [User](#user) and [Admin](#admin) Endpoints
-* `(/user)`
-+ Gets user info (GET) `(/info)`
+* `/user`
++ Gets user info (GET) `/info` requires `email`
 
 ### [Admin](#admin) Endpoints
-* `(/movies)`
-+ Gets all movies (GET) `(/allMovies)`
-+ Adds a new movie (POST) `(/newMovie)`
-+ Deletes a movie (DELETE) `(/deleteMovie)`
+* `/movies`
++ Gets all movies (GET) `/allMovies`
++ Adds a new movie (POST) `/newMovie` requires `name, director, owner`
++ Deletes a movie (DELETE) `/deleteMovie` requires `id`
 
 ## Login info
 <a id="user"></a>
