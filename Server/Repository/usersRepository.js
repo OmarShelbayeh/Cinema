@@ -43,9 +43,22 @@ findUserById = async (id) => {
   return new users(User[0]);
 };
 
+getUserInfoByEmail = async (email) => {
+  let User;
+  User = await db.sequelize.query(
+    "SELECT id, name, surname, email, role FROM users WHERE email = :email",
+    {
+      replacements: { email: email },
+      type: db.sequelize.QueryTypes.SELECT,
+    }
+  );
+  return new users(User[0]);
+};
+
 module.exports = {
   newUser,
   getAllUsers,
   findUserByEmail,
   findUserById,
+  getUserInfoByEmail,
 };

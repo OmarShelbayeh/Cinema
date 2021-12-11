@@ -10,6 +10,17 @@ const getAllUsers = (req, res) => {
   });
 };
 
+const getUserInfo = (req, res) => {
+  let user = authentication.getUserObjectFromToken(req);
+  usersRepository
+    .getUserInfoByEmail(user.email)
+    .then((user) => {
+      res.status(200).send(user);
+    })
+    .catch((error) => res.status(500).send("User not found"));
+};
+
 module.exports = {
   getAllUsers,
+  getUserInfo,
 };

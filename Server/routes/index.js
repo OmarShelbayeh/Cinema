@@ -3,9 +3,11 @@ const userRoutes = require("./usersRoutes");
 const movieRoutes = require("./movieRoutes");
 const passport = require("passport");
 require("../config/passport")(passport);
+const cors = require("cors");
 
 module.exports = (app) => {
   app.use(passport.initialize());
+  app.use(cors());
   app.use("/", auth);
   app.use(
     "/user",
