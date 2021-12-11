@@ -5,7 +5,7 @@
 [User](#user) <br />
 [Admin](#admin) <br />
 
-## Endpoints
+## Server Endpoints
 
 ### Public Endpoints
 * `/`
