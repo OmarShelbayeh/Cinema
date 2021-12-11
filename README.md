@@ -2,8 +2,8 @@
 
 ## Intro
 ### Roles
-#### [User](#user)
-#### [Admin](#admin)
++ [User](#user)
++ [Admin](#admin)
 
 ## Server Endpoints
 
