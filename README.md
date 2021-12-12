@@ -2,15 +2,15 @@
 
 ## Intro
 ### Roles
-[User](#user) <br />
-[Admin](#admin) <br />
++ [User](#user)
++ [Admin](#admin)
 
 ## Server Endpoints
 
 ### Public Endpoints
 Public endpoint don't require authentication.
 * `/`
-+ Login (POST) `/login` requires `email, password` 
++ Login (POST). `/login` requires `email, password` 
 + register (POST) `/register` requries `email, name, surname, password`
 
 ### [User](#user) and [Admin](#admin) Endpoints
@@ -25,6 +25,23 @@ These endpoint require authentication and an ADMIN role
 + Adds a new movie (POST) `/newMovie` requires `name, director, owner`
 + Deletes a movie (DELETE) `/deleteMovie` requires `id`
 
+## Client side pages
+
+### Public
+Requires no authentication
+* Landing `/`
+* Login page `/login`
+* Register page `/register`
+
+### [User](#user)
+Requires a `USER` role
+* User dashboard `/dashboard`
+
+### [Admin](#admin)
+Requires an `ADMIN` role
+* Admin dashboard `/adminDashboard`
+
+
 ## Login info
 <a id="user"></a>
 ### User Info
@@ -34,7 +51,7 @@ These endpoint require authentication and an ADMIN role
   + Surname: Szczepaniak <br />
   + Password: user <br />
 
-<a id="Admin"></a>
+<a id="admin"></a>
 ### Admin Info
 
   + Email: admin@cinema.com <br />
