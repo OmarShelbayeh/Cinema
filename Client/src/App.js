@@ -1,5 +1,8 @@
 import React from "react";
 import { Routes, Route } from "react-router-dom";
+
+import "./css/General/App.css";
+
 import AdminDashboard from "./Pages/Dashboards/AdminDashboard";
 import UserDashboard from "./Pages/Dashboards/UserDashboard";
 import Landing from "./Pages/Landing/Landing";
