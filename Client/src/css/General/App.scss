@@ -25,6 +25,14 @@ a:hover {
   text-decoration: none;
 }
 
+a:focus,
+a:hover,
+a:visited,
+a:link,
+a:active {
+  text-decoration: none;
+}
+
 button {
   outline: none !important;
   border: none;
@@ -48,9 +56,9 @@ html {
   overflow-x: hidden;
   box-sizing: border-box;
   font-family: Rubik;
-  color: black;
+  color: $red;
   scroll-behavior: smooth;
-  background: #ff6666;
+  background: white;
 }
 
 h1,
@@ -126,4 +134,69 @@ p {
 
 ::-webkit-scrollbar-thumb:hover {
   background: #183b56;
+}
+
+.titles {
+  width: 100%;
+  text-align: left;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.titles-text {
+  @extend %h4-font;
+  display: flex;
+  align-items: center;
+}
+
+.card-popup {
+  position: relative;
+  max-width: 60%;
+  margin: 2.5rem auto;
+  padding: 24px;
+  background-color: #ffffff;
+  border-radius: 36px;
+  text-align: left;
+  max-height: 90vh;
+  overflow-y: auto;
+}
+
+.close-popup-button {
+  display: flex;
+  justify-content: space-between;
+}
+
+.card-popup-body {
+  display: flex;
+  justify-content: space-around;
+}
+
+.card-popup-section-title {
+  width: 100%;
+  float: left;
+}
+
+.card-popup-column {
+  font-style: normal;
+  font-weight: bold;
+  font-size: 14px;
+  line-height: 18px;
+  display: flex;
+  align-items: center;
+  letter-spacing: 0.2px;
+  color: #183b56;
+  width: 50%;
+  flex-wrap: wrap;
+  padding-left: 1%;
+  padding-right: 1%;
+  margin: 1%;
+}
+
+.TextField-radius {
+  font-family: "Rubik", sans-serif;
+}
+
+.TextField-radius fieldset {
+  border-radius: 12px;
 }

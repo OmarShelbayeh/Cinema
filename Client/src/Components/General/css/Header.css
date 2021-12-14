@@ -1,5 +1,24 @@
 @import url("https://fonts.googleapis.com/css2?family=Rubik:wght@400;700&display=swap");
+.header .menu a, .header .userInfo .info .name h4 {
+  font-family: "Rubik", sans-serif;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 18px;
+  line-height: 24px;
+  letter-spacing: 0.2px;
+}
+
+.header .userInfo .info .role p {
+  font-family: "Rubik", sans-serif;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 18px;
+  letter-spacing: 0.2px;
+}
+
 .header {
+  padding: 12px 48px;
   width: 100%;
   display: -webkit-box;
   display: -ms-flexbox;
@@ -10,5 +29,56 @@
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
+  background: #f37757;
+}
+
+.header .logo {
+  width: 20%;
+}
+
+.header .menu {
+  width: 80%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+
+.header .menu a {
+  margin: 8px;
+  color: black;
+}
+
+.header .menu a:hover,
+.header .menu .active {
+  color: white;
+}
+
+.header .userInfo {
+  width: 20%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: end;
+      -ms-flex-pack: end;
+          justify-content: flex-end;
+}
+
+.header .userInfo .info {
+  margin-left: 8px;
+}
+
+.header .userInfo .info .name h4 {
+  color: black;
+}
+
+.header .userInfo .info .role {
+  text-align: left;
+}
+
+.header .userInfo .info .role p {
+  color: black;
 }
 /*# sourceMappingURL=Header.css.map */

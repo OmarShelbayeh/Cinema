@@ -97,23 +97,6 @@ class App extends Component {
               />
             }
           />
-          <Route
-            exact
-            path="/stages"
-            element={
-              <Stages
-                success={(msg) => {
-                  this.success(msg);
-                }}
-                error={(msg) => {
-                  this.error(msg);
-                }}
-                warning={(msg) => {
-                  this.warning(msg);
-                }}
-              />
-            }
-          />
         </Routes>
         <Snackbar
           open={this.state.error}

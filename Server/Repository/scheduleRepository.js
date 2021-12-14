@@ -25,12 +25,12 @@ findScheduleById = async (id) => {
   return new schedule(Schedule[0]);
 };
 
-findScheduleByDate = async (date) => {
+findSpecificSchedule = async (date, movieId, stageId) => {
   let Schedule;
   Schedule = await db.sequelize.query(
-    "SELECT * FROM stages WHERE date = :date ;",
+    "SELECT * FROM stages WHERE date = :date and movie_id = :movieId and stage_id = :stageId ;",
     {
-      replacements: { date: date },
+      replacements: { date: date, movieId: movieId, stageId, stageId },
       type: db.sequelize.QueryTypes.SELECT,
     }
   );
@@ -38,7 +38,7 @@ findScheduleByDate = async (date) => {
 };
 
 deleteSchedule = async (id) => {
-  await db.sequelize.query("DELETE FROM schedules WHERE id = :id", {
+  await db.sequelize.query("DELETE FROM schedules WHERE id = :id ;", {
     replacements: { id: id },
     type: db.sequelize.QueryTypes.DELETE,
   });
@@ -47,7 +47,7 @@ deleteSchedule = async (id) => {
 module.exports = {
   newSchedule,
   getAllSchedules,
-  findScheduleByDate,
+  findSpecificSchedule,
   findScheduleById,
   deleteSchedule,
 };

@@ -1,0 +1,15 @@
+.dashboard {
+  padding: 24px;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  .row {
+    width: 100%;
+    display: flex;
+    .column {
+        padding: 12px;
+      width: 50%;
+    }
+  }
+}

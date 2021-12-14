@@ -1,17 +1,48 @@
 @import "../../../css/Global/Vars.scss";
 
 .header {
+  padding: 12px 48px;
   width: 100%;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  background: $red;
   .logo {
-
+    width: 20%;
   }
   .menu {
-
+    width: 80%;
+    display: flex;
+    justify-content: center;
+    a {
+      @extend %h4-font;
+      margin: 8px;
+      color: black;
+    }
+    a:hover,
+    .active {
+      color: white;
+    }
   }
   .userInfo {
-    
+    width: 20%;
+    display: flex;
+    justify-content: flex-end;
+    .info {
+      margin-left: 8px;
+      .name {
+        h4 {
+          @extend %h4-font;
+          color: black;
+        }
+      }
+      .role {
+        text-align: left;
+        p {
+          @extend %body-font-medium;
+          color: black;
+        }
+      }
+    }
   }
 }

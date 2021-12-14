@@ -24,7 +24,7 @@ h3 {
   letter-spacing: 0.2px;
 }
 
-h4 {
+h4, .titles-text {
   font-family: "Rubik", sans-serif;
   font-style: normal;
   font-weight: bold;
@@ -67,6 +67,14 @@ a:hover {
   text-decoration: none;
 }
 
+a:focus,
+a:hover,
+a:visited,
+a:link,
+a:active {
+  text-decoration: none;
+}
+
 button {
   outline: none !important;
   border: none;
@@ -91,9 +99,9 @@ html {
   -webkit-box-sizing: border-box;
           box-sizing: border-box;
   font-family: Rubik;
-  color: black;
+  color: #f37757;
   scroll-behavior: smooth;
-  background: #ff6666;
+  background: white;
 }
 
 h1,
@@ -161,5 +169,91 @@ p {
 
 ::-webkit-scrollbar-thumb:hover {
   background: #183b56;
+}
+
+.titles {
+  width: 100%;
+  text-align: left;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+}
+
+.titles-text {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.card-popup {
+  position: relative;
+  max-width: 60%;
+  margin: 2.5rem auto;
+  padding: 24px;
+  background-color: #ffffff;
+  border-radius: 36px;
+  text-align: left;
+  max-height: 90vh;
+  overflow-y: auto;
+}
+
+.close-popup-button {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+}
+
+.card-popup-body {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-pack: distribute;
+      justify-content: space-around;
+}
+
+.card-popup-section-title {
+  width: 100%;
+  float: left;
+}
+
+.card-popup-column {
+  font-style: normal;
+  font-weight: bold;
+  font-size: 14px;
+  line-height: 18px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  letter-spacing: 0.2px;
+  color: #183b56;
+  width: 50%;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+  padding-left: 1%;
+  padding-right: 1%;
+  margin: 1%;
+}
+
+.TextField-radius {
+  font-family: "Rubik", sans-serif;
+}
+
+.TextField-radius fieldset {
+  border-radius: 12px;
 }
 /*# sourceMappingURL=App.css.map */

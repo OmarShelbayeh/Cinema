@@ -1,10 +1,22 @@
 import axios from "axios";
 import React, { Component } from "react";
+
+//services
 import URL from "../../Services/URL";
+
+//css
 import "./css/AllMovies.css";
 
-class AllMovies extends Component {
+//Material UI
+import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
+import Backdrop from "@mui/material/Backdrop";
+import Modal from "@mui/material/Modal";
+import Fade from "@mui/material/Fade";
+import CancelIcon from "@mui/icons-material/Cancel";
+import TextField from "@mui/material/TextField";
+import MovieIcon from "@mui/icons-material/Movie";
 
+class AllMovies extends Component {
   constructor() {
     super();
   }
@@ -17,10 +29,7 @@ class AllMovies extends Component {
       owner: "",
     },
 
-    success: false,
-    successMsg: "",
-    error: false,
-    errorMsg: "",
+    openNewMovie: false,
   };
 
   componentDidMount() {
@@ -55,6 +64,7 @@ class AllMovies extends Component {
       })
         .then(() => {
           this.props.success("Successfully added new movie!");
+          this.setState({ openNewMovie: false });
           this.getAllMovies();
         })
         .catch(() => {
@@ -122,64 +132,112 @@ class AllMovies extends Component {
   render() {
     return (
       <div className="allMovies">
-        <table>
-          <tr>
-            <th>Movie Name</th>
-            <th>Director</th>
-            <th>Owner</th>
-            <th>Delete</th>
-          </tr>
-          {this.state.allMovies.map((movie) => (
+        <div className="table-container">
+          <div className="title">
+            <MovieIcon />
+            <div className="text">All movies</div>
+          </div>
+          <table>
             <tr>
-              <td>{movie.name}</td>
-              <td>{movie.director}</td>
-              <td>{movie.director}</td>
-              <td>
-                <button
-                  onClick={() => {
-                    this.deleteMovie(movie.id);
-                  }}
-                >
-                  Delete
-                </button>
-              </td>
+              <th>Movie Name</th>
+              <th style={{textAlign: 'center'}}>Director</th>
+              <th style={{textAlign: 'center'}}>Owner</th>
+              <th style={{ textAlign: "center" }}>Delete</th>
             </tr>
-          ))}
-        </table>
-        <div className="newMovie">
-          <input
-            type="text"
-            name="name"
-            placeholder="Movie Name"
-            onChange={(event) =>
-              this.handleChange(event.target.name, event.target.value)
-            }
-          />
-          <input
-            type="text"
-            name="director"
-            placeholder="Director Name"
-            onChange={(event) =>
-              this.handleChange(event.target.name, event.target.value)
-            }
-          />
-          <input
-            type="text"
-            name="owner"
-            placeholder="Owner Name"
-            onChange={(event) =>
-              this.handleChange(event.target.name, event.target.value)
-            }
-          />
+            {this.state.allMovies.map((movie) => (
+              <tr>
+                <td>{movie.name}</td>
+                <td style={{textAlign: 'center'}}>{movie.director}</td>
+                <td style={{textAlign: 'center'}}>{movie.director}</td>
+                <td style={{ textAlign: "center" }}>
+                  <button
+                    onClick={() => {
+                      this.deleteMovie(movie.id);
+                    }}
+                  >
+                    <DeleteForeverIcon style={{ fill: "#f37757" }} />
+                  </button>
+                </td>
+              </tr>
+            ))}
+          </table>
           <button
-            onClick={() => {
-              this.addNewMovie();
-            }}
+            className="button"
+            onClick={() => this.setState({ openNewMovie: true })}
           >
             Add new movie
           </button>
         </div>
-        {this.state.error ? <h1>{this.state.errorMsg}</h1> : ""}
+        <Modal
+          aria-labelledby="transition-modal-title"
+          aria-describedby="transition-modal-description"
+          open={this.state.openNewMovie}
+          onClose={() => this.setState({ openNewMovie: false })}
+          closeAfterTransition
+          BackdropComponent={Backdrop}
+          BackdropProps={{
+            timeout: 500,
+          }}
+        >
+          <Fade in={this.state.openNewMovie}>
+            <div className="card-popup">
+              <div className="close-popup-button">
+                <p className="titles-text">Add new movie</p>
+                <button
+                  type="button"
+                  onClick={() => this.setState({ openNewMovie: false })}
+                >
+                  <CancelIcon style={{ fill: "#f37757" }} />
+                </button>
+              </div>
+              <div className="newMovie">
+                <div className="element TextField-radius">
+                  <TextField
+                    type="text"
+                    name="name"
+                    onChange={(event) =>
+                      this.handleChange(event.target.name, event.target.value)
+                    }
+                    label="Movie Name"
+                    variant="outlined"
+                    fullWidth
+                  />
+                </div>
+                <div className="element TextField-radius">
+                  <TextField
+                    type="text"
+                    name="director"
+                    onChange={(event) =>
+                      this.handleChange(event.target.name, event.target.value)
+                    }
+                    label="Director Name"
+                    variant="outlined"
+                    fullWidth
+                  />
+                </div>
+                <div className="element TextField-radius">
+                  <TextField
+                    type="text"
+                    name="owner"
+                    onChange={(event) =>
+                      this.handleChange(event.target.name, event.target.value)
+                    }
+                    label="Owner Name"
+                    variant="outlined"
+                    fullWidth
+                  />
+                </div>
+                <button
+                  onClick={() => {
+                    this.addNewMovie();
+                  }}
+                >
+                  Add new movie
+                </button>
+              </div>
+            </div>
+          </Fade>
+        </Modal>
       </div>
     );
   }
