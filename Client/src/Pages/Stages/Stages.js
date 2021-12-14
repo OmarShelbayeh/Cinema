@@ -143,18 +143,12 @@ class Stages extends Component {
   }
 
   render() {
-    if (!AuthenticationService.isUserLoggedIn()) {
-      window.location.href = "/login";
-    }
-    if (AuthenticationService.getRole() !== "ADMIN") {
-      window.location.href = "/dashboard";
-    }
     return (
       <div className="allMovies">
         <div className="table-container">
           <div className="title">
             <TheatersIcon />
-            <div className="text">All movies</div>
+            <div className="text">All Stages</div>
           </div>
           <table>
             <tr>
