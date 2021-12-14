@@ -16,7 +16,11 @@ class AdminDashboard extends Component {
     }
     return (
       <div>
-        <AllMovies />
+        <AllMovies
+          error={(msg) => this.props.error(msg)}
+          warning={(msg) => this.props.warning(msg)}
+          success={(msg) => this.props.success(msg)}
+        />
       </div>
     );
   }

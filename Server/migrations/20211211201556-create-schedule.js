@@ -14,10 +14,10 @@ module.exports = {
       price: {
         type: Sequelize.INTEGER
       },
-      movieId: {
+      movie_id: {
         type: Sequelize.INTEGER
       },
-      stageId: {
+      stage_id: {
         type: Sequelize.INTEGER
       },
       createdAt: {

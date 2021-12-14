@@ -1,8 +1,17 @@
 import axios from "axios";
 import React, { Component } from "react";
+
+//Services
 import URL from "../../Services/URL";
+import AuthenticationService from "../../Services/AuthenticationService";
 
 class Stages extends Component {
+
+  constructor() {
+    super();
+  }
+
+
   state = {
     allStages: [],
     newStage: {
@@ -50,26 +59,14 @@ class Stages extends Component {
         data: this.state.newStage,
       })
         .then(() => {
-          this.setState({
-            success: true,
-            successMsg: "Successfully added new stage!",
-            error: false,
-          });
           this.getAllStages();
+          this.props.success("Successfully added new stage!");
         })
         .catch(() => {
-          this.setState({
-            error: true,
-            errorMsg: "Couldn't add stage :(",
-            success: false,
-          });
+          this.props.error("Couldn't add stage :(");
         });
     } else {
-      this.setState({
-        error: true,
-        errorMsg: "You need to fill all the fields",
-        success: false,
-      });
+      this.props.warning("You need to fill all the fields");
     }
   }
 
@@ -85,19 +82,11 @@ class Stages extends Component {
       },
     })
       .then(() => {
-        this.setState({
-          success: true,
-          successMsg: "Successfully deleted movie!",
-          error: false,
-        });
+        this.props.success("Successfully deleted stage!");
         this.getAllStages();
       })
       .catch(() => {
-        this.setState({
-          error: true,
-          errorMsg: "Couldn't delete movie :(",
-          success: false,
-        });
+        this.props.error("Couldn't delete stage :(");
       });
   }
 
@@ -149,6 +138,12 @@ class Stages extends Component {
   }
 
   render() {
+    if (!AuthenticationService.isUserLoggedIn()) {
+      window.location.href = "/login";
+    }
+    if (AuthenticationService.getRole() !== "ADMIN") {
+      window.location.href = "/dashboard";
+    }
     return (
       <div className="allMovies">
         <table>

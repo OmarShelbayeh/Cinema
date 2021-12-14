@@ -4,6 +4,11 @@ import URL from "../../Services/URL";
 import "./css/AllMovies.css";
 
 class AllMovies extends Component {
+
+  constructor() {
+    super();
+  }
+
   state = {
     allMovies: [],
     newMovie: {
@@ -49,26 +54,14 @@ class AllMovies extends Component {
         data: this.state.newMovie,
       })
         .then(() => {
-          this.setState({
-            success: true,
-            successMsg: "Successfully added new movie!",
-            error: false,
-          });
+          this.props.success("Successfully added new movie!");
           this.getAllMovies();
         })
         .catch(() => {
-          this.setState({
-            error: true,
-            errorMsg: "Couldn't add movie :(",
-            success: false,
-          });
+          this.props.error("Couldn't add movie :(");
         });
     } else {
-      this.setState({
-        error: true,
-        errorMsg: "You need to fill all the fields",
-        success: false,
-      });
+      this.props.warning("You need to fill all the fields");
     }
   }
 
@@ -84,19 +77,11 @@ class AllMovies extends Component {
       },
     })
       .then(() => {
-        this.setState({
-          success: true,
-          successMsg: "Successfully deleted movie!",
-          error: false,
-        });
+        this.props.success("Successfully deleted movie!");
         this.getAllMovies();
       })
       .catch(() => {
-        this.setState({
-          error: true,
-          errorMsg: "Couldn't delete movie :(",
-          success: false,
-        });
+        this.props.error("Couldn't delete movie :(");
       });
   }
 

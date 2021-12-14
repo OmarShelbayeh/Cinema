@@ -16,8 +16,8 @@ module.exports = (sequelize, DataTypes) => {
   schedule.init({
     date: DataTypes.DATE,
     price: DataTypes.INTEGER,
-    movieId: DataTypes.INTEGER,
-    stageId: DataTypes.INTEGER
+    movie_id: DataTypes.INTEGER,
+    stage_id: DataTypes.INTEGER
   }, {
     sequelize,
     modelName: 'schedule',
