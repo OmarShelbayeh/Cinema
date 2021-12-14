@@ -1,0 +1,44 @@
+@import "../../../css/Global/Vars.scss";
+
+.allMovies {
+  width: 100%;
+  padding: 48px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  table {
+    text-align: left;
+    width: 50%;
+    border-collapse: collapse;
+    tr {
+      margin: 8px;
+    }
+  }
+  .newMovie {
+    padding-top: 10%;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    input {
+      margin: 8px;
+      padding: 12px;
+      border-radius: 32px;
+
+    }
+    button {
+      padding: 12px;
+      border: 1px solid black;
+      background: black;
+      border-radius: 32px;
+      color: white;
+      transition: 0.4s;
+    }
+    button:hover {
+      background: transparent;
+      color: black;
+    }
+  }
+}

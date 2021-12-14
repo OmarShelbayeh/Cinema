@@ -8,16 +8,16 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      stageName: {
+      stage_name: {
         type: Sequelize.STRING
       },
       rows: {
         type: Sequelize.INTEGER
       },
-      seatsInRow: {
+      seats_in_row: {
         type: Sequelize.INTEGER
       },
-      numberOfSeats: {
+      number_of_seats: {
         type: Sequelize.INTEGER
       },
       createdAt: {

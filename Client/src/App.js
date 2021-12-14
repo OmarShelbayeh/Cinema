@@ -8,6 +8,7 @@ import UserDashboard from "./Pages/Dashboards/UserDashboard";
 import Landing from "./Pages/Landing/Landing";
 import Login from "./Pages/Login/Login";
 import Register from "./Pages/Register/Register";
+import Stages from "./Pages/Stages/Stages";
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
 
         {/* Admin */}
         <Route exact path="/adminDashboard" element={<AdminDashboard />} />
+        <Route exact path="/stages" element={<Stages />} />
       </Routes>
     </div>
   );

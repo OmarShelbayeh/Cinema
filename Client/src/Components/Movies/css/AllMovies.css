@@ -1,0 +1,68 @@
+@import url("https://fonts.googleapis.com/css2?family=Rubik:wght@400;700&display=swap");
+.allMovies {
+  width: 100%;
+  padding: 48px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+}
+
+.allMovies table {
+  text-align: left;
+  width: 50%;
+  border-collapse: collapse;
+}
+
+.allMovies table tr {
+  margin: 8px;
+}
+
+.allMovies .newMovie {
+  padding-top: 10%;
+  width: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+}
+
+.allMovies .newMovie input {
+  margin: 8px;
+  padding: 12px;
+  border-radius: 32px;
+}
+
+.allMovies .newMovie button {
+  padding: 12px;
+  border: 1px solid black;
+  background: black;
+  border-radius: 32px;
+  color: white;
+  -webkit-transition: 0.4s;
+  transition: 0.4s;
+}
+
+.allMovies .newMovie button:hover {
+  background: transparent;
+  color: black;
+}
+/*# sourceMappingURL=AllMovies.css.map */

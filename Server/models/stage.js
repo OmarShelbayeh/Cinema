@@ -14,10 +14,10 @@ module.exports = (sequelize, DataTypes) => {
     }
   };
   stage.init({
-    stageName: DataTypes.STRING,
+    stage_name: DataTypes.STRING,
     rows: DataTypes.INTEGER,
-    seatsInRow: DataTypes.INTEGER,
-    numberOfSeats: DataTypes.INTEGER
+    seats_in_row: DataTypes.INTEGER,
+    number_of_seats: DataTypes.INTEGER
   }, {
     sequelize,
     modelName: 'stage',
