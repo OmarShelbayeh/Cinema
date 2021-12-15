@@ -29,6 +29,6 @@ module.exports = (app) => {
   app.use(
     "/schedules",
     passport.authenticate("jwt", { session: false }),
-    stageRoutes
+    scheduleRouter
   );
 };

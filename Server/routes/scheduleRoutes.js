@@ -8,11 +8,11 @@ router.get(
   authentication.ensureAdmin,
   scheduleController.getAllSchedules
 );
-// router.post(
-//   "/newSchedule",
-//   authentication.ensureAdmin,
-//   scheduleController.newStage
-// );
+router.post(
+  "/newSchedule",
+  authentication.ensureAdmin,
+  scheduleController.newSchedule
+);
 router.delete(
   "/deleteSchedule",
   authentication.ensureAdmin,

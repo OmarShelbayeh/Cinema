@@ -1,5 +1,13 @@
 import React, { Component } from "react";
+
+//Images
+import Logo from "../../Images/logo_black.png";
+
+//Services
 import AuthenticationService from "../../Services/AuthenticationService";
+
+//Material UI
+import TextField from "@mui/material/TextField";
 
 class Register extends Component {
   state = {
@@ -7,8 +15,11 @@ class Register extends Component {
     name: null,
     surname: null,
     password: null,
+    passwordrpt: null,
+
+    errorpsw: false,
     error: false,
-    errorMsg: "Something went wrong",
+    errorMsg: "",
   };
 
   handleChange(change, value) {
@@ -25,12 +36,21 @@ class Register extends Component {
       case "password":
         this.setState({ password: value });
         break;
+      case "passwordrpt":
+        if (this.state.password !== value) {
+          this.setState({ errorpsw: true });
+        } else {
+          this.setState({ errorpsw: false });
+        }
+        this.setState({ passwordrpt: value });
+        break;
       default:
         break;
     }
   }
 
-  handleSubmit() {
+  handleSubmit(event) {
+    event.preventDefault();
     if (
       !this.state.email ||
       !this.state.name ||
@@ -38,56 +58,125 @@ class Register extends Component {
       !this.state.password
     ) {
       this.setState({ error: true, errorMsg: "Missing data" });
+      this.props.warning("Missing Data");
     } else {
-      AuthenticationService.register(
-        this.state.email,
-        this.state.name,
-        this.state.surname,
-        this.state.password,
-        () => {
-          this.setState({ error: true });
-        }
-      );
+      if (!this.state.errorpsw) {
+        AuthenticationService.register(
+          this.state.email,
+          this.state.name,
+          this.state.surname,
+          this.state.password,
+          () => {
+            this.setState({ error: true });
+            this.props.error("Oops! Something went wrong");
+          }
+        );
+      }
     }
   }
 
   render() {
     return (
-      <div>
-        <h1>Register</h1>
-        {this.state.error ? <h2>{this.state.errorMsg}</h2> : ""}
-        <br />
-        <input
-          name="email"
-          placeholder="Email"
-          type="text"
-          onChange={(event) => this.handleChange("email", event.target.value)}
-        />
-        <br />
-        <input
-          name="name"
-          placeholder="name"
-          type="text"
-          onChange={(event) => this.handleChange("name", event.target.value)}
-        />
-        <br />
-        <input
-          name="surname"
-          placeholder="surname"
-          type="text"
-          onChange={(event) => this.handleChange("surname", event.target.value)}
-        />
-        <br />
-        <input
-          name="password"
-          placeholder="password"
-          type="password"
-          onChange={(event) =>
-            this.handleChange("password", event.target.value)
-          }
-        />
-        <br />
-        <button onClick={() => this.handleSubmit()}>Register</button>
+      <div className="login">
+        <div className="container">
+          <div className="title">
+            <div className="text">Register</div>
+          </div>
+          <div className="row">
+            <div className="column">
+              <form>
+                <div className="element TextField-radius">
+                  <TextField
+                    required
+                    error={this.state.error}
+                    type="text"
+                    label="Email"
+                    onChange={(event) =>
+                      this.handleChange("email", event.target.value)
+                    }
+                    fullWidth
+                  />
+                </div>
+                <div className="element TextField-radius">
+                  <TextField
+                    required
+                    error={this.state.error}
+                    label="Name"
+                    type="text"
+                    onChange={(event) =>
+                      this.handleChange("name", event.target.value)
+                    }
+                    fullWidth
+                  />
+                </div>
+                <div className="element TextField-radius">
+                  <TextField
+                    required
+                    error={this.state.error}
+                    type="text"
+                    label="Surname"
+                    onChange={(event) =>
+                      this.handleChange("surname", event.target.value)
+                    }
+                    fullWidth
+                  />
+                </div>
+                <div className="element TextField-radius">
+                  <TextField
+                    required
+                    error={
+                      this.state.errorpsw
+                        ? this.state.errorpsw
+                        : this.state.error
+                    }
+                    type="password"
+                    label="Password"
+                    onChange={(event) =>
+                      this.handleChange("password", event.target.value)
+                    }
+                    fullWidth
+                  />
+                </div>
+                <div className="element TextField-radius">
+                  <TextField
+                    required
+                    error={
+                      this.state.errorpsw
+                        ? this.state.errorpsw
+                        : this.state.error
+                    }
+                    type="password"
+                    label="Repeat Password"
+                    onChange={(event) =>
+                      this.handleChange("passwordrpt", event.target.value)
+                    }
+                    fullWidth
+                    helperText={
+                      this.state.errorpsw ? "Passwords don't match" : ""
+                    }
+                  />
+                </div>
+                <button
+                  type="submit"
+                  className="button"
+                  onClickCapture={(event) => this.handleSubmit(event)}
+                >
+                  Register
+                </button>
+              </form>
+
+              <button
+                className="button-reverse"
+                onClick={() => (window.location.href = "/login")}
+              >
+                Login
+              </button>
+            </div>
+            <div className="column">
+              <img src={Logo} alt="Logo" width="90%" />
+            </div>
+          </div>
+        </div>
       </div>
     );
   }

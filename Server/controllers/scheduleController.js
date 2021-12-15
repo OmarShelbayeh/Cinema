@@ -14,18 +14,23 @@ const getAllSchedules = (req, res) => {
 
 const newSchedule = async (req, res) => {
   let payload = req.body;
-  if (payload.date && payload.price && payload.movie_id && payload.stage_id) {
+  if (
+    payload.showing_at &&
+    payload.price &&
+    payload.movie_id &&
+    payload.stage_id
+  ) {
     if (
       (
         await scheduleRepository.findSpecificSchedule(
-          payload.date,
+          payload.showing_at,
           payload.movie_id,
           payload.stage_id
         )
       ).id === null
     ) {
-      stageRepository
-        .newStage(payload)
+      scheduleRepository
+        .newSchedule(payload)
         .then(() => {
           res.status(200).send();
         })
@@ -34,7 +39,7 @@ const newSchedule = async (req, res) => {
           console.log(error);
         });
     } else {
-      res.status(500).send("Stage Exists");
+      res.status(500).send("Shcedule Exists");
     }
   }
 };

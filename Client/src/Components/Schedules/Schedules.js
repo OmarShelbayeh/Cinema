@@ -1,11 +1,8 @@
-import axios from "axios";
 import React, { Component } from "react";
+import axios from "axios";
 
-//services
+//Services
 import URL from "../../Services/URL";
-
-//css
-import "./css/AllMovies.css";
 
 //Material UI
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
@@ -14,62 +11,40 @@ import Modal from "@mui/material/Modal";
 import Fade from "@mui/material/Fade";
 import CancelIcon from "@mui/icons-material/Cancel";
 import TextField from "@mui/material/TextField";
-import MovieIcon from "@mui/icons-material/Movie";
+import DateRangeIcon from "@mui/icons-material/DateRange";
 
-class AllMovies extends Component {
-  constructor() {
-    super();
-  }
-
+class Schedules extends Component {
   state = {
-    allMovies: [],
-    newMovie: {
-      name: "",
-      director: "",
-      owner: "",
-    },
+    allSchedules: [],
 
-    openNewMovie: false,
+    openNewSchedule: false,
   };
 
   componentDidMount() {
-    this.getAllMovies();
+    this.getSchedule();
   }
 
-  getAllMovies() {
-    this.props.getAllMovies();
+  handleChange(change, value) {
+      
   }
 
-  addNewMovie() {
-    if (
-      this.state.newMovie.name &&
-      this.state.newMovie.owner &&
-      this.state.newMovie.director
-    ) {
-      axios({
-        url: URL + "/movies/newMovie",
-        method: "POST",
-        headers: {
-          authorization: localStorage.getItem("token"),
-        },
-        data: this.state.newMovie,
-      })
-        .then(() => {
-          this.props.success("Successfully added new movie!");
-          this.setState({ openNewMovie: false });
-          this.getAllMovies();
-        })
-        .catch(() => {
-          this.props.error("Couldn't add movie :(");
-        });
-    } else {
-      this.props.warning("You need to fill all the fields");
-    }
-  }
-
-  deleteMovie(id) {
+  getSchedule() {
     axios({
-      url: URL + "/movies/deleteMovie",
+      url: URL + "/schedules/allSchedules",
+      method: "GET",
+      headers: {
+        authorization: localStorage.getItem("token"),
+      },
+    }).then((response) => {
+      this.setState({ allSchedules: response.data });
+    });
+  }
+
+  addNewSchedule() {}
+
+  deleteSchedule(id) {
+    axios({
+      url: URL + "/schedules/deleteSchedule",
       method: "DELETE",
       headers: {
         authorization: localStorage.getItem("token"),
@@ -79,72 +54,40 @@ class AllMovies extends Component {
       },
     })
       .then(() => {
-        this.props.success("Successfully deleted movie!");
-        this.getAllMovies();
+        this.props.success("Successfully deleted schedule!");
+        this.getSchedule();
       })
       .catch(() => {
-        this.props.error("Couldn't delete movie :(");
+        this.props.error("Couldn't delete schedule :(");
       });
-  }
-
-  handleChange(change, value) {
-    switch (change) {
-      case "name":
-        this.setState({
-          newMovie: {
-            name: value,
-            director: this.state.newMovie.director,
-            owner: this.state.newMovie.owner,
-          },
-        });
-        break;
-      case "director":
-        this.setState({
-          newMovie: {
-            name: this.state.newMovie.name,
-            director: value,
-            owner: this.state.newMovie.owner,
-          },
-        });
-        break;
-      case "owner":
-        this.setState({
-          newMovie: {
-            name: this.state.newMovie.name,
-            director: this.state.newMovie.director,
-            owner: value,
-          },
-        });
-        break;
-      default:
-        break;
-    }
   }
 
   render() {
     return (
       <div className="allMovies">
-        <div className="table-container">
+        <div className="table-container" style={{ marginTop: "12px" }}>
           <div className="title">
-            <MovieIcon />
-            <div className="text">All movies</div>
+            <DateRangeIcon />
+            <div className="text">All Schedules</div>
           </div>
           <table>
             <tr>
               <th>Movie Name</th>
-              <th style={{ textAlign: "center" }}>Director</th>
-              <th style={{ textAlign: "center" }}>Owner</th>
+              <th style={{ textAlign: "center" }}>Stage Name</th>
+              <th style={{ textAlign: "center" }}>Date</th>
+              <th style={{ textAlign: "center" }}>Price</th>
               <th style={{ textAlign: "center" }}>Delete</th>
             </tr>
-            {this.props.allMovies.map((movie) => (
+            {this.state.allSchedules.map((schedule) => (
               <tr>
-                <td>{movie.name}</td>
-                <td style={{ textAlign: "center" }}>{movie.director}</td>
-                <td style={{ textAlign: "center" }}>{movie.director}</td>
+                <td>{schedule.moviename}</td>
+                <td style={{ textAlign: "center" }}>{schedule.stagename}</td>
+                <td style={{ textAlign: "center" }}>{schedule.date}</td>
+                <td style={{ textAlign: "center" }}>{schedule.price}</td>
                 <td style={{ textAlign: "center" }}>
                   <button
                     onClick={() => {
-                      this.deleteMovie(movie.id);
+                      this.deleteSchedule(schedule.id);
                     }}
                   >
                     <DeleteForeverIcon style={{ fill: "#f37757" }} />
@@ -155,29 +98,29 @@ class AllMovies extends Component {
           </table>
           <button
             className="button"
-            onClick={() => this.setState({ openNewMovie: true })}
+            onClick={() => this.setState({ openNewSchedule: true })}
           >
-            Add new movie
+            Add new schedule
           </button>
         </div>
         <Modal
           aria-labelledby="transition-modal-title"
           aria-describedby="transition-modal-description"
-          open={this.state.openNewMovie}
-          onClose={() => this.setState({ openNewMovie: false })}
+          open={this.state.openNewSchedule}
+          onClose={() => this.setState({ openNewSchedule: false })}
           closeAfterTransition
           BackdropComponent={Backdrop}
           BackdropProps={{
             timeout: 500,
           }}
         >
-          <Fade in={this.state.openNewMovie}>
+          <Fade in={this.state.openNewSchedule}>
             <div className="card-popup">
               <div className="close-popup-button">
-                <p className="titles-text">Add new movie</p>
+                <p className="titles-text">Add new schedule</p>
                 <button
                   type="button"
-                  onClick={() => this.setState({ openNewMovie: false })}
+                  onClick={() => this.setState({ openNewSchedule: false })}
                 >
                   <CancelIcon style={{ fill: "#f37757" }} />
                 </button>
@@ -235,4 +178,4 @@ class AllMovies extends Component {
   }
 }
 
-export default AllMovies;
+export default Schedules;

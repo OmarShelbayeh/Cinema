@@ -7,9 +7,12 @@ newSchedule = async (payload) => {
 
 getAllSchedules = async () => {
   let allSchedules;
-  allSchedules = await db.sequelize.query("SELECT * FROM schedules ;", {
-    type: db.sequelize.QueryTypes.SELECT,
-  });
+  allSchedules = await db.sequelize.query(
+    "SELECT s.id, s.showing_at as date, s.price as price, m.name as movieName, st.stage_name as stageName from schedules s inner join movies m on s.movie_id = m.id inner join stages st on s.stage_id = st.id ;",
+    {
+      type: db.sequelize.QueryTypes.SELECT,
+    }
+  );
   return allSchedules;
 };
 
@@ -28,7 +31,7 @@ findScheduleById = async (id) => {
 findSpecificSchedule = async (date, movieId, stageId) => {
   let Schedule;
   Schedule = await db.sequelize.query(
-    "SELECT * FROM stages WHERE date = :date and movie_id = :movieId and stage_id = :stageId ;",
+    "SELECT * FROM schedules WHERE showing_at = :date and movie_id = :movieId and stage_id = :stageId ;",
     {
       replacements: { date: date, movieId: movieId, stageId, stageId },
       type: db.sequelize.QueryTypes.SELECT,

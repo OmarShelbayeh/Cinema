@@ -25,7 +25,7 @@ class Header extends Component {
     return (
       <div className="header">
         <div className="logo">
-          <img src={Logo} alt="Logo" width="30%" />
+          <img src={Logo} alt="Logo" width="120px" />
         </div>
         {this.state.userInfo ? (
           this.state.userInfo.role === "ADMIN" ? (
@@ -35,6 +35,13 @@ class Header extends Component {
                 href="/adminDashboard"
               >
                 Dashboard
+              </a>
+              <a
+                onClick={() => {
+                  AuthenticationService.logout();
+                }}
+              >
+                Logout
               </a>
             </div>
           ) : (

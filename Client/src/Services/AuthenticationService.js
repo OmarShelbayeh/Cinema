@@ -2,22 +2,12 @@ import axios from "axios";
 import URL from "./URL";
 
 class AuthenticationService {
-  registerSuccessfulLogin(email, password) {
-    axios({
-      url: URL + "/login",
-      method: "POST",
-      data: {
-        email: email,
-        password: password,
-      },
-    })
-      .then((response) => {
-        localStorage.setItem("token", response.data.token);
-      })
-      .then(() => {
-        this.setUserInfo();
-      })
-      .catch((error) => console.log(error));
+  registerSuccessfulLogin(token) {
+    localStorage.setItem("token", token);
+  }
+
+  afterLogin() {
+    this.setUserInfo();
   }
 
   setUserInfo() {
@@ -64,12 +54,13 @@ class AuthenticationService {
       .then(() => {
         window.location.href = "/login";
       })
-      .catch(() => func());
+      .catch((error) => func(error));
   }
 
   logout() {
     localStorage.clear();
     sessionStorage.clear();
+    window.location.href = "/login";
   }
 }
 

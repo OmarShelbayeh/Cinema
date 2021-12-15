@@ -40,8 +40,34 @@ class App extends Component {
     return (
       <div className="App">
         <Routes>
-          <Route exact path="/" element={<Landing />} />
-          <Route exact path="/login" element={<Login />} />
+          <Route
+            exact
+            path="/"
+            element={
+              <Landing
+                error={(msg) => {
+                  this.error(msg);
+                }}
+                warning={(msg) => {
+                  this.warning(msg);
+                }}
+              />
+            }
+          />
+          <Route
+            exact
+            path="/login"
+            element={
+              <Login
+                error={(msg) => {
+                  this.error(msg);
+                }}
+                warning={(msg) => {
+                  this.warning(msg);
+                }}
+              />
+            }
+          />
           <Route
             exact
             path="/register"

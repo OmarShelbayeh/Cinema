@@ -36,15 +36,7 @@ class Stages extends Component {
   }
 
   getAllStages() {
-    axios({
-      url: URL + "/stages/allStages",
-      method: "GET",
-      headers: {
-        authorization: localStorage.getItem("token"),
-      },
-    }).then((response) => {
-      this.setState({ allStages: response.data });
-    });
+    this.props.getAllStages();
   }
 
   addNewStage() {
@@ -153,19 +145,23 @@ class Stages extends Component {
           <table>
             <tr>
               <th>Stage Name</th>
-              <th style={{textAlign: 'center'}}>Rows</th>
-              <th style={{textAlign: 'center'}}>Seats in row</th>
-              <th style={{textAlign: 'center'}}>Number of seats</th>
-              <th style={{textAlign: 'center'}}>Delete</th>
+              <th style={{ textAlign: "center" }}>Rows</th>
+              <th style={{ textAlign: "center" }}>Seats in row</th>
+              <th style={{ textAlign: "center" }}>Number of seats</th>
+              <th style={{ textAlign: "center" }}>Delete</th>
             </tr>
-            {this.state.allStages.length > 0
-              ? this.state.allStages.map((stage) => (
+            {this.props.allStages.length > 0
+              ? this.props.allStages.map((stage) => (
                   <tr>
                     <td>{stage.stage_name}</td>
-                    <td style={{textAlign: 'center'}}>{stage.rows}</td>
-                    <td style={{textAlign: 'center'}}>{stage.seats_in_row}</td>
-                    <td style={{textAlign: 'center'}}>{stage.number_of_seats}</td>
-                    <td style={{textAlign: 'center'}}>
+                    <td style={{ textAlign: "center" }}>{stage.rows}</td>
+                    <td style={{ textAlign: "center" }}>
+                      {stage.seats_in_row}
+                    </td>
+                    <td style={{ textAlign: "center" }}>
+                      {stage.number_of_seats}
+                    </td>
+                    <td style={{ textAlign: "center" }}>
                       <button
                         onClick={() => {
                           this.deleteStage(stage.id);
