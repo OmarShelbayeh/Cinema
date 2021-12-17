@@ -8,6 +8,13 @@ import AuthenticationService from "../../Services/AuthenticationService";
 
 //Material UI
 import TextField from "@mui/material/TextField";
+import IconButton from "@mui/material/IconButton";
+import OutlinedInput from "@mui/material/OutlinedInput";
+import InputLabel from "@mui/material/InputLabel";
+import InputAdornment from "@mui/material/InputAdornment";
+import FormControl from "@mui/material/FormControl";
+import Visibility from "@mui/icons-material/Visibility";
+import VisibilityOff from "@mui/icons-material/VisibilityOff";
 
 class Register extends Component {
   state = {
@@ -122,40 +129,103 @@ class Register extends Component {
                   />
                 </div>
                 <div className="element TextField-radius">
-                  <TextField
-                    required
+                  <FormControl
                     error={
                       this.state.errorpsw
                         ? this.state.errorpsw
                         : this.state.error
                     }
-                    type="password"
-                    label="Password"
-                    onChange={(event) =>
-                      this.handleChange("password", event.target.value)
-                    }
                     fullWidth
-                  />
+                    variant="outlined"
+                    required
+                  >
+                    <InputLabel
+                      style={{ fontFamily: '"Rubik", sans-serif' }}
+                      htmlFor="outlined-adornment-password"
+                    >
+                      Password
+                    </InputLabel>
+                    <OutlinedInput
+                      id="outlined-adornment-password"
+                      type={this.state.showPassword ? "text" : "password"}
+                      helperText={this.state.errorMsg}
+                      onChange={(event) =>
+                        this.handleChange("password", event.target.value)
+                      }
+                      endAdornment={
+                        <InputAdornment position="end">
+                          <IconButton
+                            aria-label="toggle password visibility"
+                            onClick={() =>
+                              this.setState({
+                                showPassword: !this.state.showPassword,
+                              })
+                            }
+                            edge="end"
+                          >
+                            {this.state.showPassword ? (
+                              <Visibility />
+                            ) : (
+                              <VisibilityOff />
+                            )}
+                          </IconButton>
+                        </InputAdornment>
+                      }
+                      label="Password"
+                    />
+                  </FormControl>
                 </div>
                 <div className="element TextField-radius">
-                  <TextField
-                    required
+                  <FormControl
                     error={
                       this.state.errorpsw
                         ? this.state.errorpsw
                         : this.state.error
                     }
-                    type="password"
-                    label="Repeat Password"
-                    onChange={(event) =>
-                      this.handleChange("passwordrpt", event.target.value)
-                    }
                     fullWidth
-                    helperText={
-                      this.state.errorpsw ? "Passwords don't match" : ""
-                    }
-                  />
+                    variant="outlined"
+                    required
+                  >
+                    <InputLabel
+                      style={{ fontFamily: '"Rubik", sans-serif' }}
+                      htmlFor="outlined-adornment-password"
+                    >
+                      Repeat Password
+                    </InputLabel>
+                    <OutlinedInput
+                      id="outlined-adornment-password"
+                      type={this.state.showPassword ? "text" : "password"}
+                      helperText={
+                        this.state.errorpsw ? "Passwords don't match" : ""
+                      }
+                      onChange={(event) =>
+                        this.handleChange("passwordrpt", event.target.value)
+                      }
+                      endAdornment={
+                        <InputAdornment position="end">
+                          <IconButton
+                            aria-label="toggle password visibility"
+                            onClick={() =>
+                              this.setState({
+                                showPassword: !this.state.showPassword,
+                              })
+                            }
+                            edge="end"
+                          >
+                            {this.state.showPassword ? (
+                              <Visibility />
+                            ) : (
+                              <VisibilityOff />
+                            )}
+                          </IconButton>
+                        </InputAdornment>
+                      }
+                      label="Repeat Password"
+                    />
+                  </FormControl>
+                  {this.state.errorpsw ? "Passwords don't match" : ""}
                 </div>
+
                 <button
                   type="submit"
                   className="button"

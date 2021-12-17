@@ -12,17 +12,34 @@ router.post("/register", async function signup(req, res) {
     req.body.password &&
     req.body.email
   ) {
-    if ((await usersRepository.findUserByEmail(req.body.email)).id === null) {
-      await usersRepository.newUser(
-        res,
-        req.body.name,
-        req.body.surname,
-        req.body.password,
-        req.body.email,
-        "USER"
-      );
+    let user = await usersRepository.findUserByEmail(req.body.email);
+    if (user.id === null) {
+      await usersRepository
+        .newUser(
+          res,
+          req.body.name,
+          req.body.surname,
+          req.body.password,
+          req.body.email,
+          "USER",
+          true,
+          false
+        )
+        .then((users) => res.status(201).send(users))
+        .catch((error) => res.status(400).send(error));
     } else {
-      res.status(500).send("User exists");
+      if (user.active) {
+        res.status(500).send("User exists");
+      } else {
+        usersRepository
+          .makeActive(
+            user.id,
+            req.body.name,
+            req.body.surname,
+            req.body.password
+          )
+          .then(() => res.status(200).send());
+      }
     }
   } else {
     res.status(500).send("missing data");
@@ -35,7 +52,12 @@ router.post("/login", async function (req, res) {
     .then((user) => {
       if (!user.dataValues.id) {
         return res.status(401).send({
-          message: "Authentication failed. User not found.",
+          message: "User not found.",
+        });
+      }
+      if (!user.dataValues.active) {
+        return res.status(401).send({
+          message: "User not active.",
         });
       }
       user.comparePassword(req.body.password, (err, isMatch) => {
@@ -50,7 +72,7 @@ router.post("/login", async function (req, res) {
         } else {
           res.status(401).send({
             success: false,
-            msg: "Authentication failed. Wrong password.",
+            msg: "Wrong password.",
           });
         }
       });

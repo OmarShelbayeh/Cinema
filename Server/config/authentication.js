@@ -1,6 +1,15 @@
 const jwt = require("jsonwebtoken");
 
 class authentication {
+  ensureOwner = (req, res, next) => {
+    const jwt_payload = jwt.decode(req.headers.authorization.substring(7));
+    if (jwt_payload.role === "OWNER") {
+      next();
+    } else {
+      res.status(401).send("Unauthorized");
+    }
+  };
+
   ensureAdmin = (req, res, next) => {
     const jwt_payload = jwt.decode(req.headers.authorization.substring(7));
     if (jwt_payload.role === "ADMIN") {

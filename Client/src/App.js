@@ -8,11 +8,12 @@ import UserDashboard from "./Pages/Dashboards/UserDashboard";
 import Landing from "./Pages/Landing/Landing";
 import Login from "./Pages/Login/Login";
 import Register from "./Pages/Register/Register";
-import Stages from "./Pages/Stages/Stages";
+import Stages from "./Components/Stages/Stages";
 
 //Material UI
 import Snackbar from "@mui/material/Snackbar";
 import { Alert } from "@mui/material";
+import OwnerDashboard from "./Pages/Dashboards/OwnerDashboard";
 
 class App extends Component {
   state = {
@@ -111,6 +112,26 @@ class App extends Component {
             path="/adminDashboard"
             element={
               <AdminDashboard
+                success={(msg) => {
+                  this.success(msg);
+                }}
+                error={(msg) => {
+                  this.error(msg);
+                }}
+                warning={(msg) => {
+                  this.warning(msg);
+                }}
+              />
+            }
+          />
+
+          {/* Owner */}
+
+          <Route
+            exact
+            path="/ownerDashboard"
+            element={
+              <OwnerDashboard
                 success={(msg) => {
                   this.success(msg);
                 }}

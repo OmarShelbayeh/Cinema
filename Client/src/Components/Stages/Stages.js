@@ -31,6 +31,19 @@ class Stages extends Component {
     openNewStage: false,
   };
 
+  clearState() {
+    this.setState({
+      newStage: {
+        stage_name: "",
+        rows: "",
+        seats_in_row: "",
+        number_of_seats: "",
+      },
+
+      openNewStage: false,
+    });
+  }
+
   componentDidMount() {
     this.getAllStages();
   }
@@ -55,9 +68,9 @@ class Stages extends Component {
         data: this.state.newStage,
       })
         .then(() => {
-          this.setState({ openNewStage: false });
           this.getAllStages();
           this.props.success("Successfully added new stage!");
+          this.clearState();
         })
         .catch(() => {
           this.props.error("Couldn't add stage :(");
@@ -253,6 +266,7 @@ class Stages extends Component {
                   />
                 </div>
                 <button
+                  className="button"
                   onClick={() => {
                     this.addNewStage();
                   }}

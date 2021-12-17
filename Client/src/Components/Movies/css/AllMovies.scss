@@ -29,7 +29,7 @@
       border-collapse: collapse;
       tr {
         margin: 8px;
-        border-bottom: 1px solid #E8E8E8; 
+        border-bottom: 1px solid #e8e8e8;
       }
     }
     .button {
@@ -60,11 +60,11 @@
   flex-direction: column;
 
   .element {
-    margin-top: 8px;
+    margin-top: 12px;
     width: 100%;
   }
 
-  button {
+  .button {
     @extend %body-font-medium;
     width: 100%;
     font-weight: bold;
@@ -77,7 +77,7 @@
     transition: 0.4s;
     float: right;
   }
-  button:hover {
+  .button:hover {
     color: white;
     background-color: #f37757;
   }

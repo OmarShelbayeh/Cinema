@@ -56,8 +56,8 @@ class AllMovies extends Component {
       })
         .then(() => {
           this.props.success("Successfully added new movie!");
-          this.setState({ openNewMovie: false });
           this.getAllMovies();
+          this.clearState();
         })
         .catch(() => {
           this.props.error("Couldn't add movie :(");
@@ -85,6 +85,18 @@ class AllMovies extends Component {
       .catch(() => {
         this.props.error("Couldn't delete movie :(");
       });
+  }
+
+  clearState() {
+    this.setState({
+      newMovie: {
+        name: "",
+        director: "",
+        owner: "",
+      },
+
+      openNewMovie: false,
+    });
   }
 
   handleChange(change, value) {
@@ -220,6 +232,7 @@ class AllMovies extends Component {
                   />
                 </div>
                 <button
+                  className="button"
                   onClick={() => {
                     this.addNewMovie();
                   }}

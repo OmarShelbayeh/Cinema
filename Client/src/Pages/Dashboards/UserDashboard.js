@@ -9,6 +9,9 @@ class UserDashboard extends Component {
     if (AuthenticationService.getRole() === "ADMIN") {
       window.location.href = "/adminDashboard";
     }
+    if (AuthenticationService.getRole() === "OWNER") {
+      window.location.href = "/ownerDashboard";
+    }
     return <div></div>;
   }
 }

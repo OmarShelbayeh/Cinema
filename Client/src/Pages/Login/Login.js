@@ -13,12 +13,21 @@ import URL from "../../Services/URL";
 
 //Material UI
 import TextField from "@mui/material/TextField";
+import IconButton from "@mui/material/IconButton";
+import OutlinedInput from "@mui/material/OutlinedInput";
+import InputLabel from "@mui/material/InputLabel";
+import InputAdornment from "@mui/material/InputAdornment";
+import FormControl from "@mui/material/FormControl";
+import Visibility from "@mui/icons-material/Visibility";
+import VisibilityOff from "@mui/icons-material/VisibilityOff";
 
 class Login extends Component {
   state = {
     email: null,
     password: null,
     error: false,
+
+    showPassword: false,
   };
 
   handleChange(change, value) {
@@ -85,18 +94,49 @@ class Login extends Component {
                   />
                 </div>
                 <div className="element TextField-radius">
-                  <TextField
-                    required
+                  <FormControl
                     error={this.state.error}
-                    label="Password"
-                    type="password"
-                    onChange={(event) =>
-                      this.handleChange("password", event.target.value)
-                    }
                     fullWidth
-                    helperText={this.state.errorMsg}
-                  />
+                    variant="outlined"
+                    required
+                  >
+                    <InputLabel
+                      style={{ fontFamily: '"Rubik", sans-serif' }}
+                      htmlFor="outlined-adornment-password"
+                    >
+                      Password
+                    </InputLabel>
+                    <OutlinedInput
+                      id="outlined-adornment-password"
+                      type={this.state.showPassword ? "text" : "password"}
+                      helperText={this.state.errorMsg}
+                      onChange={(event) =>
+                        this.handleChange("password", event.target.value)
+                      }
+                      endAdornment={
+                        <InputAdornment position="end">
+                          <IconButton
+                            aria-label="toggle password visibility"
+                            onClick={() =>
+                              this.setState({
+                                showPassword: !this.state.showPassword,
+                              })
+                            }
+                            edge="end"
+                          >
+                            {this.state.showPassword ? (
+                              <Visibility />
+                            ) : (
+                              <VisibilityOff />
+                            )}
+                          </IconButton>
+                        </InputAdornment>
+                      }
+                      label="Password"
+                    />
+                  </FormControl>
                 </div>
+
                 <button
                   type="submit"
                   className="button"

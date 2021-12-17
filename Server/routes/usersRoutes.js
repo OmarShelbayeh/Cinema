@@ -3,7 +3,17 @@ const router = express.Router();
 const usersController = require("../controllers").usersController;
 const authentication = require("../config/authentication");
 
-router.get("/users", authentication.ensureAdmin, usersController.getAllUsers);
 router.get("/info", usersController.getUserInfo);
+router.get(
+  "/allAdmins",
+  authentication.ensureOwner,
+  usersController.getAllAdmins
+);
+router.post(
+  "/deleteAdmin",
+  authentication.ensureOwner,
+  usersController.deleteAdmin
+);
+router.post("/addAdmin", authentication.ensureOwner, usersController.addAdmin);
 
 module.exports = router;

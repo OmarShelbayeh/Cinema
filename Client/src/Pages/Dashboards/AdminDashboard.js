@@ -11,8 +11,9 @@ import URL from "../../Services/URL";
 //Components
 import AllMovies from "../../Components/Movies/AllMovies";
 import Header from "../../Components/General/Header";
-import Stages from "../Stages/Stages";
+import Stages from "../../Components/Stages/Stages";
 import Schedules from "../../Components/Schedules/Schedules";
+import AddAdmin from "../../Components/AddAdmin/AddAdmin";
 
 class AdminDashboard extends Component {
   state = {
@@ -79,6 +80,11 @@ class AdminDashboard extends Component {
                 success={(msg) => this.props.success(msg)}
                 allStages={this.state.allStages}
                 getAllStages={() => this.getAllStages()}
+              />
+              <AddAdmin
+                error={(msg) => this.props.error(msg)}
+                warning={(msg) => this.props.warning(msg)}
+                success={(msg) => this.props.success(msg)}
               />
             </div>
           </div>

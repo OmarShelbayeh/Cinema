@@ -8,20 +8,25 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER,
       },
+      active: {
+        allowNull: false,
+        type: Sequelize.BOOLEAN,
+      },
+      disabled: {
+        allowNull: false,
+        type: Sequelize.BOOLEAN,
+      },
       email: {
         allowNull: false,
         type: Sequelize.STRING,
       },
       name: {
-        allowNull: false,
         type: Sequelize.STRING,
       },
       surname: {
-        allowNull: false,
         type: Sequelize.STRING,
       },
       password: {
-        allowNull: false,
         type: Sequelize.STRING,
       },
       role: {
