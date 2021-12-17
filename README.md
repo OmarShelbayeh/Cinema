@@ -4,6 +4,7 @@
 ### Roles
 + [User](#user)
 + [Admin](#admin)
++ [Owner](#owner)
 
 ## Server Endpoints
 
@@ -25,6 +26,8 @@ These endpoint require authentication and an ADMIN role
 + Adds a new movie (POST) `/newMovie` requires `name, director, owner`
 + Deletes a movie (DELETE) `/deleteMovie` requires `id`
 
+### [Owner](#owner) Endpoints
+
 ## Client side pages
 
 ### Public
@@ -40,6 +43,8 @@ Requires a `USER` role
 ### [Admin](#admin)
 Requires an `ADMIN` role
 * Admin dashboard `/adminDashboard`
+
+### [Owner](#owner)
 
 
 ## Login info
@@ -58,3 +63,11 @@ Requires an `ADMIN` role
   + Name: Omar <br />
   + Surname: Shelbayeh <br />
   + Password: admin <br />
+
+<a id="admin"></a>
+### Owner Info
+
+  + Email: owner@cinema.com <br />
+  + Name: Omar <br />
+  + Surname: Shelbayeh <br />
+  + Password: owner <br />
