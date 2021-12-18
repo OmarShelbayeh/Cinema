@@ -6,13 +6,15 @@ import URL from "../../Services/URL";
 import AuthenticationService from "../../Services/AuthenticationService";
 
 //Material UI
-import TheatersIcon from "@mui/icons-material/Theaters";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import Backdrop from "@mui/material/Backdrop";
 import Modal from "@mui/material/Modal";
 import Fade from "@mui/material/Fade";
 import CancelIcon from "@mui/icons-material/Cancel";
 import TextField from "@mui/material/TextField";
+import PauseCircleFilledIcon from "@mui/icons-material/PauseCircleFilled";
+import PlayCircleFilledWhiteIcon from "@mui/icons-material/PlayCircleFilledWhite";
+import SupervisorAccountIcon from "@mui/icons-material/SupervisorAccount";
 
 class AddAdmin extends Component {
   state = {
@@ -65,6 +67,52 @@ class AddAdmin extends Component {
       });
   }
 
+  disableAccount(id, email) {
+    axios({
+      url: URL + "/user/disableAccount",
+      method: "POST",
+      headers: {
+        authorization: localStorage.getItem("token"),
+      },
+      data: {
+        id: id,
+        email: email,
+      },
+    })
+      .then((response) => {
+        this.props.success(response.data);
+      })
+      .then(() => {
+        this.getAdmins();
+      })
+      .catch((error) => {
+        this.props.error(error.response.data);
+      });
+  }
+
+  enableAccount(id, email) {
+    axios({
+      url: URL + "/user/enableAccount",
+      method: "POST",
+      headers: {
+        authorization: localStorage.getItem("token"),
+      },
+      data: {
+        id: id,
+        email: email,
+      },
+    })
+      .then((response) => {
+        this.props.success(response.data);
+      })
+      .then(() => {
+        this.getAdmins();
+      })
+      .catch((error) => {
+        this.props.error(error.response.data);
+      });
+  }
+
   addNewAdmin() {
     if (this.state.email) {
       axios({
@@ -97,39 +145,91 @@ class AddAdmin extends Component {
       <div className="allMovies">
         <div className="table-container">
           <div className="title">
-            <TheatersIcon />
+            <SupervisorAccountIcon />
             <div className="text">Admins</div>
           </div>
-          <table>
-            <tr>
-              <th>Full Name</th>
-              <th>Email</th>
-              <th>Status</th>
-              <th style={{ textAlign: "center" }}>Delete</th>
-            </tr>
-            {this.state.allAdmins.length > 0
-              ? this.state.allAdmins.map((admin) => (
-                  <tr>
-                    <td>
-                      {admin.active
-                        ? admin.name + " " + admin.surname
-                        : "User not registered yet"}
-                    </td>
-                    <td>{admin.email}</td>
-                    <td>{admin.active ? "Active" : "Not active"}</td>
-                    <td style={{ textAlign: "center" }}>
-                      <button
-                        onClick={() => {
-                          this.deleteAdmin(admin.id, admin.email);
-                        }}
-                      >
-                        <DeleteForeverIcon style={{ fill: "#f37757" }} />
-                      </button>
-                    </td>
-                  </tr>
-                ))
-              : ""}
-          </table>
+          <div className="table">
+            <table>
+              <tr>
+                <th>Full Name</th>
+                <th>Email</th>
+                <th style={{ textAlign: "center" }}>Status</th>
+                <th style={{ textAlign: "center" }}>Control</th>
+                <th style={{ textAlign: "center" }}>Delete</th>
+              </tr>
+              {this.state.allAdmins.length > 0
+                ? this.state.allAdmins.map((admin) => (
+                    <tr>
+                      <td>
+                        {admin.active ? (
+                          admin.disabled ? (
+                            <p style={{ color: "red" }}>
+                              {admin.name + " " + admin.surname}
+                            </p>
+                          ) : (
+                            admin.name + " " + admin.surname
+                          )
+                        ) : (
+                          <p style={{ color: "red" }}>
+                            User not registered yet
+                          </p>
+                        )}
+                      </td>
+                      <td>
+                        {admin.disabled || !admin.active ? (
+                          <p style={{ color: "red" }}>{admin.email}</p>
+                        ) : (
+                          admin.email
+                        )}
+                      </td>
+                      <td style={{ textAlign: "center" }}>
+                        {admin.disabled ? (
+                          <p style={{ color: "red" }}>Disabled</p>
+                        ) : (
+                          "Active"
+                        )}
+                      </td>
+                      {admin.disabled ? (
+                        <td style={{ textAlign: "center" }}>
+                          <button
+                            onClick={() => {
+                              this.enableAccount(admin.id, admin.email);
+                            }}
+                            aria-label
+                          >
+                            <PlayCircleFilledWhiteIcon
+                              style={{ fill: "#f37757" }}
+                            />
+                          </button>
+                        </td>
+                      ) : (
+                        <td style={{ textAlign: "center" }}>
+                          <button
+                            onClick={() => {
+                              this.disableAccount(admin.id, admin.email);
+                            }}
+                          >
+                            <PauseCircleFilledIcon
+                              style={{ fill: "#f37757" }}
+                            />
+                          </button>
+                        </td>
+                      )}
+
+                      <td style={{ textAlign: "center" }}>
+                        <button
+                          onClick={() => {
+                            this.deleteAdmin(admin.id, admin.email);
+                          }}
+                        >
+                          <DeleteForeverIcon style={{ fill: "#f37757" }} />
+                        </button>
+                      </td>
+                    </tr>
+                  ))
+                : ""}
+            </table>
+          </div>
           <button
             className="button"
             onClick={() => this.setState({ openNewAdmin: true })}

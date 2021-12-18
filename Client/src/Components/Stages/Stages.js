@@ -155,38 +155,40 @@ class Stages extends Component {
             <TheatersIcon />
             <div className="text">All Stages</div>
           </div>
-          <table>
-            <tr>
-              <th>Stage Name</th>
-              <th style={{ textAlign: "center" }}>Rows</th>
-              <th style={{ textAlign: "center" }}>Seats in row</th>
-              <th style={{ textAlign: "center" }}>Number of seats</th>
-              <th style={{ textAlign: "center" }}>Delete</th>
-            </tr>
-            {this.props.allStages.length > 0
-              ? this.props.allStages.map((stage) => (
-                  <tr>
-                    <td>{stage.stage_name}</td>
-                    <td style={{ textAlign: "center" }}>{stage.rows}</td>
-                    <td style={{ textAlign: "center" }}>
-                      {stage.seats_in_row}
-                    </td>
-                    <td style={{ textAlign: "center" }}>
-                      {stage.number_of_seats}
-                    </td>
-                    <td style={{ textAlign: "center" }}>
-                      <button
-                        onClick={() => {
-                          this.deleteStage(stage.id);
-                        }}
-                      >
-                        <DeleteForeverIcon style={{ fill: "#f37757" }} />
-                      </button>
-                    </td>
-                  </tr>
-                ))
-              : ""}
-          </table>
+          <div className="table">
+            <table>
+              <tr>
+                <th>Stage Name</th>
+                <th style={{ textAlign: "center" }}>Rows</th>
+                <th style={{ textAlign: "center" }}>Seats in row</th>
+                <th style={{ textAlign: "center" }}>Number of seats</th>
+                <th style={{ textAlign: "center" }}>Delete</th>
+              </tr>
+              {this.props.allStages.length > 0
+                ? this.props.allStages.map((stage) => (
+                    <tr>
+                      <td>{stage.stage_name}</td>
+                      <td style={{ textAlign: "center" }}>{stage.rows}</td>
+                      <td style={{ textAlign: "center" }}>
+                        {stage.seats_in_row}
+                      </td>
+                      <td style={{ textAlign: "center" }}>
+                        {stage.number_of_seats}
+                      </td>
+                      <td style={{ textAlign: "center" }}>
+                        <button
+                          onClick={() => {
+                            this.deleteStage(stage.id);
+                          }}
+                        >
+                          <DeleteForeverIcon style={{ fill: "#f37757" }} />
+                        </button>
+                      </td>
+                    </tr>
+                  ))
+                : ""}
+            </table>
+          </div>
           <button
             className="button"
             onClick={() => this.setState({ openNewStage: true })}

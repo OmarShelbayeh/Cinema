@@ -1,19 +1,23 @@
 import React, { Component } from "react";
 import { Routes, Route } from "react-router-dom";
 
+//css
 import "./css/General/App.css";
 
+//Pages
 import AdminDashboard from "./Pages/Dashboards/AdminDashboard";
 import UserDashboard from "./Pages/Dashboards/UserDashboard";
 import Landing from "./Pages/Landing/Landing";
 import Login from "./Pages/Login/Login";
 import Register from "./Pages/Register/Register";
-import Stages from "./Components/Stages/Stages";
+import OwnerDashboard from "./Pages/Dashboards/OwnerDashboard";
+import Buy from "./Pages/Buy/Buy";
+import History from "./Pages/History/UserHistory";
 
 //Material UI
 import Snackbar from "@mui/material/Snackbar";
 import { Alert } from "@mui/material";
-import OwnerDashboard from "./Pages/Dashboards/OwnerDashboard";
+import Ticket from "./Pages/Ticket/Ticket";
 
 class App extends Component {
   state = {
@@ -93,6 +97,57 @@ class App extends Component {
             path="/dashboard"
             element={
               <UserDashboard
+                success={(msg) => {
+                  this.success(msg);
+                }}
+                error={(msg) => {
+                  this.error(msg);
+                }}
+                warning={(msg) => {
+                  this.warning(msg);
+                }}
+              />
+            }
+          />
+          <Route
+            exact
+            path="/buy"
+            element={
+              <Buy
+                success={(msg) => {
+                  this.success(msg);
+                }}
+                error={(msg) => {
+                  this.error(msg);
+                }}
+                warning={(msg) => {
+                  this.warning(msg);
+                }}
+              />
+            }
+          />
+          <Route
+            exact
+            path="/history"
+            element={
+              <History
+                success={(msg) => {
+                  this.success(msg);
+                }}
+                error={(msg) => {
+                  this.error(msg);
+                }}
+                warning={(msg) => {
+                  this.warning(msg);
+                }}
+              />
+            }
+          />
+          <Route
+            exact
+            path="/ticket"
+            element={
+              <Ticket
                 success={(msg) => {
                   this.success(msg);
                 }}

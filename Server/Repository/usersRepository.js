@@ -88,7 +88,7 @@ makeAdmin = async (id) => {
 
 getAllAdmins = async () => {
   let allAdmins = await db.sequelize.query(
-    "SELECT id, name, surname, email, active FROM users WHERE role = 'ADMIN' ;",
+    "SELECT id, name, surname, email, active, disabled FROM users WHERE role = 'ADMIN' order by id;",
     {
       type: db.sequelize.QueryTypes.SELECT,
     }
@@ -103,6 +103,26 @@ deleteAdmin = async (id) => {
   });
 };
 
+disableAccount = async (id) => {
+  await db.sequelize.query(
+    "UPDATE users SET disabled = true WHERE id = :id ;",
+    {
+      replacements: { id: id },
+      type: db.sequelize.QueryTypes.UPDATE,
+    }
+  );
+};
+
+enableAccount = async (id) => {
+  await db.sequelize.query(
+    "UPDATE users SET disabled = false WHERE id = :id ;",
+    {
+      replacements: { id: id },
+      type: db.sequelize.QueryTypes.UPDATE,
+    }
+  );
+};
+
 module.exports = {
   newUser,
   getAllUsers,
@@ -113,4 +133,6 @@ module.exports = {
   makeActive,
   getAllAdmins,
   deleteAdmin,
+  disableAccount,
+  enableAccount,
 };

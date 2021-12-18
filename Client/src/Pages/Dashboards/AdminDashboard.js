@@ -81,11 +81,6 @@ class AdminDashboard extends Component {
                 allStages={this.state.allStages}
                 getAllStages={() => this.getAllStages()}
               />
-              <AddAdmin
-                error={(msg) => this.props.error(msg)}
-                warning={(msg) => this.props.warning(msg)}
-                success={(msg) => this.props.success(msg)}
-              />
             </div>
           </div>
         </div>

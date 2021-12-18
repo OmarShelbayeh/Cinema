@@ -50,6 +50,55 @@ class Header extends Component {
         ) : (
           ""
         )}
+        {this.state.userInfo ? (
+          this.state.userInfo.role === "OWNER" ? (
+            <div className="menu">
+              <a
+                className={this.props.dashboard ? "active" : ""}
+                href="/ownerDashboard"
+              >
+                Dashboard
+              </a>
+              <a
+                onClick={() => {
+                  AuthenticationService.logout();
+                }}
+              >
+                Logout
+              </a>
+            </div>
+          ) : (
+            ""
+          )
+        ) : (
+          ""
+        )}
+        {this.state.userInfo ? (
+          this.state.userInfo.role === "USER" ? (
+            <div className="menu">
+              <a
+                className={this.props.dashboard ? "active" : ""}
+                href="/dashboard"
+              >
+                Dashboard
+              </a>
+              <a className={this.props.history ? "active" : ""} href="/history">
+                History
+              </a>
+              <a
+                onClick={() => {
+                  AuthenticationService.logout();
+                }}
+              >
+                Logout
+              </a>
+            </div>
+          ) : (
+            ""
+          )
+        ) : (
+          ""
+        )}
 
         {this.state.userInfo ? (
           <div className="userInfo">

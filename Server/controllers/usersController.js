@@ -67,10 +67,36 @@ const deleteAdmin = async (req, res) => {
   }
 };
 
+const disableAccount = async (req, res) => {
+  let payload = req.body;
+  if (!payload.id || !payload.email) {
+    res.status(500).send("Missing data");
+  } else {
+    usersRepository
+      .disableAccount(payload.id)
+      .then(() => res.status(200).send(payload.email + " disabled!"))
+      .catch(() => res.status(500).send("Couldn't disable account"));
+  }
+};
+
+const enableAccount = async (req, res) => {
+  let payload = req.body;
+  if (!payload.id || !payload.email) {
+    res.status(500).send("Missing data");
+  } else {
+    usersRepository
+      .enableAccount(payload.id)
+      .then(() => res.status(200).send(payload.email + " enabled!"))
+      .catch(() => res.status(500).send("Couldn't enable account"));
+  }
+};
+
 module.exports = {
   getAllAdmins,
   getAllUsers,
   getUserInfo,
   addAdmin,
   deleteAdmin,
+  disableAccount,
+  enableAccount,
 };

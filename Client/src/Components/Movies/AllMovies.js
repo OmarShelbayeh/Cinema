@@ -141,30 +141,32 @@ class AllMovies extends Component {
             <MovieIcon />
             <div className="text">All movies</div>
           </div>
-          <table>
-            <tr>
-              <th>Movie Name</th>
-              <th style={{ textAlign: "center" }}>Director</th>
-              <th style={{ textAlign: "center" }}>Owner</th>
-              <th style={{ textAlign: "center" }}>Delete</th>
-            </tr>
-            {this.props.allMovies.map((movie) => (
+          <div className="table">
+            <table>
               <tr>
-                <td>{movie.name}</td>
-                <td style={{ textAlign: "center" }}>{movie.director}</td>
-                <td style={{ textAlign: "center" }}>{movie.director}</td>
-                <td style={{ textAlign: "center" }}>
-                  <button
-                    onClick={() => {
-                      this.deleteMovie(movie.id);
-                    }}
-                  >
-                    <DeleteForeverIcon style={{ fill: "#f37757" }} />
-                  </button>
-                </td>
+                <th>Movie Name</th>
+                <th style={{ textAlign: "center" }}>Director</th>
+                <th style={{ textAlign: "center" }}>Owner</th>
+                <th style={{ textAlign: "center" }}>Delete</th>
               </tr>
-            ))}
-          </table>
+              {this.props.allMovies.map((movie) => (
+                <tr>
+                  <td>{movie.name}</td>
+                  <td style={{ textAlign: "center" }}>{movie.director}</td>
+                  <td style={{ textAlign: "center" }}>{movie.director}</td>
+                  <td style={{ textAlign: "center" }}>
+                    <button
+                      onClick={() => {
+                        this.deleteMovie(movie.id);
+                      }}
+                    >
+                      <DeleteForeverIcon style={{ fill: "#f37757" }} />
+                    </button>
+                  </td>
+                </tr>
+              ))}
+            </table>
+          </div>
           <button
             className="button"
             onClick={() => this.setState({ openNewMovie: true })}

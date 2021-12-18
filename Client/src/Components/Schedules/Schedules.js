@@ -168,34 +168,46 @@ class Schedules extends Component {
             <DateRangeIcon />
             <div className="text">All Schedules</div>
           </div>
-          <table>
-            <tr>
-              <th>Movie Name</th>
-              <th style={{ textAlign: "center" }}>Stage Name</th>
-              <th style={{ textAlign: "center" }}>Date</th>
-              <th style={{ textAlign: "center" }}>Time</th>
-              <th style={{ textAlign: "center" }}>Price</th>
-              <th style={{ textAlign: "center" }}>Delete</th>
-            </tr>
-            {this.state.allSchedules.map((schedule) => (
+          <div className="table">
+            <table>
               <tr>
-                <td>{schedule.moviename}</td>
-                <td style={{ textAlign: "center" }}>{schedule.stagename}</td>
-                <td style={{ textAlign: "center" }}>{new Date(schedule.date).getDate() + "/" + new Date(schedule.date).getMonth() + "/" + new Date(schedule.date).getFullYear()}</td>
-                <td style={{ textAlign: "center" }}>{new Date(schedule.date).getHours() + ":" + new Date(schedule.date).getMinutes()}</td>
-                <td style={{ textAlign: "center" }}>{schedule.price}</td>
-                <td style={{ textAlign: "center" }}>
-                  <button
-                    onClick={() => {
-                      this.deleteSchedule(schedule.id);
-                    }}
-                  >
-                    <DeleteForeverIcon style={{ fill: "#f37757" }} />
-                  </button>
-                </td>
+                <th>Movie Name</th>
+                <th style={{ textAlign: "center" }}>Stage Name</th>
+                <th style={{ textAlign: "center" }}>Date</th>
+                <th style={{ textAlign: "center" }}>Time</th>
+                <th style={{ textAlign: "center" }}>Price</th>
+                <th style={{ textAlign: "center" }}>Delete</th>
               </tr>
-            ))}
-          </table>
+              {this.state.allSchedules.map((schedule) => (
+                <tr>
+                  <td>{schedule.moviename}</td>
+                  <td style={{ textAlign: "center" }}>{schedule.stagename}</td>
+                  <td style={{ textAlign: "center" }}>
+                    {new Date(schedule.date).getDate() +
+                      "/" +
+                      new Date(schedule.date).getMonth() +
+                      "/" +
+                      new Date(schedule.date).getFullYear()}
+                  </td>
+                  <td style={{ textAlign: "center" }}>
+                    {new Date(schedule.date).getHours() +
+                      ":" +
+                      new Date(schedule.date).getMinutes()}
+                  </td>
+                  <td style={{ textAlign: "center" }}>{schedule.price}</td>
+                  <td style={{ textAlign: "center" }}>
+                    <button
+                      onClick={() => {
+                        this.deleteSchedule(schedule.id);
+                      }}
+                    >
+                      <DeleteForeverIcon style={{ fill: "#f37757" }} />
+                    </button>
+                  </td>
+                </tr>
+              ))}
+            </table>
+          </div>
           <button
             className="button"
             onClick={() => this.setState({ openNewSchedule: true })}

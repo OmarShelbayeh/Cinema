@@ -60,6 +60,11 @@ router.post("/login", async function (req, res) {
           message: "User not active.",
         });
       }
+      if (user.disabled) {
+        return res.status(401).send({
+          message: "Account disabled",
+        });
+      }
       user.comparePassword(req.body.password, (err, isMatch) => {
         if (isMatch && !err) {
           var token = jwt.sign(

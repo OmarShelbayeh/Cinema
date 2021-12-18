@@ -1,10 +1,10 @@
 import React, { Component } from "react";
 import Header from "../../Components/General/Header";
-import CurrentTickets from "../../Components/History/CurrentTickets";
-import UserSchedules from "../../Components/Schedules/UserSchedules";
 import AuthenticationService from "../../Services/AuthenticationService";
+import UserHistoryComponent from "../../Components/History/UserHistory";
+import CurrentTickets from "../../Components/History/CurrentTickets";
 
-class UserDashboard extends Component {
+class UserHistory extends Component {
   state = {
     allSchedules: [],
   };
@@ -21,22 +21,18 @@ class UserDashboard extends Component {
     }
     return (
       <div>
-        <Header dashboard />
+        <Header history />
         <div className="dashboard">
           <div className="row">
             <div className="column">
-              <UserSchedules
+              <UserHistoryComponent
                 error={(msg) => this.props.error(msg)}
                 warning={(msg) => this.props.warning(msg)}
                 success={(msg) => this.props.success(msg)}
               />
             </div>
             <div className="column">
-              <CurrentTickets
-                error={(msg) => this.props.error(msg)}
-                warning={(msg) => this.props.warning(msg)}
-                success={(msg) => this.props.success(msg)}
-              />
+
             </div>
           </div>
         </div>
@@ -45,4 +41,4 @@ class UserDashboard extends Component {
   }
 }
 
-export default UserDashboard;
+export default UserHistory;

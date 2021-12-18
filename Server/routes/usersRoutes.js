@@ -15,5 +15,15 @@ router.post(
   usersController.deleteAdmin
 );
 router.post("/addAdmin", authentication.ensureOwner, usersController.addAdmin);
+router.post(
+  "/disableAccount",
+  authentication.ensureOwner,
+  usersController.disableAccount
+);
+router.post(
+  "/enableAccount",
+  authentication.ensureOwner,
+  usersController.enableAccount
+);
 
 module.exports = router;

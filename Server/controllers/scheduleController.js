@@ -57,8 +57,24 @@ const deleteSchedule = (req, res) => {
   }
 };
 
+const getSchudeleInfoForUser = (req, res) => {
+  let payload = req.body;
+  if (!payload.id) {
+    return res.status(500).send("Missing Data");
+  } else {
+    scheduleRepository
+      .getSchudeleInfoForUser(req.body.id)
+      .then((info) => res.status(200).send(info))
+      .catch((error) => {
+        console.log(error);
+        res.status(500).send();
+      });
+  }
+};
+
 module.exports = {
   newSchedule,
   getAllSchedules,
   deleteSchedule,
+  getSchudeleInfoForUser,
 };

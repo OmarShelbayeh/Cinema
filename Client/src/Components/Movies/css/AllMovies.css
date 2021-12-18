@@ -65,14 +65,19 @@
   margin-left: 8px;
 }
 
-.allMovies .table-container table {
+.allMovies .table-container .table {
   margin-top: 12px;
+  max-height: 30vh;
+  overflow-y: auto;
+}
+
+.allMovies .table-container .table table {
   text-align: left;
   width: 100%;
   border-collapse: collapse;
 }
 
-.allMovies .table-container table tr {
+.allMovies .table-container .table table tr {
   margin: 8px;
   border-bottom: 1px solid #e8e8e8;
 }
