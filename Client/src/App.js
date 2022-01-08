@@ -18,6 +18,7 @@ import History from "./Pages/History/UserHistory";
 import Snackbar from "@mui/material/Snackbar";
 import { Alert } from "@mui/material";
 import Ticket from "./Pages/Ticket/Ticket";
+import Shops from "./Pages/Shops/Shops";
 
 class App extends Component {
   state = {
@@ -167,6 +168,23 @@ class App extends Component {
             path="/adminDashboard"
             element={
               <AdminDashboard
+                success={(msg) => {
+                  this.success(msg);
+                }}
+                error={(msg) => {
+                  this.error(msg);
+                }}
+                warning={(msg) => {
+                  this.warning(msg);
+                }}
+              />
+            }
+          />
+          <Route
+            exact
+            path="/adminShops"
+            element={
+              <Shops
                 success={(msg) => {
                   this.success(msg);
                 }}

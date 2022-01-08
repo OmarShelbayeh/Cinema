@@ -87,7 +87,7 @@ class Ticket extends Component {
                     <td>
                       {new Date(this.state.ticket.showing_at).getDate() +
                         "/" +
-                        new Date(this.state.ticket.showing_at).getMonth() +
+                        (new Date(this.state.ticket.showing_at).getMonth() + 1) +
                         "/" +
                         new Date(this.state.ticket.showing_at).getFullYear()}
                     </td>

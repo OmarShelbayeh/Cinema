@@ -2,6 +2,7 @@ const schedule = require("../models").schedule;
 const scheduleRepository = require("../Repository").scheduleRepository;
 const db = require("../models");
 const authentication = require("../config/authentication");
+const ticketRepository = require("../Repository").ticketRepository;
 
 const getAllSchedules = (req, res) => {
   scheduleRepository
@@ -48,6 +49,9 @@ const deleteSchedule = (req, res) => {
   if (req.body.id) {
     scheduleRepository
       .deleteSchedule(req.body.id)
+      .then(() => {
+        ticketRepository.deleteTicketByScheduleId(req.body.id);
+      })
       .then(() => res.status(200).send())
       .catch((error) => {
         res.status(500).send(error);

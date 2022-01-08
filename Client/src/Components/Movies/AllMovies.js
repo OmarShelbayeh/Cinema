@@ -153,7 +153,7 @@ class AllMovies extends Component {
                 <tr>
                   <td>{movie.name}</td>
                   <td style={{ textAlign: "center" }}>{movie.director}</td>
-                  <td style={{ textAlign: "center" }}>{movie.director}</td>
+                  <td style={{ textAlign: "center" }}>{movie.owner}</td>
                   <td style={{ textAlign: "center" }}>
                     <button
                       onClick={() => {

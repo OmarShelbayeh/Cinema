@@ -4,6 +4,10 @@ const movieRoutes = require("./movieRoutes");
 const stageRoutes = require("./stageRoutes");
 const scheduleRouter = require("./scheduleRoutes");
 const ticketRoutes = require("./ticketRoutes");
+const orderRoutes = require("./orderRoutes");
+const storageRoutes = require("./storageRoutes");
+const shopRoutes = require("./shopRoutes");
+const productRoutes = require("./productRoutes");
 const passport = require("passport");
 require("../config/passport")(passport);
 const cors = require("cors");
@@ -36,5 +40,25 @@ module.exports = (app) => {
     "/tickets",
     passport.authenticate("jwt", { session: false }),
     ticketRoutes
+  );
+  app.use(
+    "/orders",
+    passport.authenticate("jwt", { session: false }),
+    orderRoutes
+  );
+  app.use(
+    "/storage",
+    passport.authenticate("jwt", { session: false }),
+    storageRoutes
+  );
+  app.use(
+    "/shops",
+    passport.authenticate("jwt", { session: false }),
+    shopRoutes
+  );
+  app.use(
+    "/products",
+    passport.authenticate("jwt", { session: false }),
+    productRoutes
   );
 };

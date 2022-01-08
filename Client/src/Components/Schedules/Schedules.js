@@ -185,7 +185,7 @@ class Schedules extends Component {
                   <td style={{ textAlign: "center" }}>
                     {new Date(schedule.date).getDate() +
                       "/" +
-                      new Date(schedule.date).getMonth() +
+                      (new Date(schedule.date).getMonth() + 1) +
                       "/" +
                       new Date(schedule.date).getFullYear()}
                   </td>

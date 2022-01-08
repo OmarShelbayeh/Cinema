@@ -50,7 +50,7 @@ class UserHistory extends Component {
                   <td style={{ textAlign: "center" }}>
                     {new Date(history.date).getDate() +
                       "/" +
-                      new Date(history.date).getMonth() +
+                      (new Date(history.date).getMonth() + 1) +
                       "/" +
                       new Date(history.date).getFullYear()}
                   </td>

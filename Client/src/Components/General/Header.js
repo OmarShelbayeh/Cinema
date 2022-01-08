@@ -37,6 +37,12 @@ class Header extends Component {
                 Dashboard
               </a>
               <a
+                className={this.props.shops ? "active" : ""}
+                href="/adminShops"
+              >
+                Shops
+              </a>
+              <a
                 onClick={() => {
                   AuthenticationService.logout();
                 }}

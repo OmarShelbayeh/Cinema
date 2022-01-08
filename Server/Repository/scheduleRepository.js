@@ -16,6 +16,30 @@ getAllSchedules = async () => {
   return allSchedules;
 };
 
+getScheculesByMovieId = async (id) => {
+  let allSchedules;
+  allSchedules = await db.sequelize.query(
+    "SELECT id FROM schedules WHERE movie_id = :id ",
+    {
+      replacements: { id: id },
+      type: db.sequelize.QueryTypes.SELECT,
+    }
+  );
+  return allSchedules;
+};
+
+getScheculesByStageId = async (id) => {
+  let allSchedules;
+  allSchedules = await db.sequelize.query(
+    "SELECT id FROM schedules WHERE stage_id = :id ",
+    {
+      replacements: { id: id },
+      type: db.sequelize.QueryTypes.SELECT,
+    }
+  );
+  return allSchedules;
+};
+
 findScheduleById = async (id) => {
   let Schedule;
   Schedule = await db.sequelize.query(
@@ -47,6 +71,20 @@ deleteSchedule = async (id) => {
   });
 };
 
+deleteScheduleByMovie = async (id) => {
+  await db.sequelize.query("DELETE FROM schedules WHERE movie_id = :id ;", {
+    replacements: { id: id },
+    type: db.sequelize.QueryTypes.DELETE,
+  });
+};
+
+deleteScheduleByStage = async (id) => {
+  await db.sequelize.query("DELETE FROM schedules WHERE stage_id = :id ;", {
+    replacements: { id: id },
+    type: db.sequelize.QueryTypes.DELETE,
+  });
+};
+
 getSchudeleInfoForUser = async (id) => {
   let Schedule = await db.sequelize.query(
     "SELECT s.id, s.price as price , st.stage_name as stage_name, m.name, st.rows as rows, st.seats_in_row as seats_in_row, (st.number_of_seats - (SELECT count(*) FROM tickets WHERE schedule_id = s.id)) as available_seats, ARRAY(SELECT seat_id FROM tickets WHERE schedule_id = s.id) as seats FROM schedules s INNER JOIN stages st ON s.stage_id = st.id INNER JOIN movies m on s.movie_id = m.id WHERE s.id = :id;",
@@ -65,4 +103,8 @@ module.exports = {
   findScheduleById,
   deleteSchedule,
   getSchudeleInfoForUser,
+  deleteScheduleByMovie,
+  getScheculesByMovieId,
+  getScheculesByStageId,
+  deleteScheduleByStage,
 };

@@ -57,10 +57,20 @@ deleteTicket = async (id) => {
   });
 };
 
+deleteTicketByScheduleId = async (id) => {
+  await db.sequelize.query("DELETE FROM tickets WHERE schedule_id = :id ;", {
+    replacements: {
+      id: id,
+    },
+    type: db.sequelize.QueryTypes.DELETE,
+  });
+};
+
 module.exports = {
   buyTicket,
   history,
   showTickets,
   ticketInfo,
   deleteTicket,
+  deleteTicketByScheduleId,
 };

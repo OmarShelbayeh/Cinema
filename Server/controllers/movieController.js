@@ -1,6 +1,8 @@
 const movies = require("../models/movies");
 const movieRepository = require("../Repository").movieRepository;
 const authentication = require("../config/authentication");
+const scheduleRepository = require("../Repository").scheduleRepository;
+const ticketRepository = require("../Repository").ticketRepository;
 
 const getAllMovies = (req, res) => {
   movieRepository
@@ -34,6 +36,18 @@ const deleteMovie = (req, res) => {
   if (req.body.id) {
     movieRepository
       .deleteMovie(req.body.id)
+      .then(() => {
+        let allSchedules = scheduleRepository.getScheculesByMovieId(
+          req.body.id
+        );
+        scheduleRepository.deleteScheduleByMovie(req.body.id);
+        return allSchedules;
+      })
+      .then((allSchedules) => {
+        for (let i = 0; i < allSchedules.length; i++) {
+          ticketRepository.deleteTicketByScheduleId(allSchedules[i].id);
+        }
+      })
       .then(() => res.status(200).send())
       .catch((error) => {
         console.log(error);

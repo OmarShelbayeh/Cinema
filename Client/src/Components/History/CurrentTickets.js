@@ -8,6 +8,7 @@ import URL from "../../Services/URL";
 import LocalActivityIcon from "@mui/icons-material/LocalActivity";
 import DownloadIcon from "@mui/icons-material/Download";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
+import StorefrontIcon from "@mui/icons-material/Storefront";
 
 class CurrentTickets extends Component {
   state = {
@@ -67,6 +68,7 @@ class CurrentTickets extends Component {
                 <th style={{ textAlign: "center" }}>Date</th>
                 <th style={{ textAlign: "center" }}>Time</th>
                 <th style={{ textAlign: "center" }}>Seat</th>
+                <th style={{ textAlign: "center" }}>Buy Merch</th>
                 <th style={{ textAlign: "center" }}>Return</th>
                 <th style={{ textAlign: "center" }}>Download</th>
               </tr>
@@ -76,7 +78,7 @@ class CurrentTickets extends Component {
                   <td style={{ textAlign: "center" }}>
                     {new Date(ticket.date).getDate() +
                       "/" +
-                      new Date(ticket.date).getMonth() +
+                      (new Date(ticket.date).getMonth() + 1) +
                       "/" +
                       new Date(ticket.date).getFullYear()}
                   </td>
@@ -87,6 +89,15 @@ class CurrentTickets extends Component {
                   </td>
                   <td style={{ textAlign: "center" }}>{ticket.seat}</td>
 
+                  <td style={{ textAlign: "center" }}>
+                    <button
+                      onClick={() => {
+                        // window.location.href="/merch?movie_id";
+                      }}
+                    >
+                      <StorefrontIcon style={{ fill: "#f37757" }} />
+                    </button>
+                  </td>
                   <td style={{ textAlign: "center" }}>
                     <button
                       onClick={() => {

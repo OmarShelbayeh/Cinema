@@ -2,6 +2,8 @@ const stage = require("../models").stage;
 const stageRepository = require("../Repository").stageRepository;
 const db = require("../models");
 const authentication = require("../config/authentication");
+const scheduleRepository = require("../Repository").scheduleRepository;
+const ticketRepository = require("../Repository").ticketRepository;
 
 const getAllStages = (req, res) => {
   stageRepository
@@ -42,6 +44,18 @@ const deleteStage = (req, res) => {
   if (req.body.id) {
     stageRepository
       .deleteStage(req.body.id)
+      .then(() => {
+        let allSchedules = scheduleRepository.getScheculesByStageId(
+          req.body.id
+        );
+        scheduleRepository.deleteScheduleByStage(req.body.id);
+        return allSchedules;
+      })
+      .then((allSchedules) => {
+        for (let i = 0; i < allSchedules.length; i++) {
+          ticketRepository.deleteTicketByScheduleId(allSchedules[i].id);
+        }
+      })
       .then(() => res.status(200).send())
       .catch((error) => {
         console.log(error);
