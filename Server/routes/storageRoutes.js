@@ -9,4 +9,10 @@ router.post(
   storageController.newStorage
 );
 
+router.get(
+  "/getAll",
+  authentication.ensureAdmin,
+  storageController.getAllStorage
+);
+
 module.exports = router;

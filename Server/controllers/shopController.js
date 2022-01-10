@@ -17,6 +17,27 @@ newShop = (req, res) => {
   }
 };
 
+getShopByMovieId = (req, res) => {
+  let payload = req.body;
+  if (payload.id) {
+    shopRepository
+      .getShopByMovieId(payload.id)
+      .then((shop) => {
+        if (!shop) {
+          res.status(500).send("Shop not found");
+        } else {
+          res.status(200).send(shop);
+        }
+      })
+      .catch(() => {
+        res.status(500).send("Something went wrong");
+      });
+  } else {
+    res.status(500).send("Missing data");
+  }
+};
+
 module.exports = {
   newShop,
+  getShopByMovieId,
 };

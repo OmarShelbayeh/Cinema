@@ -7,6 +7,15 @@ newStorage = async (capacity) => {
   });
 };
 
+getAllStorage = async () => {
+  let all = await db.sequelize.query("SELECT * FROM storages ;", {
+    type: db.sequelize.QueryTypes.SELECT,
+  });
+  console.log(all);
+  return all;
+};
+
 module.exports = {
   newStorage,
+  getAllStorage,
 };

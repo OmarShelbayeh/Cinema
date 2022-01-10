@@ -3,13 +3,12 @@ const router = express.Router();
 const productController = require("../controllers").productController;
 const authentication = require("../config/authentication");
 
-
 router.post(
   "/newProduct",
   authentication.ensureAdmin,
   productController.newProduct
 );
 
-router.get("/allProducts", productController.getAllProductsForMovie);
+router.post("/allProducts", productController.getAllProductsForMovie);
 
 module.exports = router;

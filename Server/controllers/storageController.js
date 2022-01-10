@@ -17,6 +17,18 @@ newStorage = (req, res) => {
   }
 };
 
+getAllStorage = (req, res) => {
+  storageRepository
+    .getAllStorage()
+    .then((all) => {
+      res.status(200).send(all);
+    })
+    .catch(() => {
+      res.status(500).send("Something went wrong");
+    });
+};
+
 module.exports = {
   newStorage,
+  getAllStorage,
 };
