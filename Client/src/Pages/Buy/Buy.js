@@ -155,102 +155,109 @@ class Buy extends Component {
     }
     return (
       <div className="buy">
-        {this.state.schedule ? (
-          this.state.showSeats ? (
-            <div className="container">
-              <div className="title">
-                <div className="text">{this.state.schedule.name}</div>
-              </div>
-              <div className="subTitle">
-                <div className="text">
-                  {"Stage Name: " + this.state.schedule.stage_name}
+        <div className="buy-2">
+          {this.state.schedule ? (
+            this.state.showSeats ? (
+              <div className="container">
+                <div className="title">
+                  <div className="text">{this.state.schedule.name}</div>
                 </div>
-              </div>
+                <div className="subTitle">
+                  <div className="text">
+                    {"Stage Name: " + this.state.schedule.stage_name}
+                  </div>
+                </div>
 
-              {this.state.seats.map((row) => (
-                <div className="row" style={{ justifyContent: "center" }}>
-                  {row.map(
-                    (seat) =>
-                      seat.available ? (
-                        this.state.reserved.includes(seat.id) ? (
-                          <button
-                            onClick={() => this.chooseSeats("remove", seat.id)}
-                          >
-                            <EventSeatIcon style={{ fill: "#BBCEFF" }} />
-                          </button>
+                {this.state.seats.map((row) => (
+                  <div className="row" style={{ justifyContent: "center" }}>
+                    {row.map(
+                      (seat) =>
+                        seat.available ? (
+                          this.state.reserved.includes(seat.id) ? (
+                            <button
+                              onClick={() =>
+                                this.chooseSeats("remove", seat.id)
+                              }
+                            >
+                              <EventSeatIcon style={{ fill: "#BBCEFF" }} />
+                            </button>
+                          ) : (
+                            <button
+                              onClick={() => this.chooseSeats("add", seat.id)}
+                            >
+                              <EventSeatIcon style={{ fill: "#638DFC" }} />
+                            </button>
+                          )
                         ) : (
                           <button
-                            onClick={() => this.chooseSeats("add", seat.id)}
+                            onClick={() => this.props.warning("Seat taken")}
                           >
-                            <EventSeatIcon style={{ fill: "#638DFC" }} />
+                            <EventSeatIcon style={{ fill: "#F37757" }} />
                           </button>
                         )
-                      ) : (
-                        <button
-                          onClick={() => this.props.warning("Seat taken")}
-                        >
-                          <EventSeatIcon style={{ fill: "#F37757" }} />
-                        </button>
-                      )
 
-                    // <p>{seat.id}</p>
-                  )}
+                      // <p>{seat.id}</p>
+                    )}
+                  </div>
+                ))}
+                <div className="row">
+                  <button className="button" onClick={() => this.buyTicket()}>
+                    Buy
+                  </button>
                 </div>
-              ))}
-              <div className="row">
-                <button className="button" onClick={() => this.buyTicket()}>
-                  Buy
-                </button>
               </div>
-            </div>
+            ) : (
+              <div className="container">
+                <div className="title">
+                  <div className="text">{this.state.schedule.name}</div>
+                </div>
+                <div className="numOfSeats">
+                  <div className="text">
+                    <p className="available">Available Tickets: </p>
+                    <p className="num">{this.state.schedule.available_seats}</p>
+                  </div>
+                </div>
+                <div className="row">
+                  <div className="column">
+                    <div className="element TextField-radius">
+                      <TextField
+                        error={this.state.error}
+                        label="Amount of tickets"
+                        type="number"
+                        variant="outlined"
+                        defaultValue={1}
+                        min={1}
+                        max={this.state.schedule.available_seats}
+                        onChange={(event) =>
+                          this.handleChange("numOfTickets", event.target.value)
+                        }
+                        fullWidth
+                      />
+                    </div>
+                  </div>
+                  <div className="column">
+                    <div className="element">
+                      {this.state.error
+                        ? "Error"
+                        : "Price: $" +
+                          this.state.numOfTickets * this.state.schedule.price}
+                    </div>
+                  </div>
+                </div>
+                <div className="row">
+                  <button
+                    className="button"
+                    onClick={() => this.seatsControl()}
+                  >
+                    Choose seats
+                  </button>
+                </div>
+              </div>
+            )
           ) : (
-            <div className="container">
-              <div className="title">
-                <div className="text">{this.state.schedule.name}</div>
-              </div>
-              <div className="numOfSeats">
-                <div className="text">
-                  <p className="available">Available Tickets: </p>
-                  <p className="num">{this.state.schedule.available_seats}</p>
-                </div>
-              </div>
-              <div className="row">
-                <div className="column">
-                  <div className="element TextField-radius">
-                    <TextField
-                      error={this.state.error}
-                      label="Amount of tickets"
-                      type="number"
-                      variant="outlined"
-                      defaultValue={1}
-                      min={1}
-                      max={this.state.schedule.available_seats}
-                      onChange={(event) =>
-                        this.handleChange("numOfTickets", event.target.value)
-                      }
-                      fullWidth
-                    />
-                  </div>
-                </div>
-                <div className="column">
-                  <div className="element">
-                    {this.state.error
-                      ? "Error"
-                      : "Price: $" +
-                        this.state.numOfTickets * this.state.schedule.price}
-                  </div>
-                </div>
-              </div>
-              <div className="row">
-                <button className="button" onClick={() => this.seatsControl()}>
-                  Choose seats
-                </button>
-              </div>
-            </div>
-          )
-        ) : (
-          <div className="container">Something went wrong!</div>
-        )}
+            <div className="container">Something went wrong!</div>
+          )}
+        </div>
       </div>
     );
   }
