@@ -6,10 +6,16 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: $red;
+  background: url("../../../Images/landingHeader.jpg");
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  position: relative;
   .container {
     @extend %element-container;
-    width: 60%;
+    background-color: rgba(255, 255, 255, 1);
+    backdrop-filter: blur(15px);
+    width: 20%;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -27,19 +33,19 @@
       display: flex;
       align-items: center;
       .column {
-        width: 50%;
+        width: 100%;
         display: flex;
         justify-content: flex-start;
         flex-direction: column;
         .element {
-          width: 80%;
+          width: 100%;
           margin-top: 12px;
         }
       }
       .button {
         @extend %body-font-medium;
         font-weight: bold;
-        width: 80%;
+        width: 100%;
         margin-top: 12px;
         padding: 12px;
         border: 1px solid #f37757;
@@ -56,7 +62,7 @@
       .button-reverse {
         @extend %body-font-medium;
         font-weight: bold;
-        width: 80%;
+        width: 100%;
         margin-top: 12px;
         padding: 12px;
         border: 1px solid #f37757;

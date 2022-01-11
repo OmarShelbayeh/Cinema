@@ -6,6 +6,7 @@ import Header from "../../Components/General/Header";
 
 //Services
 import URL from "../../Services/URL";
+import AuthenticationService from "../../Services/AuthenticationService";
 
 //Material UI
 import StorefrontIcon from "@mui/icons-material/Storefront";
@@ -241,6 +242,12 @@ class Shops extends Component {
   }
 
   render() {
+    if (!AuthenticationService.isUserLoggedIn()) {
+      window.location.href = "/login";
+    }
+    if (AuthenticationService.getRole() !== "ADMIN") {
+      window.location.href = "/dashboard";
+    }
     return (
       <div>
         <Header shops />

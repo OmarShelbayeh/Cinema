@@ -3,6 +3,7 @@ import axios from "axios";
 
 //Services
 import URL from "../../Services/URL";
+import AuthenticationService from "../../Services/AuthenticationService";
 
 //Components
 import Header from "../../Components/General/Header";
@@ -53,6 +54,12 @@ class Orders extends Component {
   }
 
   render() {
+    if (!AuthenticationService.isUserLoggedIn()) {
+      window.location.href = "/login";
+    }
+    if (AuthenticationService.getRole() !== "USER") {
+      window.location.href = "/dashboard";
+    }
     return (
       <div>
         <Header orders />

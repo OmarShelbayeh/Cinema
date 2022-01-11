@@ -1,22 +1,106 @@
 @import "../../../css/Global/Vars.scss";
 
+@keyframes slideInFromTop {
+  0% {
+    transform: translateY(-400%);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideInFromBottom {
+  0% {
+    transform: translateY(500%);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideInFromLeft {
+  0% {
+    transform: translateX(-200%);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+
 .landing {
   .header {
     width: 100%;
-    height: 45vh;
-    .title {
-      width: 100%;
+    height: 100vh;
+    background: url("../../../Images/landingHeader.jpg");
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    position: relative;
+  }
+  .header-2 {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 24px;
+    width: 100%;
+    height: 100vh;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(7px);
+    .column {
+      width: 50%;
       display: flex;
       justify-content: center;
       align-items: center;
-      padding: 48px;
-      color: white;
+      flex-direction: column;
     }
-    .buttons {
-      justify-content: center;
+    .picture {
+      animation: 1s ease-out 0s 1 slideInFromLeft;
+      width: 50%;
       display: flex;
+      justify-content: center;
       align-items: center;
-      width: 100%;
+      flex-direction: column;
+    }
+    .button {
+      animation: 1s ease-out 0s 1 slideInFromTop;
+      @extend %body-font-medium;
+      font-weight: bold;
+      width: 30%;
+      margin-top: 12px;
+      padding: 12px;
+      border: 1px solid #f37757;
+      background: transparent;
+      border-radius: 32px;
+      color: #f37757;
+      transition: 0.4s;
+      float: right;
+    }
+    .button:hover {
+      color: white;
+      background-color: #f37757;
+    }
+
+    .button-reverse {
+      animation: 1s ease-out 0s 1 slideInFromBottom;
+      @extend %body-font-medium;
+      font-weight: bold;
+      width: 30%;
+      margin-top: 12px;
+      padding: 12px;
+      border: 1px solid #f37757;
+      background: white;
+      border-radius: 32px;
+      transition: 0.4s;
+      float: right;
+      color: white;
+      background-color: #f37757;
+    }
+    .button-reverse:hover {
+      color: #f37757;
+      background-color: transparent;
     }
   }
 }

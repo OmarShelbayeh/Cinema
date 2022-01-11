@@ -36,11 +36,18 @@
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
-  background-color: #f37757;
+  background: url("../../../Images/landingHeader.jpg");
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  position: relative;
 }
 
 .login .container {
-  width: 60%;
+  background-color: white;
+  -webkit-backdrop-filter: blur(15px);
+          backdrop-filter: blur(15px);
+  width: 20%;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -76,7 +83,7 @@
 }
 
 .login .container .row .column {
-  width: 50%;
+  width: 100%;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -90,13 +97,13 @@
 }
 
 .login .container .row .column .element {
-  width: 80%;
+  width: 100%;
   margin-top: 12px;
 }
 
 .login .container .row .button {
   font-weight: bold;
-  width: 80%;
+  width: 100%;
   margin-top: 12px;
   padding: 12px;
   border: 1px solid #f37757;
@@ -114,7 +121,7 @@
 
 .login .container .row .button-reverse {
   font-weight: bold;
-  width: 80%;
+  width: 100%;
   margin-top: 12px;
   padding: 12px;
   border: 1px solid #f37757;

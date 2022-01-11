@@ -242,9 +242,6 @@ class Register extends Component {
                 Login
               </button>
             </div>
-            <div className="column">
-              <img src={Logo} alt="Logo" width="90%" />
-            </div>
           </div>
         </div>
       </div>

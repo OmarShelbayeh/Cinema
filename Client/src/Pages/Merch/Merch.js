@@ -3,6 +3,7 @@ import axios from "axios";
 
 //Services
 import URL from "../../Services/URL";
+import AuthenticationService from "../../Services/AuthenticationService";
 
 //Css
 import "./css/Merch.css";
@@ -122,6 +123,12 @@ class Merch extends Component {
   }
 
   render() {
+    if (!AuthenticationService.isUserLoggedIn()) {
+      window.location.href = "/login";
+    }
+    if (AuthenticationService.getRole() !== "USER") {
+      window.location.href = "/dashboard";
+    }
     return (
       <div className="merch">
         <div className="title">{this.state.movie}</div>

@@ -8,6 +8,7 @@ import "./css/Ticket.css";
 
 //Services
 import URL from "../../Services/URL";
+import AuthenticationService from "../../Services/AuthenticationService";
 
 class Ticket extends Component {
   state = {
@@ -56,7 +57,12 @@ class Ticket extends Component {
         pdf.save("ticket.pdf");
       });
     };
-
+    if (!AuthenticationService.isUserLoggedIn()) {
+      window.location.href = "/login";
+    }
+    if (AuthenticationService.getRole() !== "USER") {
+      window.location.href = "/dashboard";
+    }
     return (
       <div>
         {this.state.ticket ? (
