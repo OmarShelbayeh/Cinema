@@ -91,6 +91,9 @@ class Header extends Component {
               <a className={this.props.history ? "active" : ""} href="/history">
                 History
               </a>
+              <a className={this.props.orders ? "active" : ""} href="/orders">
+                My Orders
+              </a>
               <a
                 onClick={() => {
                   AuthenticationService.logout();

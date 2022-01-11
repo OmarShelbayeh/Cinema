@@ -20,6 +20,7 @@ import { Alert } from "@mui/material";
 import Ticket from "./Pages/Ticket/Ticket";
 import Shops from "./Pages/Shops/Shops";
 import Merch from "./Pages/Merch/Merch";
+import Orders from "./Pages/Orders/Orders";
 
 class App extends Component {
   state = {
@@ -150,6 +151,23 @@ class App extends Component {
             path="/history"
             element={
               <History
+                success={(msg) => {
+                  this.success(msg);
+                }}
+                error={(msg) => {
+                  this.error(msg);
+                }}
+                warning={(msg) => {
+                  this.warning(msg);
+                }}
+              />
+            }
+          />
+          <Route
+            exact
+            path="/orders"
+            element={
+              <Orders
                 success={(msg) => {
                   this.success(msg);
                 }}

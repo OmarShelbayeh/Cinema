@@ -21,7 +21,7 @@ getAllOrders = async () => {
 getAllOrdersForUser = async (id) => {
   let allOrders;
   allOrders = await db.sequelize.query(
-    "SELECT * FROM orders WHERE who_id = :id ;",
+    "SELECT o.id as id, o.number_of_pieces as num, p.name as product, m.name as movie FROM orders o INNER JOIN products p ON o.product_id = p.id INNER JOIN shops s ON p.shop_id = s.id INNER JOIN  movies m on s.movie_id = m.id WHERE o.who_id = :id ;",
     {
       replacements: { id: id },
       type: db.sequelize.QueryTypes.SELECT,
