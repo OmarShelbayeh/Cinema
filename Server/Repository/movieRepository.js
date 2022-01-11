@@ -45,10 +45,23 @@ deleteMovie = async (id) => {
   });
 };
 
+getMovieIdByTicketId = async (ticket_id) => {
+  let movie_id = await db.sequelize.query(
+    "SELECT s.movie_id FROM tickets t INNER JOIN schedules s ON t.schedule_id = s.id WHERE t.id = :id ;",
+    {
+      replacements: { id: ticket_id },
+      type: db.sequelize.QueryTypes.SELECT,
+    }
+  );
+
+  return movie_id[0].movie_id;
+};
+
 module.exports = {
   newMovie,
   getAllMovies,
   findMovieById,
   findMovieByName,
   deleteMovie,
+  getMovieIdByTicketId,
 };

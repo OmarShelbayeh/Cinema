@@ -20,6 +20,7 @@ import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
+import DeleteForever from "@mui/icons-material/DeleteForever";
 
 class Shops extends Component {
   state = {
@@ -30,6 +31,12 @@ class Shops extends Component {
     movie_id: null,
     openNewShop: false,
     storage_id: 0,
+    openNewProduct: false,
+    newProduct: {
+      name: null,
+      available_pcs: null,
+      price: null,
+    },
   };
 
   componentDidMount() {
@@ -140,8 +147,97 @@ class Shops extends Component {
       });
   }
 
+  addNewProduct() {
+    axios({
+      url: URL + "/products/newProduct",
+      method: "POST",
+      headers: {
+        authorization: localStorage.getItem("token"),
+      },
+      data: {
+        name: this.state.newProduct.name,
+        available_pcs: this.state.newProduct.available_pcs,
+        shop_id: this.state.shop.id,
+        price: this.state.newProduct.price,
+      },
+    })
+      .then((response) => {
+        this.props.success(response.data);
+        this.setState({
+          openNewProduct: false,
+          newProduct: {
+            name: null,
+            available_pcs: null,
+            price: null,
+          },
+        });
+      })
+      .then(() => {
+        this.getAllProducts(this.state.shop.movie_id);
+      })
+      .catch((error) => {
+        this.props.error(error.response.data);
+      });
+  }
+
+  deleteProduct(id) {
+    axios({
+      url: URL + "/products/deleteProduct",
+      method: "DELETE",
+      headers: {
+        authorization: localStorage.getItem("token"),
+      },
+      data: {
+        product_id: id,
+      },
+    })
+      .then((response) => {
+        this.props.success(response.data);
+      })
+      .then(() => {
+        this.getAllProducts(this.state.shop.movie_id);
+      })
+      .catch((error) => {
+        this.props.error(error.response.data);
+      });
+  }
+
   handleChange(value) {
     this.setState({ storage_id: value });
+  }
+
+  handleChangeProduct(change, value) {
+    switch (change) {
+      case "name":
+        this.setState({
+          newProduct: {
+            name: value,
+            available_pcs: this.state.newProduct.available_pcs,
+            price: this.state.newProduct.price,
+          },
+        });
+        break;
+      case "available":
+        this.setState({
+          newProduct: {
+            name: this.state.newProduct.name,
+            available_pcs: value,
+            price: this.state.newProduct.price,
+          },
+        });
+        break;
+      case "price":
+        this.setState({
+          newProduct: {
+            name: this.state.newProduct.name,
+            available_pcs: this.state.newProduct.available_pcs,
+            price: value,
+          },
+        });
+        break;
+      default:
+        break;
+    }
   }
 
   render() {
@@ -216,32 +312,62 @@ class Shops extends Component {
                   ""
                 )}
                 {this.state.shop ? (
-                  <table>
-                    <tr>
-                      <th>Movie Name</th>
-                      <th style={{ textAlign: "center" }}>Director</th>
-                      <th style={{ textAlign: "center" }}>Owner</th>
-                      <th style={{ textAlign: "center" }}>Open Shop</th>
-                    </tr>
-                    {this.state.allMovies.map((movie) => (
-                      <tr>
-                        <td>{movie.name}</td>
-                        <td style={{ textAlign: "center" }}>
-                          {movie.director}
-                        </td>
-                        <td style={{ textAlign: "center" }}>{movie.owner}</td>
-                        <td style={{ textAlign: "center" }}>
-                          <button
-                            onClick={() => {
-                              this.getShop(movie.id);
-                            }}
-                          >
-                            <OpenInNewIcon />
-                          </button>
-                        </td>
-                      </tr>
-                    ))}
-                  </table>
+                  this.state.products ? (
+                    <div className="table-container">
+                      <div className="title">
+                        <StorefrontIcon />
+                        <div className="text">
+                          {this.state.shopName + " Shop"}
+                        </div>
+                      </div>
+                      <div className="table">
+                        <table>
+                          <tr>
+                            <th>Product ID</th>
+                            <th style={{ textAlign: "center" }}>Name</th>
+                            <th style={{ textAlign: "center" }}>Price</th>
+                            <th style={{ textAlign: "center" }}>
+                              Available Pieces
+                            </th>
+                            <th style={{ textAlign: "center" }}>Delete</th>
+                          </tr>
+                          {this.state.products.map((product) => (
+                            <tr>
+                              <td>{product.id}</td>
+                              <td style={{ textAlign: "center" }}>
+                                {product.name}
+                              </td>
+                              <td style={{ textAlign: "center" }}>
+                                {product.price}
+                              </td>
+                              <td style={{ textAlign: "center" }}>
+                                {product.available_pcs}
+                              </td>
+                              <td style={{ textAlign: "center" }}>
+                                <button
+                                  onClick={() => {
+                                    this.deleteProduct(product.id);
+                                  }}
+                                >
+                                  <DeleteForever style={{ fill: "#f37757" }} />
+                                </button>
+                              </td>
+                            </tr>
+                          ))}
+                        </table>
+                        <button
+                          className="button"
+                          onClick={() =>
+                            this.setState({ openNewProduct: true })
+                          }
+                        >
+                          Add new product
+                        </button>
+                      </div>
+                    </div>
+                  ) : (
+                    ""
+                  )
                 ) : (
                   ""
                 )}
@@ -311,6 +437,95 @@ class Shops extends Component {
                   }}
                 >
                   Add new shop
+                </button>
+              </div>
+            </div>
+          </Fade>
+        </Modal>
+        <Modal
+          aria-labelledby="transition-modal-title"
+          aria-describedby="transition-modal-description"
+          open={this.state.openNewProduct}
+          onClose={() =>
+            this.setState({
+              openNewProduct: false,
+              newProduct: {
+                name: null,
+                available_pcs: null,
+                price: null,
+              },
+            })
+          }
+          closeAfterTransition
+          BackdropComponent={Backdrop}
+          BackdropProps={{
+            timeout: 500,
+          }}
+        >
+          <Fade in={this.state.openNewProduct}>
+            <div className="card-popup">
+              <div className="close-popup-button">
+                <p className="titles-text">Add new product</p>
+                <button
+                  type="button"
+                  onClick={() =>
+                    this.setState({
+                      openNewProduct: false,
+                      newProduct: {
+                        name: null,
+                        available_pcs: null,
+                        price: null,
+                      },
+                    })
+                  }
+                >
+                  <CancelIcon style={{ fill: "#f37757" }} />
+                </button>
+              </div>
+              <div className="newMovie">
+                <div className="element TextField-radius">
+                  <TextField
+                    type="text"
+                    name="ProdctName"
+                    label="Prodct Name"
+                    variant="outlined"
+                    fullWidth
+                    onChange={(event) => {
+                      this.handleChangeProduct("name", event.target.value);
+                    }}
+                  />
+                </div>
+                <div className="element TextField-radius">
+                  <TextField
+                    type="number"
+                    name="name"
+                    label="Available Pieces"
+                    variant="outlined"
+                    onChange={(event) => {
+                      this.handleChangeProduct("available", event.target.value);
+                    }}
+                    fullWidth
+                  />
+                </div>
+                <div className="element TextField-radius">
+                  <TextField
+                    type="number"
+                    name="name"
+                    label="Price"
+                    variant="outlined"
+                    onChange={(event) => {
+                      this.handleChangeProduct("price", event.target.value);
+                    }}
+                    fullWidth
+                  />
+                </div>
+                <button
+                  className="button"
+                  onClick={() => {
+                    this.addNewProduct();
+                  }}
+                >
+                  Add new product
                 </button>
               </div>
             </div>

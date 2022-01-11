@@ -7,7 +7,7 @@ newStage = async (payload) => {
 
 getAllStages = async () => {
   let allStages;
-  allStages = await db.sequelize.query("SELECT * FROM stages ;", {
+  allStages = await db.sequelize.query("SELECT * FROM stages ORDER BY number_of_seats;", {
     type: db.sequelize.QueryTypes.SELECT,
   });
   return allStages;

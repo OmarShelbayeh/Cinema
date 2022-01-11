@@ -9,6 +9,16 @@ router.post(
   productController.newProduct
 );
 
-router.post("/allProducts", productController.getAllProductsForMovie);
+router.post(
+  "/movieProducts",
+  authentication.ensureUser,
+  productController.getProductsByTicketId
+);
 
+router.post("/allProducts", productController.getAllProductsForMovie);
+router.delete(
+  "/deleteProduct",
+  authentication.ensureAdmin,
+  productController.deleteProduct
+);
 module.exports = router;

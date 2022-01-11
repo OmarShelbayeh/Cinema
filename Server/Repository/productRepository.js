@@ -1,11 +1,12 @@
 const products = require("../models").products;
 const db = require("../models");
 
-newProduct = async (name, available_pcs, shop_id) => {
+newProduct = async (name, available_pcs, shop_id, price) => {
   await products.create({
     name: name,
     available_pcs: available_pcs,
     shop_id: shop_id,
+    price: price,
   });
 };
 
@@ -62,6 +63,13 @@ getAllProductsFromMovieId = async (id) => {
   return AllProducts;
 };
 
+deleteProduct = async (id) => {
+  await db.sequelize.query("DELETE FROM products WHERE id = :id ;", {
+    replacements: { id: id },
+    type: db.sequelize.QueryTypes.DELETE,
+  });
+};
+
 module.exports = {
   newProduct,
   productStorageId,
@@ -69,4 +77,5 @@ module.exports = {
   updateAvailableProductById,
   returnProduct,
   getAllProductsFromMovieId,
+  deleteProduct,
 };

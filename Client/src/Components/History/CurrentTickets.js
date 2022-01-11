@@ -92,7 +92,7 @@ class CurrentTickets extends Component {
                   <td style={{ textAlign: "center" }}>
                     <button
                       onClick={() => {
-                        // window.location.href="/merch?movie_id";
+                        window.location.href = "/merch?ticket_id=" + ticket.id;
                       }}
                     >
                       <StorefrontIcon style={{ fill: "#f37757" }} />

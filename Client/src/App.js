@@ -19,6 +19,7 @@ import Snackbar from "@mui/material/Snackbar";
 import { Alert } from "@mui/material";
 import Ticket from "./Pages/Ticket/Ticket";
 import Shops from "./Pages/Shops/Shops";
+import Merch from "./Pages/Merch/Merch";
 
 class App extends Component {
   state = {
@@ -115,6 +116,23 @@ class App extends Component {
             path="/buy"
             element={
               <Buy
+                success={(msg) => {
+                  this.success(msg);
+                }}
+                error={(msg) => {
+                  this.error(msg);
+                }}
+                warning={(msg) => {
+                  this.warning(msg);
+                }}
+              />
+            }
+          />
+          <Route
+            exact
+            path="/merch"
+            element={
+              <Merch
                 success={(msg) => {
                   this.success(msg);
                 }}
