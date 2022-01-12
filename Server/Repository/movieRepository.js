@@ -39,7 +39,7 @@ findMovieByName = async (name) => {
 };
 
 deleteMovie = async (id) => {
-  await db.sequelize.query("DELETE FROM MOVIES WHERE id = :id", {
+  await db.sequelize.query("DELETE FROM movies WHERE id = :id", {
     replacements: { id: id },
     type: db.sequelize.QueryTypes.DELETE,
   });

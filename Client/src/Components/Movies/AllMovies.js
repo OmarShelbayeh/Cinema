@@ -29,6 +29,8 @@ class AllMovies extends Component {
       owner: "",
     },
 
+    deleteId: null,
+    openConfirmation: false,
     openNewMovie: false,
   };
 
@@ -67,7 +69,7 @@ class AllMovies extends Component {
     }
   }
 
-  deleteMovie(id) {
+  deleteMovie() {
     axios({
       url: URL + "/movies/deleteMovie",
       method: "DELETE",
@@ -75,11 +77,12 @@ class AllMovies extends Component {
         authorization: localStorage.getItem("token"),
       },
       data: {
-        id: id,
+        id: this.state.deleteId,
       },
     })
       .then(() => {
         this.props.success("Successfully deleted movie!");
+        this.setState({ openConfirmation: false, deleteId: null });
         this.getAllMovies();
       })
       .catch(() => {
@@ -157,7 +160,10 @@ class AllMovies extends Component {
                   <td style={{ textAlign: "center" }}>
                     <button
                       onClick={() => {
-                        this.deleteMovie(movie.id);
+                        this.setState({
+                          deleteId: movie.id,
+                          openConfirmation: true,
+                        });
                       }}
                     >
                       <DeleteForeverIcon style={{ fill: "#f37757" }} />
@@ -240,6 +246,57 @@ class AllMovies extends Component {
                   }}
                 >
                   Add new movie
+                </button>
+              </div>
+            </div>
+          </Fade>
+        </Modal>
+        <Modal
+          aria-labelledby="transition-modal-title"
+          aria-describedby="transition-modal-description"
+          open={this.state.openConfirmation}
+          onClose={() =>
+            this.setState({
+              openConfirmation: false,
+            })
+          }
+          closeAfterTransition
+          BackdropComponent={Backdrop}
+          BackdropProps={{
+            timeout: 500,
+          }}
+        >
+          <Fade in={this.state.openConfirmation}>
+            <div className="merch-popup">
+              <div className="close-popup-button">
+                <p className="titles-text">
+                  Are you sure you want to delete this movie?
+                </p>
+                <button
+                  type="button"
+                  onClick={() =>
+                    this.setState({
+                      openConfirmation: false,
+                    })
+                  }
+                >
+                  <CancelIcon style={{ fill: "#f37757" }} />
+                </button>
+              </div>
+              <div className="merch-popup-body">
+                <p>
+                  By deleting this movie you're deleting all the schedules and
+                  tickets connected to it.
+                </p>
+              </div>
+              <div className="newMovie">
+                <button
+                  className="button"
+                  onClick={() => {
+                    this.deleteMovie();
+                  }}
+                >
+                  Delete movie
                 </button>
               </div>
             </div>

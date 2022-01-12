@@ -36,18 +36,6 @@ const deleteMovie = (req, res) => {
   if (req.body.id) {
     movieRepository
       .deleteMovie(req.body.id)
-      .then(() => {
-        let allSchedules = scheduleRepository.getScheculesByMovieId(
-          req.body.id
-        );
-        scheduleRepository.deleteScheduleByMovie(req.body.id);
-        return allSchedules;
-      })
-      .then((allSchedules) => {
-        for (let i = 0; i < allSchedules.length; i++) {
-          ticketRepository.deleteTicketByScheduleId(allSchedules[i].id);
-        }
-      })
       .then(() => res.status(200).send())
       .catch((error) => {
         console.log(error);

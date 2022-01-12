@@ -34,6 +34,9 @@ class Schedules extends Component {
       price: null,
     },
 
+    deleteId: null,
+
+    openConfirmation: false,
     openNewSchedule: false,
   };
 
@@ -140,7 +143,7 @@ class Schedules extends Component {
     }
   }
 
-  deleteSchedule(id) {
+  deleteSchedule() {
     axios({
       url: URL + "/schedules/deleteSchedule",
       method: "DELETE",
@@ -148,11 +151,12 @@ class Schedules extends Component {
         authorization: localStorage.getItem("token"),
       },
       data: {
-        id: id,
+        id: this.state.deleteId,
       },
     })
       .then(() => {
         this.props.success("Successfully deleted schedule!");
+        this.setState({ openConfirmation: false, deleteId: null });
         this.getSchedule();
       })
       .catch(() => {
@@ -198,7 +202,10 @@ class Schedules extends Component {
                   <td style={{ textAlign: "center" }}>
                     <button
                       onClick={() => {
-                        this.deleteSchedule(schedule.id);
+                        this.setState({
+                          deleteId: schedule.id,
+                          openConfirmation: true,
+                        });
                       }}
                     >
                       <DeleteForeverIcon style={{ fill: "#f37757" }} />
@@ -315,6 +322,57 @@ class Schedules extends Component {
                   }}
                 >
                   Add new schedule
+                </button>
+              </div>
+            </div>
+          </Fade>
+        </Modal>
+        <Modal
+          aria-labelledby="transition-modal-title"
+          aria-describedby="transition-modal-description"
+          open={this.state.openConfirmation}
+          onClose={() =>
+            this.setState({
+              openConfirmation: false,
+            })
+          }
+          closeAfterTransition
+          BackdropComponent={Backdrop}
+          BackdropProps={{
+            timeout: 500,
+          }}
+        >
+          <Fade in={this.state.openConfirmation}>
+            <div className="merch-popup">
+              <div className="close-popup-button">
+                <p className="titles-text">
+                  Are you sure you want to delete this schedule?
+                </p>
+                <button
+                  type="button"
+                  onClick={() =>
+                    this.setState({
+                      openConfirmation: false,
+                    })
+                  }
+                >
+                  <CancelIcon style={{ fill: "#f37757" }} />
+                </button>
+              </div>
+              <div className="merch-popup-body">
+                <p>
+                  By deleting this schedule you're deleting all the tickets
+                  associated with it.
+                </p>
+              </div>
+              <div className="newMovie">
+                <button
+                  className="button"
+                  onClick={() => {
+                    this.deleteSchedule();
+                  }}
+                >
+                  Delete schedule
                 </button>
               </div>
             </div>

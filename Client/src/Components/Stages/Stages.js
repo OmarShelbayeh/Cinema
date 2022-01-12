@@ -28,6 +28,8 @@ class Stages extends Component {
       number_of_seats: "",
     },
 
+    openConfirmation: false,
+    deleteId: null,
     openNewStage: false,
   };
 
@@ -80,7 +82,7 @@ class Stages extends Component {
     }
   }
 
-  deleteStage(id) {
+  deleteStage() {
     axios({
       url: URL + "/stages/deleteStage",
       method: "DELETE",
@@ -88,11 +90,12 @@ class Stages extends Component {
         authorization: localStorage.getItem("token"),
       },
       data: {
-        id: id,
+        id: this.state.deleteId,
       },
     })
       .then(() => {
         this.props.success("Successfully deleted stage!");
+        this.setState({ openConfirmation: false, deleteId: null });
         this.getAllStages();
       })
       .catch(() => {
@@ -178,7 +181,10 @@ class Stages extends Component {
                       <td style={{ textAlign: "center" }}>
                         <button
                           onClick={() => {
-                            this.deleteStage(stage.id);
+                            this.setState({
+                              deleteId: stage.id,
+                              openConfirmation: true,
+                            });
                           }}
                         >
                           <DeleteForeverIcon style={{ fill: "#f37757" }} />
@@ -274,6 +280,57 @@ class Stages extends Component {
                   }}
                 >
                   Add new stage
+                </button>
+              </div>
+            </div>
+          </Fade>
+        </Modal>
+        <Modal
+          aria-labelledby="transition-modal-title"
+          aria-describedby="transition-modal-description"
+          open={this.state.openConfirmation}
+          onClose={() =>
+            this.setState({
+              openConfirmation: false,
+            })
+          }
+          closeAfterTransition
+          BackdropComponent={Backdrop}
+          BackdropProps={{
+            timeout: 500,
+          }}
+        >
+          <Fade in={this.state.openConfirmation}>
+            <div className="merch-popup">
+              <div className="close-popup-button">
+                <p className="titles-text">
+                  Are you sure you want to delete this stage?
+                </p>
+                <button
+                  type="button"
+                  onClick={() =>
+                    this.setState({
+                      openConfirmation: false,
+                    })
+                  }
+                >
+                  <CancelIcon style={{ fill: "#f37757" }} />
+                </button>
+              </div>
+              <div className="merch-popup-body">
+                <p>
+                  By deleting this stage you're deleting all the tickets and
+                  schedules associated with it.
+                </p>
+              </div>
+              <div className="newMovie">
+                <button
+                  className="button"
+                  onClick={() => {
+                    this.deleteStage();
+                  }}
+                >
+                  Delete stage
                 </button>
               </div>
             </div>
