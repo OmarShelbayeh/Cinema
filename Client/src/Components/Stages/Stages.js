@@ -239,7 +239,7 @@ class Stages extends Component {
                 </div>
                 <div className="element TextField-radius">
                   <TextField
-                    type="text"
+                    type="number"
                     name="rows"
                     onChange={(event) =>
                       this.handleChange(event.target.name, event.target.value)
@@ -251,7 +251,7 @@ class Stages extends Component {
                 </div>
                 <div className="element TextField-radius">
                   <TextField
-                    type="text"
+                    type="number"
                     name="seats_in_row"
                     onChange={(event) =>
                       this.handleChange(event.target.name, event.target.value)
@@ -263,7 +263,7 @@ class Stages extends Component {
                 </div>
                 <div className="element TextField-radius">
                   <TextField
-                    type="text"
+                    type="number"
                     name="number_of_seats"
                     onChange={(event) =>
                       this.handleChange(event.target.name, event.target.value)

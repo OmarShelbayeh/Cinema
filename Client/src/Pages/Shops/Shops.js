@@ -38,6 +38,9 @@ class Shops extends Component {
       available_pcs: null,
       price: null,
     },
+
+    openConfirmation: false,
+    deleteId: null,
   };
 
   componentDidMount() {
@@ -181,7 +184,7 @@ class Shops extends Component {
       });
   }
 
-  deleteProduct(id) {
+  deleteProduct() {
     axios({
       url: URL + "/products/deleteProduct",
       method: "DELETE",
@@ -189,7 +192,7 @@ class Shops extends Component {
         authorization: localStorage.getItem("token"),
       },
       data: {
-        product_id: id,
+        product_id: this.state.deleteId,
       },
     })
       .then((response) => {
@@ -197,6 +200,7 @@ class Shops extends Component {
       })
       .then(() => {
         this.getAllProducts(this.state.shop.movie_id);
+        this.setState({ openConfirmation: false, deleteId: null });
       })
       .catch((error) => {
         this.props.error(error.response.data);
@@ -353,7 +357,10 @@ class Shops extends Component {
                               <td style={{ textAlign: "center" }}>
                                 <button
                                   onClick={() => {
-                                    this.deleteProduct(product.id);
+                                    this.setState({
+                                      openConfirmation: true,
+                                      deleteId: product.id,
+                                    });
                                   }}
                                 >
                                   <DeleteForever style={{ fill: "#f37757" }} />
@@ -533,6 +540,57 @@ class Shops extends Component {
                   }}
                 >
                   Add new product
+                </button>
+              </div>
+            </div>
+          </Fade>
+        </Modal>
+        <Modal
+          aria-labelledby="transition-modal-title"
+          aria-describedby="transition-modal-description"
+          open={this.state.openConfirmation}
+          onClose={() =>
+            this.setState({
+              openConfirmation: false,
+            })
+          }
+          closeAfterTransition
+          BackdropComponent={Backdrop}
+          BackdropProps={{
+            timeout: 500,
+          }}
+        >
+          <Fade in={this.state.openConfirmation}>
+            <div className="merch-popup">
+              <div className="close-popup-button">
+                <p className="titles-text">
+                  Are you sure you want to delete this product?
+                </p>
+                <button
+                  type="button"
+                  onClick={() =>
+                    this.setState({
+                      openConfirmation: false,
+                    })
+                  }
+                >
+                  <CancelIcon style={{ fill: "#f37757" }} />
+                </button>
+              </div>
+              <div className="merch-popup-body">
+                <p>
+                  By deleting this product you're deleting all the orders and
+                  deliveries associated with it.
+                </p>
+              </div>
+              <div className="newMovie">
+                <button
+                  className="button"
+                  onClick={() => {
+                    this.deleteProduct();
+                  }}
+                >
+                  Delete product
                 </button>
               </div>
             </div>
