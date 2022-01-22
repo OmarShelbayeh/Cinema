@@ -21,26 +21,38 @@ const newSchedule = async (req, res) => {
     payload.movie_id &&
     payload.stage_id
   ) {
-    if (
-      (
-        await scheduleRepository.findSpecificSchedule(
-          payload.showing_at,
-          payload.movie_id,
-          payload.stage_id
-        )
-      ).id === null
-    ) {
-      scheduleRepository
-        .newSchedule(payload)
-        .then(() => {
-          res.status(200).send();
-        })
-        .catch((error) => {
-          res.status(500).send();
-          console.log(error);
-        });
+    if (payload.price <= 0) {
+      res.status(500).send("Price cannot be less than or equal to 0");
     } else {
-      res.status(500).send("Shcedule Exists");
+      if (
+        (
+          await scheduleRepository.findSpecificSchedule(
+            payload.showing_at,
+            payload.movie_id,
+            payload.stage_id
+          )
+        ).id === null
+      ) {
+        scheduleRepository
+          .getIfStageIsUsed(payload.showing_at)
+          .then((schedules) => {
+            if (schedules.length > 0) {
+              res.status(500).send("Stage not available at that time");
+            } else {
+              scheduleRepository
+                .newSchedule(payload)
+                .then(() => {
+                  res.status(200).send();
+                })
+                .catch((error) => {
+                  res.status(500).send();
+                  console.log(error);
+                });
+            }
+          });
+      } else {
+        res.status(500).send("Shcedule Exists");
+      }
     }
   }
 };

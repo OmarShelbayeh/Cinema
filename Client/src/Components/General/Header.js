@@ -25,7 +25,14 @@ class Header extends Component {
     return (
       <div className="header">
         <div className="logo">
-          <img src={Logo} alt="Logo" width="120px" />
+          <img
+            src={Logo}
+            alt="Logo"
+            width="120px"
+            onClick={() => {
+              window.location.href = "/";
+            }}
+          />
         </div>
         {this.state.userInfo ? (
           this.state.userInfo.role === "ADMIN" ? (
@@ -90,9 +97,6 @@ class Header extends Component {
               </a>
               <a className={this.props.history ? "active" : ""} href="/history">
                 History
-              </a>
-              <a className={this.props.orders ? "active" : ""} href="/orders">
-                My Orders
               </a>
               <a
                 onClick={() => {

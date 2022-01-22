@@ -36,6 +36,10 @@
   width: 15%;
 }
 
+.header img:hover {
+  cursor: pointer;
+}
+
 .header .menu {
   width: 100%;
   display: -webkit-box;

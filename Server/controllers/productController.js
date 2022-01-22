@@ -2,7 +2,7 @@ const productRepository = require("../Repository").productRepository;
 const movieRepository = require("../Repository").movieRepository;
 const authentication = require("../config/authentication");
 
-newProduct = (req, res) => {
+newProduct = async (req, res) => {
   let payload = req.body;
   if (
     payload.name &&
@@ -10,19 +10,39 @@ newProduct = (req, res) => {
     payload.shop_id &&
     payload.price
   ) {
-    productRepository
-      .newProduct(
-        payload.name,
-        payload.available_pcs,
-        payload.shop_id,
-        payload.price
-      )
-      .then(() => {
-        res.status(200).send("Product added");
-      })
-      .catch((error) => {
-        res.status(500).send("Something went wrong");
-      });
+    if (payload.price <= 0 || payload.available_pcs < 1) {
+      if (payload.price <= 0 && payload.available_pcs < 1) {
+        res
+          .status(500)
+          .send("Price and available pieces cannot be less than or equal to 0");
+      } else if (payload.price < 1) {
+        res.status(500).send("Price cannot be less than or equal to 0");
+      } else if (payload.available_pcs < 1) {
+        res.status(500).send("Available pieces cannot be less than 1");
+      }
+    } else {
+      productRepository
+        .findProductByNameAndShopId(payload.name, payload.shop_id)
+        .then((products) => {
+          if (products.length > 0) {
+            res.status(500).send("Product name must be unique");
+          } else {
+            productRepository
+              .newProduct(
+                payload.name,
+                payload.available_pcs,
+                payload.shop_id,
+                payload.price
+              )
+              .then(() => {
+                res.status(200).send("Product added");
+              })
+              .catch((error) => {
+                res.status(500).send("Something went wrong");
+              });
+          }
+        });
+    }
   } else {
     res.status(500).send("Missing data");
   }

@@ -61,10 +61,17 @@ class UserSchedules extends Component {
                 <th style={{ textAlign: "center" }}>Date</th>
                 <th style={{ textAlign: "center" }}>Time</th>
                 <th style={{ textAlign: "center" }}>Price</th>
+                <th style={{ textAlign: "center" }}>Available tickets</th>
                 <th style={{ textAlign: "center" }}>Buy</th>
               </tr>
               {this.state.allSchedules.map((schedule) => (
-                <tr>
+                <tr
+                  style={
+                    schedule.available_seats <= 0
+                      ? { color: "red" }
+                      : { color: "black" }
+                  }
+                >
                   <td>{schedule.moviename}</td>
                   <td style={{ textAlign: "center" }}>{schedule.stagename}</td>
                   <td style={{ textAlign: "center" }}>
@@ -81,13 +88,22 @@ class UserSchedules extends Component {
                   </td>
                   <td style={{ textAlign: "center" }}>{schedule.price}</td>
                   <td style={{ textAlign: "center" }}>
-                    <button
-                      onClick={() => {
-                        this.buy(schedule.id);
-                      }}
-                    >
-                      <ShoppingCartIcon style={{ fill: "#f37757" }} />
-                    </button>
+                    {schedule.available_seats > 0
+                      ? schedule.available_seats
+                      : "Fully booked"}
+                  </td>
+                  <td style={{ textAlign: "center" }}>
+                    {schedule.available_seats > 0 ? (
+                      <button
+                        onClick={() => {
+                          this.buy(schedule.id);
+                        }}
+                      >
+                        <ShoppingCartIcon style={{ fill: "#f37757" }} />
+                      </button>
+                    ) : (
+                      <ShoppingCartIcon style={{ fill: "grey" }} />
+                    )}
                   </td>
                 </tr>
               ))}

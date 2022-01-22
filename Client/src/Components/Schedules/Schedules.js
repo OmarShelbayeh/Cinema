@@ -135,8 +135,12 @@ class Schedules extends Component {
           this.getSchedule();
           this.clearState();
         })
-        .catch(() => {
-          this.props.error("Couldn't add a new schedule :(");
+        .catch((error) => {
+          if (error.response.data) {
+            this.props.error(error.response.data);
+          } else {
+            this.props.error("Couldn't add a new schedule :(");
+          }
         });
     } else {
       this.props.warning("Missing Data!");
@@ -180,10 +184,17 @@ class Schedules extends Component {
                 <th style={{ textAlign: "center" }}>Date</th>
                 <th style={{ textAlign: "center" }}>Time</th>
                 <th style={{ textAlign: "center" }}>Price</th>
+                <th style={{ textAlign: "center" }}>Available Tickets</th>
                 <th style={{ textAlign: "center" }}>Delete</th>
               </tr>
               {this.state.allSchedules.map((schedule) => (
-                <tr>
+                <tr
+                  style={
+                    schedule.available_seats <= 0
+                      ? { color: "red" }
+                      : { color: "black" }
+                  }
+                >
                   <td>{schedule.moviename}</td>
                   <td style={{ textAlign: "center" }}>{schedule.stagename}</td>
                   <td style={{ textAlign: "center" }}>
@@ -199,6 +210,11 @@ class Schedules extends Component {
                       new Date(schedule.date).getMinutes()}
                   </td>
                   <td style={{ textAlign: "center" }}>{schedule.price}</td>
+                  <td style={{ textAlign: "center" }}>
+                    {schedule.available_seats > 0
+                      ? schedule.available_seats
+                      : "Fully booked"}
+                  </td>
                   <td style={{ textAlign: "center" }}>
                     <button
                       onClick={() => {
@@ -288,7 +304,7 @@ class Schedules extends Component {
                       renderInput={(props) => (
                         <TextField fullWidth {...props} />
                       )}
-                      label="DateTimePicker"
+                      label="Date and Time"
                       value={this.state.newSchedule.showing_at}
                       onChange={(newValue) => {
                         this.handleChange("date", new Date(newValue));

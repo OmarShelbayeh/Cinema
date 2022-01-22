@@ -25,7 +25,6 @@ class Stages extends Component {
       stage_name: "",
       rows: "",
       seats_in_row: "",
-      number_of_seats: "",
     },
 
     openConfirmation: false,
@@ -57,7 +56,6 @@ class Stages extends Component {
   addNewStage() {
     if (
       this.state.newStage.stage_name &&
-      this.state.newStage.number_of_seats &&
       this.state.newStage.rows &&
       this.state.newStage.seats_in_row
     ) {
@@ -74,8 +72,12 @@ class Stages extends Component {
           this.props.success("Successfully added new stage!");
           this.clearState();
         })
-        .catch(() => {
-          this.props.error("Couldn't add stage :(");
+        .catch((error) => {
+          if (error.response.data) {
+            this.props.error(error.response.data);
+          } else {
+            this.props.error("Couldn't add stage :(");
+          }
         });
     } else {
       this.props.warning("You need to fill all the fields");
@@ -257,18 +259,6 @@ class Stages extends Component {
                       this.handleChange(event.target.name, event.target.value)
                     }
                     label="Number of seats in each row"
-                    variant="outlined"
-                    fullWidth
-                  />
-                </div>
-                <div className="element TextField-radius">
-                  <TextField
-                    type="number"
-                    name="number_of_seats"
-                    onChange={(event) =>
-                      this.handleChange(event.target.name, event.target.value)
-                    }
-                    label="Total number of seats"
                     variant="outlined"
                     fullWidth
                   />

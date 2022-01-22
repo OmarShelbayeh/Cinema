@@ -3,6 +3,7 @@ import Header from "../../Components/General/Header";
 import CurrentTickets from "../../Components/History/CurrentTickets";
 import UserSchedules from "../../Components/Schedules/UserSchedules";
 import AuthenticationService from "../../Services/AuthenticationService";
+import Orders from "../Orders/Orders";
 
 class UserDashboard extends Component {
   state = {
@@ -33,6 +34,11 @@ class UserDashboard extends Component {
             </div>
             <div className="column">
               <CurrentTickets
+                error={(msg) => this.props.error(msg)}
+                warning={(msg) => this.props.warning(msg)}
+                success={(msg) => this.props.success(msg)}
+              />
+              <Orders
                 error={(msg) => this.props.error(msg)}
                 warning={(msg) => this.props.warning(msg)}
                 success={(msg) => this.props.success(msg)}

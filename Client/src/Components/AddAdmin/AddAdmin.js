@@ -21,6 +21,11 @@ class AddAdmin extends Component {
     allAdmins: [],
     email: null,
     openNewAdmin: false,
+    openConfirmation: false,
+    deleteAdmin: {
+      id: null,
+      email: null,
+    },
   };
 
   componentDidMount() {
@@ -43,7 +48,7 @@ class AddAdmin extends Component {
     });
   }
 
-  deleteAdmin(id, email) {
+  deleteAdmin() {
     axios({
       url: URL + "/user/deleteAdmin",
       method: "POST",
@@ -51,12 +56,18 @@ class AddAdmin extends Component {
         authorization: localStorage.getItem("token"),
       },
       data: {
-        id: id,
-        email: email,
+        id: this.state.deleteAdmin.id,
+        email: this.state.deleteAdmin.email,
       },
     })
       .then((response) => {
-        console.log(response);
+        this.setState({
+          openConfirmation: false,
+          deleteAdmin: {
+            id: null,
+            email: null,
+          },
+        });
         this.props.success(response.data);
       })
       .then(() => {
@@ -219,7 +230,10 @@ class AddAdmin extends Component {
                       <td style={{ textAlign: "center" }}>
                         <button
                           onClick={() => {
-                            this.deleteAdmin(admin.id, admin.email);
+                            this.setState({
+                              openConfirmation: true,
+                              deleteAdmin: { id: admin.id, email: admin.email },
+                            });
                           }}
                         >
                           <DeleteForeverIcon style={{ fill: "#f37757" }} />
@@ -280,6 +294,57 @@ class AddAdmin extends Component {
                   }}
                 >
                   Add new admin
+                </button>
+              </div>
+            </div>
+          </Fade>
+        </Modal>
+        <Modal
+          aria-labelledby="transition-modal-title"
+          aria-describedby="transition-modal-description"
+          open={this.state.openConfirmation}
+          onClose={() =>
+            this.setState({
+              openConfirmation: false,
+            })
+          }
+          closeAfterTransition
+          BackdropComponent={Backdrop}
+          BackdropProps={{
+            timeout: 500,
+          }}
+        >
+          <Fade in={this.state.openConfirmation}>
+            <div className="merch-popup">
+              <div className="close-popup-button">
+                <p className="titles-text">
+                  Are you sure you want to delete this account?
+                </p>
+                <button
+                  type="button"
+                  onClick={() =>
+                    this.setState({
+                      openConfirmation: false,
+                    })
+                  }
+                >
+                  <CancelIcon style={{ fill: "#f37757" }} />
+                </button>
+              </div>
+              <div className="merch-popup-body">
+                <p>
+                  By deleting this account the account holder will no longer be
+                  an admin.
+                </p>
+              </div>
+              <div className="newMovie">
+                <button
+                  className="button"
+                  onClick={() => {
+                    this.deleteAdmin();
+                  }}
+                >
+                  Delete Admin
                 </button>
               </div>
             </div>

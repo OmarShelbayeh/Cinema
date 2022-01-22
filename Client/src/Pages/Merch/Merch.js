@@ -100,7 +100,7 @@ class Merch extends Component {
           this.handleClose();
         })
         .then(() => {
-          window.location.href = "/orders";
+          window.location.href = "/dashboard";
         })
         .catch((error) => {
           this.props.error(error.response.data);

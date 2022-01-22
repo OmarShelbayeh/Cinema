@@ -10,6 +10,20 @@ newProduct = async (name, available_pcs, shop_id, price) => {
   });
 };
 
+findProductByNameAndShopId = async (name, shop_id) => {
+  let products = await db.sequelize.query(
+    "SELECT * FROM products WHERE name = :name AND shop_id = :shop_id ;",
+    {
+      replacements: {
+        name: name,
+        shop_id: shop_id,
+      },
+      type: db.sequelize.QueryTypes.SELECT,
+    }
+  );
+  return products;
+};
+
 productStorageId = async (id) => {
   let storage_id = await db.sequelize.query(
     "SELECT s.storage_id FROM products p INNER JOIN shops s ON p.shop_id = s.id WHERE p.id = :id ;",
@@ -78,4 +92,5 @@ module.exports = {
   returnProduct,
   getAllProductsFromMovieId,
   deleteProduct,
+  findProductByNameAndShopId,
 };

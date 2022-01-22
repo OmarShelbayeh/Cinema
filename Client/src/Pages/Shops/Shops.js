@@ -334,8 +334,7 @@ class Shops extends Component {
                       <div className="table">
                         <table>
                           <tr>
-                            <th>Product ID</th>
-                            <th style={{ textAlign: "center" }}>Name</th>
+                            <th >Name</th>
                             <th style={{ textAlign: "center" }}>Price</th>
                             <th style={{ textAlign: "center" }}>
                               Available Pieces
@@ -344,8 +343,7 @@ class Shops extends Component {
                           </tr>
                           {this.state.products.map((product) => (
                             <tr>
-                              <td>{product.id}</td>
-                              <td style={{ textAlign: "center" }}>
+                              <td >
                                 {product.name}
                               </td>
                               <td style={{ textAlign: "center" }}>

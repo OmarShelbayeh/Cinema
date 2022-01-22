@@ -12,6 +12,8 @@ import "./css/Buy.css";
 import InputLabel from "@mui/material/InputLabel";
 import TextField from "@mui/material/TextField";
 import EventSeatIcon from "@mui/icons-material/EventSeat";
+import { Backdrop, Fade, Modal } from "@mui/material";
+import CancelIcon from "@mui/icons-material/Cancel";
 
 class Buy extends Component {
   state = {
@@ -24,6 +26,8 @@ class Buy extends Component {
     reserved: [],
 
     error: false,
+
+    openConfirmation: false,
   };
 
   componentDidMount() {
@@ -119,7 +123,13 @@ class Buy extends Component {
       !this.state.id ||
       this.state.reserved.length < this.state.numOfTickets
     ) {
-      this.props.warning("Missing data");
+      this.props.warning(
+        `You have to choose ${this.state.numOfTickets} ${
+          this.state.numOfTickets > 1 ? "seats" : "seat"
+        }, you have chosen only ${this.state.reserved.length} ${
+          this.state.reserved.length > 1 ? "seats" : "seat"
+        }.`
+      );
     } else {
       for (let i = 0; i < this.state.reserved.length; i++) {
         axios({
@@ -135,6 +145,7 @@ class Buy extends Component {
         })
           .then((response) => {
             this.props.success(response.data);
+            this.setState({ openConfirmation: false });
           })
           .then(() => {
             window.location.href = "/dashboard";
@@ -170,38 +181,52 @@ class Buy extends Component {
 
                 {this.state.seats.map((row) => (
                   <div className="row" style={{ justifyContent: "center" }}>
-                    {row.map(
-                      (seat) =>
-                        seat.available ? (
-                          this.state.reserved.includes(seat.id) ? (
-                            <button
-                              onClick={() =>
-                                this.chooseSeats("remove", seat.id)
-                              }
-                            >
-                              <EventSeatIcon style={{ fill: "#BBCEFF" }} />
-                            </button>
-                          ) : (
-                            <button
-                              onClick={() => this.chooseSeats("add", seat.id)}
-                            >
-                              <EventSeatIcon style={{ fill: "#638DFC" }} />
-                            </button>
-                          )
+                    {row.map((seat) =>
+                      seat.available ? (
+                        this.state.reserved.includes(seat.id) ? (
+                          <button
+                            onClick={() => this.chooseSeats("remove", seat.id)}
+                          >
+                            <EventSeatIcon style={{ fill: "#BBCEFF" }} />
+                          </button>
                         ) : (
                           <button
-                            onClick={() => this.props.warning("Seat taken")}
+                            onClick={() => this.chooseSeats("add", seat.id)}
                           >
-                            <EventSeatIcon style={{ fill: "#F37757" }} />
+                            <EventSeatIcon style={{ fill: "#638DFC" }} />
                           </button>
                         )
-
-                      // <p>{seat.id}</p>
+                      ) : (
+                        <button
+                          onClick={() => this.props.warning("Seat taken")}
+                        >
+                          <EventSeatIcon style={{ fill: "#F37757" }} />
+                        </button>
+                      )
                     )}
                   </div>
                 ))}
                 <div className="row">
-                  <button className="button" onClick={() => this.buyTicket()}>
+                  <button
+                    className="button"
+                    onClick={() => {
+                      if (
+                        this.state.reserved.length < this.state.numOfTickets
+                      ) {
+                        this.props.warning(
+                          `You have to choose ${this.state.numOfTickets} ${
+                            this.state.numOfTickets > 1 ? "seats" : "seat"
+                          }, you have chosen only ${
+                            this.state.reserved.length
+                          } ${
+                            this.state.reserved.length > 1 ? "seats" : "seat"
+                          }.`
+                        );
+                      } else {
+                        this.setState({ openConfirmation: true });
+                      }
+                    }}
+                  >
                     Buy
                   </button>
                 </div>
@@ -238,7 +263,7 @@ class Buy extends Component {
                   <div className="column">
                     <div className="element">
                       {this.state.error
-                        ? "Error"
+                        ? "You have chosen too little or too many tickets"
                         : "Price: $" +
                           this.state.numOfTickets * this.state.schedule.price}
                     </div>
@@ -258,6 +283,73 @@ class Buy extends Component {
             <div className="container">Something went wrong!</div>
           )}
         </div>
+        <Modal
+          aria-labelledby="transition-modal-title"
+          aria-describedby="transition-modal-description"
+          open={this.state.openConfirmation}
+          onClose={() =>
+            this.setState({
+              openConfirmation: false,
+            })
+          }
+          closeAfterTransition
+          BackdropComponent={Backdrop}
+          BackdropProps={{
+            timeout: 500,
+          }}
+        >
+          <Fade in={this.state.openConfirmation}>
+            <div className="merch-popup">
+              <div className="close-popup-button">
+                <p className="titles-text">
+                  Are you sure you want to buy these tickets?
+                </p>
+                <button
+                  type="button"
+                  onClick={() =>
+                    this.setState({
+                      openConfirmation: false,
+                    })
+                  }
+                >
+                  <CancelIcon style={{ fill: "#f37757" }} />
+                </button>
+              </div>
+              <div className="merch-popup-body">
+                {this.state.schedule ? (
+                  <table>
+                    <tr>
+                      <th>Movie Name</th>
+                      <th style={{ textAlign: "center" }}>Total Price</th>
+                      <th style={{ textAlign: "center" }}>Amount of tickets</th>
+                    </tr>
+                    <tr>
+                      <td>{this.state.schedule.name}</td>
+                      <td style={{ textAlign: "center" }}>
+                        {this.state.schedule.price * this.state.numOfTickets}
+                      </td>
+                      <td style={{ textAlign: "center" }}>
+                        {this.state.numOfTickets}
+                      </td>
+                    </tr>
+                  </table>
+                ) : (
+                  ""
+                )}
+              </div>
+              <div className="newMovie">
+                <button
+                  className="button"
+                  onClick={() => {
+                    this.buyTicket();
+                  }}
+                >
+                  Buy
+                </button>
+              </div>
+            </div>
+          </Fade>
+        </Modal>
       </div>
     );
   }

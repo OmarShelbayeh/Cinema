@@ -16,24 +16,29 @@ const getAllStages = (req, res) => {
 
 const newStage = async (req, res) => {
   let payload = req.body;
-  if (
-    payload.stage_name &&
-    payload.rows &&
-    payload.seats_in_row &&
-    payload.number_of_seats
-  ) {
+  if (payload.stage_name && payload.rows && payload.seats_in_row) {
     if (
       (await stageRepository.findStageByName(payload.stage_name)).id === null
     ) {
-      stageRepository
-        .newStage(payload)
-        .then(() => {
-          res.status(200).send();
-        })
-        .catch((error) => {
-          res.status(500).send();
-          console.log(error);
-        });
+      payloadToSend = {
+        stage_name: payload.stage_name,
+        rows: payload.rows,
+        seats_in_row: payload.seats_in_row,
+        number_of_seats: payload.rows * payload.seats_in_row,
+      };
+      if (payloadToSend.number_of_seats < 1) {
+        res.status(500).send("Number of seats cannot be less than 1");
+      } else {
+        stageRepository
+          .newStage(payloadToSend)
+          .then(() => {
+            res.status(200).send();
+          })
+          .catch((error) => {
+            res.status(500).send();
+            console.log(error);
+          });
+      }
     } else {
       res.status(500).send("Stage Exists");
     }
