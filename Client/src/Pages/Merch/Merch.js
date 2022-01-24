@@ -133,39 +133,47 @@ class Merch extends Component {
       <div className="merch">
         <div className="title">{this.state.movie}</div>
         {this.state.products.length > 0 ? (
-          this.state.products.map((product) => (
-            <div className="item">
-              <div className="name">{product.name}</div>
-              <div className="price">{`\$${product.price} /piece`}</div>
-              <div className="available TextField-radius">
-                <TextField
-                  error={this.state.error}
-                  variant="outlined"
-                  type="number"
-                  label="Amount"
-                  value={this.state.chosen.pcs}
-                  fullWidth
-                  onChange={(e) => {
-                    this.handleChange(
-                      product.id,
-                      e.target.value,
-                      product.available_pcs
-                    );
-                  }}
-                />
+          this.state.products.map((product) =>
+            product.available_pcs > 0 ? (
+              <div className="item">
+                <div className="name">{product.name}</div>
+                <div className="price">{`\$${product.price} /piece`}</div>
+                <div className="available TextField-radius">
+                  <TextField
+                    error={this.state.error}
+                    variant="outlined"
+                    type="number"
+                    label="Amount"
+                    value={
+                      this.state.chosen.id === product.id
+                        ? this.state.chosen.pcs
+                        : 1
+                    }
+                    fullWidth
+                    onChange={(e) => {
+                      this.handleChange(
+                        product.id,
+                        e.target.value,
+                        product.available_pcs
+                      );
+                    }}
+                  />
+                </div>
+                <div className="available">
+                  {`Available: ${product.available_pcs} pieces`}
+                </div>
+                <button
+                  onClick={() =>
+                    this.setState({ openBuy: true, product: product })
+                  }
+                >
+                  Buy
+                </button>
               </div>
-              <div className="available">
-                {`Available: ${product.available_pcs} pieces`}
-              </div>
-              <button
-                onClick={() =>
-                  this.setState({ openBuy: true, product: product })
-                }
-              >
-                Buy
-              </button>
-            </div>
-          ))
+            ) : (
+              ""
+            )
+          )
         ) : (
           <div className="item">
             <div className="name">No Merch Available</div>

@@ -26,4 +26,6 @@ router.post(
   usersController.enableAccount
 );
 
+router.post("/changePassword", usersController.changePassword);
+
 module.exports = router;

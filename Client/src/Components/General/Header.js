@@ -50,6 +50,12 @@ class Header extends Component {
                 Shops
               </a>
               <a
+                className={this.props.settings ? "active" : ""}
+                href="/settings"
+              >
+                Settings
+              </a>
+              <a
                 onClick={() => {
                   AuthenticationService.logout();
                 }}
@@ -71,6 +77,12 @@ class Header extends Component {
                 href="/ownerDashboard"
               >
                 Dashboard
+              </a>
+              <a
+                className={this.props.settings ? "active" : ""}
+                href="/settings"
+              >
+                Settings
               </a>
               <a
                 onClick={() => {
@@ -97,6 +109,12 @@ class Header extends Component {
               </a>
               <a className={this.props.history ? "active" : ""} href="/history">
                 History
+              </a>
+              <a
+                className={this.props.settings ? "active" : ""}
+                href="/settings"
+              >
+                Settings
               </a>
               <a
                 onClick={() => {

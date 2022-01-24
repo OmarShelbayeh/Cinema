@@ -178,7 +178,11 @@ class Buy extends Component {
                     {"Stage Name: " + this.state.schedule.stage_name}
                   </div>
                 </div>
-
+                <div className="row" style={{ justifyContent: "center" }}>
+                  ----------------------------Screen----------------------------
+                </div>
+                <br />
+                <br />
                 {this.state.seats.map((row) => (
                   <div className="row" style={{ justifyContent: "center" }}>
                     {row.map((seat) =>

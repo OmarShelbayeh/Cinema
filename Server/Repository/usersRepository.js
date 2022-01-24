@@ -123,6 +123,19 @@ enableAccount = async (id) => {
   );
 };
 
+changePassword = async (id, password) => {
+  await db.sequelize.query(
+    "UPDATE users SET password = :password WHERE id = :id ;",
+    {
+      replacements: {
+        id: id,
+        password: bcrypt.hashSync(password, bcrypt.genSaltSync(10), null),
+      },
+      type: db.sequelize.QueryTypes.UPDATE,
+    }
+  );
+};
+
 module.exports = {
   newUser,
   getAllUsers,
@@ -135,4 +148,5 @@ module.exports = {
   deleteAdmin,
   disableAccount,
   enableAccount,
+  changePassword,
 };

@@ -91,6 +91,29 @@ const enableAccount = async (req, res) => {
   }
 };
 
+changePassword = async (req, res) => {
+  let user = authentication.getUserObjectFromToken(req);
+  let payload = req.body;
+  if (!payload.oldPassword || !payload.password || !payload.passwordrpt) {
+    res.status(500).send("Missing data");
+  } else {
+    if (payload.password !== payload.passwordrpt) {
+      res.status(401).send("Passwords don't match");
+    } else {
+      user = new users(user);
+      user.comparePassword(payload.oldPassword, (err, isMatch) => {
+        if (isMatch && !err) {
+          usersRepository.changePassword(user.id, payload.password).then(() => {
+            res.status(200).send("Password changed successfully");
+          });
+        } else {
+          res.status(401).send("Wrong Password");
+        }
+      });
+    }
+  }
+};
+
 module.exports = {
   getAllAdmins,
   getAllUsers,
@@ -99,4 +122,5 @@ module.exports = {
   deleteAdmin,
   disableAccount,
   enableAccount,
+  changePassword,
 };

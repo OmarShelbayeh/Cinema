@@ -21,6 +21,7 @@ import Ticket from "./Pages/Ticket/Ticket";
 import Shops from "./Pages/Shops/Shops";
 import Merch from "./Pages/Merch/Merch";
 import Orders from "./Pages/Orders/Orders";
+import Settings from "./Pages/Settings/Settings";
 
 class App extends Component {
   state = {
@@ -81,6 +82,23 @@ class App extends Component {
             path="/register"
             element={
               <Register
+                success={(msg) => {
+                  this.success(msg);
+                }}
+                error={(msg) => {
+                  this.error(msg);
+                }}
+                warning={(msg) => {
+                  this.warning(msg);
+                }}
+              />
+            }
+          />
+          <Route
+            exact
+            path="/settings"
+            element={
+              <Settings
                 success={(msg) => {
                   this.success(msg);
                 }}

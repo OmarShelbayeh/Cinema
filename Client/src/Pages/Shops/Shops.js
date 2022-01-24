@@ -298,7 +298,7 @@ class Shops extends Component {
 
             <div className="column">
               <div className="allMovies">
-                {this.state.newShop ? (
+                {this.state.newShop && !this.state.shop ? (
                   <div className="table-container">
                     <div className="title">
                       <StorefrontIcon />
@@ -334,7 +334,7 @@ class Shops extends Component {
                       <div className="table">
                         <table>
                           <tr>
-                            <th >Name</th>
+                            <th>Name</th>
                             <th style={{ textAlign: "center" }}>Price</th>
                             <th style={{ textAlign: "center" }}>
                               Available Pieces
@@ -342,10 +342,14 @@ class Shops extends Component {
                             <th style={{ textAlign: "center" }}>Delete</th>
                           </tr>
                           {this.state.products.map((product) => (
-                            <tr>
-                              <td >
-                                {product.name}
-                              </td>
+                            <tr
+                              style={
+                                product.available_pcs > 0
+                                  ? { color: "black" }
+                                  : { color: "red" }
+                              }
+                            >
+                              <td>{product.name}</td>
                               <td style={{ textAlign: "center" }}>
                                 {product.price}
                               </td>

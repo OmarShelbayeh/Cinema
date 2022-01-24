@@ -8,22 +8,29 @@ newSchedule = async (payload) => {
 getAllSchedules = async () => {
   let allSchedules;
   allSchedules = await db.sequelize.query(
-    "SELECT s.id, s.showing_at as date, s.price as price, m.name as movieName, st.stage_name as stageName, (st.number_of_seats - (SELECT count(*) FROM tickets WHERE schedule_id = s.id)) as available_seats from schedules s inner join movies m on s.movie_id = m.id inner join stages st on s.stage_id = st.id where s.showing_at >= DATE(NOW()) order by s.showing_at;",
+    "SELECT s.id, s.showing_at as date, s.price as price, m.name as movieName, st.stage_name as stageName, (st.number_of_seats - (SELECT count(*) FROM tickets WHERE schedule_id = s.id)) as available_seats from schedules s inner join movies m on s.movie_id = m.id inner join stages st on s.stage_id = st.id where s.showing_at >= :date order by s.showing_at;",
     {
+      replacements: {
+        date: new Date(),
+      },
       type: db.sequelize.QueryTypes.SELECT,
     }
   );
   return allSchedules;
 };
 
-getIfStageIsUsed = async (showing_at) => {
+getIfStageIsUsed = async (showing_at, stage_id) => {
   let dateBegin = await new Date(showing_at);
   await dateBegin.setHours(dateBegin.getHours() - 3);
   let dateEnd = await new Date(showing_at);
   let allSchedules = await db.sequelize.query(
-    "SELECT * FROM schedules WHERE showing_at BETWEEN :dateBegin AND :dateEnd ;",
+    "SELECT * FROM schedules WHERE stage_id = :stage_id AND showing_at BETWEEN :dateBegin AND :dateEnd ;",
     {
-      replacements: { dateBegin: dateBegin, dateEnd: dateEnd },
+      replacements: {
+        stage_id: stage_id,
+        dateBegin: dateBegin,
+        dateEnd: dateEnd,
+      },
       type: db.sequelize.QueryTypes.SELECT,
     }
   );

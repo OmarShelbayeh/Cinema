@@ -34,7 +34,7 @@ const newSchedule = async (req, res) => {
         ).id === null
       ) {
         scheduleRepository
-          .getIfStageIsUsed(payload.showing_at)
+          .getIfStageIsUsed(payload.showing_at, payload.stage_id)
           .then((schedules) => {
             if (schedules.length > 0) {
               res.status(500).send("Stage not available at that time");

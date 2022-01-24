@@ -1,0 +1,83 @@
+@import url("https://fonts.googleapis.com/css2?family=Rubik:wght@400;700&display=swap");
+.settings .row .container {
+  padding: 24px;
+  background: #ffffff;
+  -webkit-box-shadow: 0px 0px 32px rgba(223, 225, 226, 0.5);
+          box-shadow: 0px 0px 32px rgba(223, 225, 226, 0.5);
+  border-radius: 36px;
+}
+
+.settings .row .container .button {
+  font-family: "Rubik", sans-serif;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 18px;
+  letter-spacing: 0.2px;
+}
+
+.settings {
+  padding: 24px;
+  width: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.settings .row {
+  width: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  height: 80vh;
+}
+
+.settings .row .container {
+  padding: 48px 48px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  color: black;
+}
+
+.settings .row .container .button {
+  font-weight: bold;
+  width: 100%;
+  margin-top: 12px;
+  padding: 12px;
+  border: 1px solid #f37757;
+  background: white;
+  border-radius: 32px;
+  color: #f37757;
+  -webkit-transition: 0.4s;
+  transition: 0.4s;
+  float: right;
+}
+
+.settings .row .container .button:hover {
+  color: white;
+  background-color: #f37757;
+}
+/*# sourceMappingURL=Settings.css.map */
