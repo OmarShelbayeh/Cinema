@@ -15,6 +15,7 @@ import Fade from "@mui/material/Fade";
 import CancelIcon from "@mui/icons-material/Cancel";
 import TextField from "@mui/material/TextField";
 import MovieIcon from "@mui/icons-material/Movie";
+import EditIcon from "@mui/icons-material/Edit";
 
 class AllMovies extends Component {
   constructor() {
@@ -29,6 +30,7 @@ class AllMovies extends Component {
       owner: "",
     },
 
+    openEdit: false,
     deleteId: null,
     openConfirmation: false,
     openNewMovie: false,
@@ -93,13 +95,41 @@ class AllMovies extends Component {
   clearState() {
     this.setState({
       newMovie: {
-        name: "",
-        director: "",
-        owner: "",
+        name: null,
+        director: null,
+        owner: null,
       },
-
+      openEdit: false,
       openNewMovie: false,
     });
+  }
+
+  editMovie() {
+    if (
+      this.state.newMovie.id &&
+      this.state.newMovie.name &&
+      this.state.newMovie.owner &&
+      this.state.newMovie.director
+    ) {
+      axios({
+        url: URL + "/movies/editMovie",
+        method: "POST",
+        headers: {
+          authorization: localStorage.getItem("token"),
+        },
+        data: this.state.newMovie,
+      })
+        .then((response) => {
+          this.props.success(response.data);
+          this.getAllMovies();
+          this.clearState();
+        })
+        .catch((error) => {
+          this.props.error(error.response.data);
+        });
+    } else {
+      this.props.warning("You need to fill all the fields");
+    }
   }
 
   handleChange(change, value) {
@@ -107,6 +137,7 @@ class AllMovies extends Component {
       case "name":
         this.setState({
           newMovie: {
+            id: this.state.newMovie.id,
             name: value,
             director: this.state.newMovie.director,
             owner: this.state.newMovie.owner,
@@ -116,6 +147,7 @@ class AllMovies extends Component {
       case "director":
         this.setState({
           newMovie: {
+            id: this.state.newMovie.id,
             name: this.state.newMovie.name,
             director: value,
             owner: this.state.newMovie.owner,
@@ -125,6 +157,7 @@ class AllMovies extends Component {
       case "owner":
         this.setState({
           newMovie: {
+            id: this.state.newMovie.id,
             name: this.state.newMovie.name,
             director: this.state.newMovie.director,
             owner: value,
@@ -150,6 +183,7 @@ class AllMovies extends Component {
                 <th>Movie Name</th>
                 <th style={{ textAlign: "center" }}>Director</th>
                 <th style={{ textAlign: "center" }}>Owner</th>
+                <th style={{ textAlign: "center" }}>Edit</th>
                 <th style={{ textAlign: "center" }}>Delete</th>
               </tr>
               {this.props.allMovies.map((movie) => (
@@ -157,6 +191,18 @@ class AllMovies extends Component {
                   <td>{movie.name}</td>
                   <td style={{ textAlign: "center" }}>{movie.director}</td>
                   <td style={{ textAlign: "center" }}>{movie.owner}</td>
+                  <td style={{ textAlign: "center" }}>
+                    <button
+                      onClick={() => {
+                        this.setState({
+                          newMovie: movie,
+                          openEdit: true,
+                        });
+                      }}
+                    >
+                      <EditIcon style={{ fill: "#638DFC" }} />
+                    </button>
+                  </td>
                   <td style={{ textAlign: "center" }}>
                     <button
                       onClick={() => {
@@ -254,12 +300,78 @@ class AllMovies extends Component {
         <Modal
           aria-labelledby="transition-modal-title"
           aria-describedby="transition-modal-description"
+          open={this.state.openEdit}
+          onClose={() => this.clearState()}
+          closeAfterTransition
+          BackdropComponent={Backdrop}
+          BackdropProps={{
+            timeout: 500,
+          }}
+        >
+          <Fade in={this.state.openEdit}>
+            <div className="card-popup">
+              <div className="close-popup-button">
+                <p className="titles-text">Edit movie</p>
+                <button type="button" onClick={() => this.clearState()}>
+                  <CancelIcon style={{ fill: "#f37757" }} />
+                </button>
+              </div>
+              <div className="newMovie">
+                <div className="element TextField-radius">
+                  <TextField
+                    type="text"
+                    name="name"
+                    value={this.state.newMovie.name}
+                    label="Movie Name"
+                    variant="outlined"
+                    disabled
+                    fullWidth
+                  />
+                </div>
+                <div className="element TextField-radius">
+                  <TextField
+                    type="text"
+                    name="director"
+                    value={this.state.newMovie.director}
+                    onChange={(event) =>
+                      this.handleChange(event.target.name, event.target.value)
+                    }
+                    label="Director Name"
+                    variant="outlined"
+                    fullWidth
+                  />
+                </div>
+                <div className="element TextField-radius">
+                  <TextField
+                    type="text"
+                    value={this.state.newMovie.owner}
+                    name="owner"
+                    onChange={(event) =>
+                      this.handleChange(event.target.name, event.target.value)
+                    }
+                    label="Owner Name"
+                    variant="outlined"
+                    fullWidth
+                  />
+                </div>
+                <button
+                  className="button"
+                  onClick={() => {
+                    this.editMovie();
+                  }}
+                >
+                  Confirm
+                </button>
+              </div>
+            </div>
+          </Fade>
+        </Modal>
+
+        <Modal
+          aria-labelledby="transition-modal-title"
+          aria-describedby="transition-modal-description"
           open={this.state.openConfirmation}
-          onClose={() =>
-            this.setState({
-              openConfirmation: false,
-            })
-          }
+          onClose={() => this.clearState()}
           closeAfterTransition
           BackdropComponent={Backdrop}
           BackdropProps={{
@@ -272,14 +384,7 @@ class AllMovies extends Component {
                 <p className="titles-text">
                   Are you sure you want to delete this movie?
                 </p>
-                <button
-                  type="button"
-                  onClick={() =>
-                    this.setState({
-                      openConfirmation: false,
-                    })
-                  }
-                >
+                <button type="button" onClick={() => this.clearState()}>
                   <CancelIcon style={{ fill: "#f37757" }} />
                 </button>
               </div>

@@ -13,7 +13,7 @@ newMovie = async (name, director, owner, res) => {
 
 getAllMovies = async () => {
   let allMovies;
-  allMovies = await db.sequelize.query("SELECT * FROM movies ;", {
+  allMovies = await db.sequelize.query("SELECT * FROM movies ORDER BY name ;", {
     type: db.sequelize.QueryTypes.SELECT,
   });
   return allMovies;
@@ -59,6 +59,16 @@ getMovieIdByTicketId = async (ticket_id) => {
   return movie_id[0].movie_id;
 };
 
+editMovieData = async (id, name, owner, director) => {
+  await db.sequelize.query(
+    "UPDATE movies SET name = :name, director = :director, owner = :owner where id = :id ;",
+    {
+      replacements: { name: name, owner: owner, director: director, id: id },
+      type: db.sequelize.QueryTypes.UPDATE,
+    }
+  );
+};
+
 module.exports = {
   newMovie,
   getAllMovies,
@@ -66,4 +76,5 @@ module.exports = {
   findMovieByName,
   deleteMovie,
   getMovieIdByTicketId,
+  editMovieData,
 };

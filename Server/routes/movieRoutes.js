@@ -11,4 +11,10 @@ router.delete(
   movieController.deleteMovie
 );
 
+router.post(
+  "/editMovie",
+  authentication.ensureAdmin,
+  movieController.editMovie
+);
+
 module.exports = router;

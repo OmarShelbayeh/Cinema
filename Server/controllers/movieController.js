@@ -46,8 +46,23 @@ const deleteMovie = (req, res) => {
   }
 };
 
+const editMovie = (req, res) => {
+  let payload = req.body;
+  if (payload.name && payload.director && payload.owner) {
+    movieRepository
+      .editMovieData(payload.id, payload.name, payload.owner, payload.director)
+      .then(() => {
+        res.status(200).send("Movie updated");
+      })
+      .catch((error) => {
+        res.status(500).send("Something went wrong");
+      });
+  }
+};
+
 module.exports = {
   getAllMovies,
   newMovie,
   deleteMovie,
+  editMovie,
 };
