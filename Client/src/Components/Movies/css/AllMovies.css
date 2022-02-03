@@ -65,6 +65,21 @@
   margin-left: 8px;
 }
 
+.allMovies .table-container .search {
+  padding-top: 12px;
+  width: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  gap: 12px;
+}
+
 .allMovies .table-container .table {
   margin-top: 12px;
   max-height: 30vh;

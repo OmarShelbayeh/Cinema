@@ -8,5 +8,6 @@ router.get("/history", ticketController.history);
 router.get("/getTickets", ticketController.getTickets);
 router.post("/ticketInfo", ticketController.ticketInfo);
 router.delete("/deleteTicket", ticketController.deleteTicket);
+router.post("/availableSeats", ticketController.getAvailableSeats);
 
 module.exports = router;

@@ -16,5 +16,6 @@ router.delete(
 );
 
 router.post("/getInfo", scheduleController.getSchudeleInfoForUser);
+router.post("/search", scheduleController.searchSchedules);
 
 module.exports = router;

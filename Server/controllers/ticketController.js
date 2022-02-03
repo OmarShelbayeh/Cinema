@@ -67,10 +67,27 @@ const deleteTicket = (req, res) => {
     });
 };
 
+const getAvailableSeats = (req, res) => {
+  let payload = req.body;
+  if (!payload.schedule_id) {
+    res.status(500).send("Missing data");
+  } else {
+    ticketRepository
+      .getAvailableSeats(payload.schedule_id)
+      .then((seats) => {
+        res.status(200).send(seats);
+      })
+      .catch((error) => {
+        res.status(500).send("Something went wrong");
+      });
+  }
+};
+
 module.exports = {
   buyTicket,
   history,
   getTickets,
   ticketInfo,
   deleteTicket,
+  getAvailableSeats,
 };

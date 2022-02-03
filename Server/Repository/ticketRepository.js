@@ -67,6 +67,17 @@ deleteTicketByScheduleId = async (id) => {
   });
 };
 
+getAvailableSeats = async (schedule_id) => {
+  let seats = await db.sequelize.query("SELECT available_seats(:id)", {
+    replacements: {
+      id: schedule_id,
+    },
+    type: db.sequelize.QueryTypes.DELETE,
+  });
+  console.log(seats);
+  return seats[0].available_seats;
+};
+
 module.exports = {
   buyTicket,
   history,
@@ -74,4 +85,5 @@ module.exports = {
   ticketInfo,
   deleteTicket,
   deleteTicketByScheduleId,
+  getAvailableSeats,
 };

@@ -2,10 +2,12 @@ const movies = require("../models").movies;
 const db = require("../models");
 
 newMovie = async (name, director, owner, res) => {
-  await movies.create({
-    name: name,
-    director: director,
-    owner: owner,
+  await db.sequelize.query("CALL add_movie(:name, :director, :owner);", {
+    replacements: {
+      name: name,
+      director: director,
+      owner: owner,
+    },
   });
 };
 

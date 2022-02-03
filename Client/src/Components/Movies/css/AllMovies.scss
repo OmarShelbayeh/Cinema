@@ -22,6 +22,14 @@
       }
     }
     width: 100%;
+    .search {
+      padding-top: 12px;
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 12px;
+    }
     .table {
       margin-top: 12px;
       max-height: 30vh;
@@ -50,7 +58,6 @@
       color: #f37757;
       transition: 0.4s;
       float: right;
-
     }
     .button:hover {
       color: white;

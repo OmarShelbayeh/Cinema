@@ -23,7 +23,7 @@ const newMovie = async (req, res) => {
           res.status(200).send();
         })
         .catch((error) => {
-          res.status(500).send();
+          res.status(500).send("Something went wrong");
           console.log(error);
         });
     } else {

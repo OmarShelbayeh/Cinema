@@ -88,9 +88,44 @@ const getSchudeleInfoForUser = (req, res) => {
   }
 };
 
+const searchSchedules = async (req, res) => {
+  let payload = req.body;
+  if (payload.movieName && payload.date) {
+    scheduleRepository
+      .searchSchedulesByDateAndMovie(payload.movieName, payload.date)
+      .then((schedules) => {
+        res.status(200).send(schedules);
+      })
+      .catch((error) => {
+        res.status(500).send("Something went wrong");
+      });
+  } else if (payload.movieName && !payload.date) {
+    scheduleRepository
+      .searchSchedulesByMovie(payload.movieName)
+      .then((schedules) => {
+        res.status(200).send(schedules);
+      })
+      .catch((error) => {
+        res.status(500).send("Something went wrong");
+      });
+  } else if (payload.date && !payload.movieName) {
+    scheduleRepository
+      .searchSchedulesByDate(payload.date)
+      .then((schedules) => {
+        res.status(200).send(schedules);
+      })
+      .catch((error) => {
+        res.status(500).send("Something went wrong");
+      });
+  } else if (!payload.date && !payload.movieName) {
+    res.status(500).send("Missing data");
+  }
+};
+
 module.exports = {
   newSchedule,
   getAllSchedules,
   deleteSchedule,
   getSchudeleInfoForUser,
+  searchSchedules,
 };

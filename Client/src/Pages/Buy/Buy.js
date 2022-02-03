@@ -26,7 +26,7 @@ class Buy extends Component {
     reserved: [],
 
     error: false,
-
+    availableSeats: null,
     openConfirmation: false,
   };
 
@@ -85,7 +85,23 @@ class Buy extends Component {
       id: id,
     });
     this.getSchedule();
+    this.getAvailableSeats();
   };
+
+  getAvailableSeats() {
+    axios({
+      url: URL + "/tickets/availableSeats",
+      method: "POST",
+      headers: {
+        authorization: localStorage.getItem("token"),
+      },
+      data: {
+        schedule_id: this.state.id,
+      },
+    }).then((response) => {
+      this.setState({ availableSeats: response.data });
+    });
+  }
 
   getSchedule() {
     axios({
@@ -243,7 +259,7 @@ class Buy extends Component {
                 <div className="numOfSeats">
                   <div className="text">
                     <p className="available">Available Tickets: </p>
-                    <p className="num">{this.state.schedule.available_seats}</p>
+                    <p className="num">{this.state.availableSeats}</p>
                   </div>
                 </div>
                 <div className="row">
