@@ -16,10 +16,25 @@ import CancelIcon from "@mui/icons-material/Cancel";
 import TextField from "@mui/material/TextField";
 import MovieIcon from "@mui/icons-material/Movie";
 import EditIcon from "@mui/icons-material/Edit";
+import SearchIcon from "@mui/icons-material/Search";
 
 class AllMovies extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
+    this.state = {
+      allMovies: this.props.allMovies,
+      newMovie: {
+        name: "",
+        director: "",
+        owner: "",
+      },
+
+      openEdit: false,
+      deleteId: null,
+      openConfirmation: false,
+      openNewMovie: false,
+      search: false,
+    };
   }
 
   state = {
@@ -34,14 +49,18 @@ class AllMovies extends Component {
     deleteId: null,
     openConfirmation: false,
     openNewMovie: false,
+    search: false,
   };
 
-  componentDidMount() {
-    this.getAllMovies();
+  async componentDidMount() {
+    await this.getAllMovies();
+    this.setState({ search: false });
   }
 
-  getAllMovies() {
-    this.props.getAllMovies();
+  async getAllMovies() {
+    await this.props.getAllMovies();
+    this.setState({ allMovies: this.props.allMovies });
+    this.setState({ search: false });
   }
 
   addNewMovie() {
@@ -169,6 +188,33 @@ class AllMovies extends Component {
     }
   }
 
+  search(param, string) {
+    let items = this.props.allMovies;
+    let matches = [];
+    if (string === "") {
+      this.setState({ search: false, allMovies: items });
+    } else {
+      switch (param) {
+        case "movie":
+          matches = items.filter((s) =>
+            s.name.toLowerCase().includes(string.toLowerCase())
+          );
+          break;
+        case "director":
+          matches = items.filter((s) =>
+            s.director.toLowerCase().includes(string.toLowerCase())
+          );
+          break;
+        case "owner":
+          matches = items.filter((s) =>
+            s.owner.toLowerCase().includes(string.toLowerCase())
+          );
+          break;
+      }
+      this.setState({ allMovies: matches, search: true });
+    }
+  }
+
   render() {
     return (
       <div className="allMovies">
@@ -176,6 +222,30 @@ class AllMovies extends Component {
           <div className="title">
             <MovieIcon />
             <div className="text">All movies</div>
+          </div>
+          <div className="search TextField-radius">
+            <SearchIcon />
+            <TextField
+              label="Movie Name"
+              fullWidth
+              onChange={(e) => {
+                this.search("movie", e.target.value);
+              }}
+            />
+            <TextField
+              label="Director Name"
+              fullWidth
+              onChange={(e) => {
+                this.search("director", e.target.value);
+              }}
+            />
+            <TextField
+              label="Owner Name"
+              fullWidth
+              onChange={(e) => {
+                this.search("owner", e.target.value);
+              }}
+            />
           </div>
           <div className="table">
             <table>
@@ -186,37 +256,69 @@ class AllMovies extends Component {
                 <th style={{ textAlign: "center" }}>Edit</th>
                 <th style={{ textAlign: "center" }}>Delete</th>
               </tr>
-              {this.props.allMovies.map((movie) => (
-                <tr>
-                  <td>{movie.name}</td>
-                  <td style={{ textAlign: "center" }}>{movie.director}</td>
-                  <td style={{ textAlign: "center" }}>{movie.owner}</td>
-                  <td style={{ textAlign: "center" }}>
-                    <button
-                      onClick={() => {
-                        this.setState({
-                          newMovie: movie,
-                          openEdit: true,
-                        });
-                      }}
-                    >
-                      <EditIcon style={{ fill: "#638DFC" }} />
-                    </button>
-                  </td>
-                  <td style={{ textAlign: "center" }}>
-                    <button
-                      onClick={() => {
-                        this.setState({
-                          deleteId: movie.id,
-                          openConfirmation: true,
-                        });
-                      }}
-                    >
-                      <DeleteForeverIcon style={{ fill: "#f37757" }} />
-                    </button>
-                  </td>
-                </tr>
-              ))}
+              {this.state.search
+                ? this.state.allMovies.map((movie) => (
+                    <tr>
+                      <td>{movie.name}</td>
+                      <td style={{ textAlign: "center" }}>{movie.director}</td>
+                      <td style={{ textAlign: "center" }}>{movie.owner}</td>
+                      <td style={{ textAlign: "center" }}>
+                        <button
+                          onClick={() => {
+                            this.setState({
+                              newMovie: movie,
+                              openEdit: true,
+                            });
+                          }}
+                        >
+                          <EditIcon style={{ fill: "#638DFC" }} />
+                        </button>
+                      </td>
+                      <td style={{ textAlign: "center" }}>
+                        <button
+                          onClick={() => {
+                            this.setState({
+                              deleteId: movie.id,
+                              openConfirmation: true,
+                            });
+                          }}
+                        >
+                          <DeleteForeverIcon style={{ fill: "#f37757" }} />
+                        </button>
+                      </td>
+                    </tr>
+                  ))
+                : this.props.allMovies.map((movie) => (
+                    <tr>
+                      <td>{movie.name}</td>
+                      <td style={{ textAlign: "center" }}>{movie.director}</td>
+                      <td style={{ textAlign: "center" }}>{movie.owner}</td>
+                      <td style={{ textAlign: "center" }}>
+                        <button
+                          onClick={() => {
+                            this.setState({
+                              newMovie: movie,
+                              openEdit: true,
+                            });
+                          }}
+                        >
+                          <EditIcon style={{ fill: "#638DFC" }} />
+                        </button>
+                      </td>
+                      <td style={{ textAlign: "center" }}>
+                        <button
+                          onClick={() => {
+                            this.setState({
+                              deleteId: movie.id,
+                              openConfirmation: true,
+                            });
+                          }}
+                        >
+                          <DeleteForeverIcon style={{ fill: "#f37757" }} />
+                        </button>
+                      </td>
+                    </tr>
+                  ))}
             </table>
           </div>
           <button
