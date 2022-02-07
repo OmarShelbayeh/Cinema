@@ -6,7 +6,7 @@ const ticketRepository = require("../Repository").ticketRepository;
 
 const getAllSchedules = (req, res) => {
   scheduleRepository
-    .getAllSchedules()
+    .getAllSchedules(req.body.order)
     .then((schedules) => {
       res.status(200).send(schedules);
     })
@@ -90,34 +90,38 @@ const getSchudeleInfoForUser = (req, res) => {
 
 const searchSchedules = async (req, res) => {
   let payload = req.body;
-  if (payload.movieName && payload.date) {
+  if (payload.search.movieName && payload.search.date) {
     scheduleRepository
-      .searchSchedulesByDateAndMovie(payload.movieName, payload.date)
+      .searchSchedulesByDateAndMovie(
+        payload.search.movieName,
+        payload.search.date,
+        payload.order
+      )
       .then((schedules) => {
         res.status(200).send(schedules);
       })
       .catch((error) => {
         res.status(500).send("Something went wrong");
       });
-  } else if (payload.movieName && !payload.date) {
+  } else if (payload.search.movieName && !payload.search.date) {
     scheduleRepository
-      .searchSchedulesByMovie(payload.movieName)
+      .searchSchedulesByMovie(payload.search.movieName, payload.order)
       .then((schedules) => {
         res.status(200).send(schedules);
       })
       .catch((error) => {
         res.status(500).send("Something went wrong");
       });
-  } else if (payload.date && !payload.movieName) {
+  } else if (payload.search.date && !payload.search.movieName) {
     scheduleRepository
-      .searchSchedulesByDate(payload.date)
+      .searchSchedulesByDate(payload.search.date, payload.order)
       .then((schedules) => {
         res.status(200).send(schedules);
       })
       .catch((error) => {
         res.status(500).send("Something went wrong");
       });
-  } else if (!payload.date && !payload.movieName) {
+  } else if (!payload.search.date && !payload.schedule.movieName) {
     res.status(500).send("Missing data");
   }
 };

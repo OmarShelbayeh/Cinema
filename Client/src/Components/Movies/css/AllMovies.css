@@ -97,6 +97,18 @@
   border-bottom: 1px solid #e8e8e8;
 }
 
+.allMovies .table-container .table table a {
+  font-weight: bold;
+  color: black;
+  -webkit-transition: all 0.3s;
+  transition: all 0.3s;
+}
+
+.allMovies .table-container .table table a:hover,
+.allMovies .table-container .table table .active {
+  color: #638dfc;
+}
+
 .allMovies .table-container .button {
   font-weight: bold;
   width: 20%;

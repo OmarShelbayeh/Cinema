@@ -13,6 +13,7 @@ import Modal from "@mui/material/Modal";
 import Fade from "@mui/material/Fade";
 import CancelIcon from "@mui/icons-material/Cancel";
 import TextField from "@mui/material/TextField";
+import SearchIcon from "@mui/icons-material/Search";
 
 class Stages extends Component {
   constructor() {
@@ -30,6 +31,9 @@ class Stages extends Component {
     openConfirmation: false,
     deleteId: null,
     openNewStage: false,
+    searchParam: null,
+    errorSearch: false,
+    errorSearchMsg: "",
   };
 
   clearState() {
@@ -49,8 +53,14 @@ class Stages extends Component {
     this.getAllStages();
   }
 
-  getAllStages() {
-    this.props.getAllStages();
+  getAllStages(order) {
+    this.props.getAllStages(order);
+    this.setState({ search: false });
+    if (order) {
+      this.setState({ active: order });
+    } else {
+      this.setState({ active: "name" });
+    }
   }
 
   addNewStage() {
@@ -152,6 +162,34 @@ class Stages extends Component {
     }
   }
 
+  search() {
+    axios({
+      url: URL + "/stages/search",
+      method: "POST",
+      headers: {
+        authorization: localStorage.getItem("token"),
+      },
+      data: { name: this.state.searchParam },
+    })
+      .then((response) => {
+        this.setState({
+          search: true,
+          allStages: response.data,
+          errorSearch: false,
+          errorSearchMsg: "",
+          active: "name",
+        });
+      })
+      .catch((e) => {
+        this.props.error(e.response.data);
+        this.setState({ errorSearch: true, errorSearchMsg: e.response.data });
+      });
+  }
+
+  closeSearch() {
+    this.getAllStages();
+  }
+
   render() {
     return (
       <div className="allMovies">
@@ -160,16 +198,93 @@ class Stages extends Component {
             <TheatersIcon />
             <div className="text">All Stages</div>
           </div>
+          <div className="search TextField-radius" autocomplete="off">
+            <SearchIcon />
+            <TextField
+              label="Stage Name"
+              error={this.state.errorSearch}
+              helperText={this.state.errorSearchMsg}
+              fullWidth
+              name="stagenamesearch"
+              onChange={(e) => {
+                this.setState({ searchParam: e.target.value });
+              }}
+            />
+
+            {this.state.search ? (
+              <button
+                onClick={() => {
+                  this.closeSearch();
+                }}
+                style={{ marginTop: "0px" }}
+              >
+                <CancelIcon style={{ fill: "#f37757" }} />
+              </button>
+            ) : (
+              <button
+                className="button"
+                onClick={() => {
+                  this.search();
+                }}
+                style={{ marginTop: "0px" }}
+              >
+                Search
+              </button>
+            )}
+          </div>
           <div className="table">
             <table>
               <tr>
-                <th>Stage Name</th>
+                <th>
+                  <a
+                    onClick={() => {
+                      this.getAllStages();
+                    }}
+                    className={this.state.active === "name" ? "active" : ""}
+                  >
+                    Stage Name +
+                  </a>
+                </th>
                 <th style={{ textAlign: "center" }}>Rows</th>
                 <th style={{ textAlign: "center" }}>Seats in row</th>
-                <th style={{ textAlign: "center" }}>Number of seats</th>
+                <th style={{ textAlign: "center" }}>
+                  <a
+                    onClick={() => {
+                      this.getAllStages("seats");
+                    }}
+                    className={this.state.active === "seats" ? "active" : ""}
+                  >
+                    Number of seats +
+                  </a>
+                </th>
                 <th style={{ textAlign: "center" }}>Delete</th>
               </tr>
-              {this.props.allStages.length > 0
+              {this.state.search
+                ? this.state.allStages.map((stage) => (
+                    <tr>
+                      <td>{stage.stage_name}</td>
+                      <td style={{ textAlign: "center" }}>{stage.rows}</td>
+                      <td style={{ textAlign: "center" }}>
+                        {stage.seats_in_row}
+                      </td>
+                      <td style={{ textAlign: "center" }}>
+                        {stage.number_of_seats}
+                      </td>
+                      <td style={{ textAlign: "center" }}>
+                        <button
+                          onClick={() => {
+                            this.setState({
+                              deleteId: stage.id,
+                              openConfirmation: true,
+                            });
+                          }}
+                        >
+                          <DeleteForeverIcon style={{ fill: "#f37757" }} />
+                        </button>
+                      </td>
+                    </tr>
+                  ))
+                : this.props.allStages.length > 0
                 ? this.props.allStages.map((stage) => (
                     <tr>
                       <td>{stage.stage_name}</td>

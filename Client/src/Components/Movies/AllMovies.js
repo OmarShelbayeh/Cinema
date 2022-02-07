@@ -29,6 +29,7 @@ class AllMovies extends Component {
         owner: "",
       },
 
+      active: "movie",
       openEdit: false,
       deleteId: null,
       openConfirmation: false,
@@ -45,6 +46,7 @@ class AllMovies extends Component {
       owner: "",
     },
 
+    active: "movie",
     openEdit: false,
     deleteId: null,
     openConfirmation: false,
@@ -57,8 +59,8 @@ class AllMovies extends Component {
     this.setState({ search: false });
   }
 
-  async getAllMovies() {
-    await this.props.getAllMovies();
+  async getAllMovies(order) {
+    await this.props.getAllMovies(order);
     this.setState({ allMovies: this.props.allMovies });
     this.setState({ search: false });
   }
@@ -81,6 +83,7 @@ class AllMovies extends Component {
           this.props.success("Successfully added new movie!");
           this.getAllMovies();
           this.clearState();
+          this.setState({ active: "movie" });
         })
         .catch(() => {
           this.props.error("Couldn't add movie :(");
@@ -105,6 +108,7 @@ class AllMovies extends Component {
         this.props.success("Successfully deleted movie!");
         this.setState({ openConfirmation: false, deleteId: null });
         this.getAllMovies();
+        this.setState({ active: "movie" });
       })
       .catch(() => {
         this.props.error("Couldn't delete movie :(");
@@ -142,6 +146,7 @@ class AllMovies extends Component {
           this.props.success(response.data);
           this.getAllMovies();
           this.clearState();
+          this.setState({ active: "movie" });
         })
         .catch((error) => {
           this.props.error(error.response.data);
@@ -223,10 +228,11 @@ class AllMovies extends Component {
             <MovieIcon />
             <div className="text">All movies</div>
           </div>
-          <div className="search TextField-radius">
+          <div className="search TextField-radius" autocomplete="off">
             <SearchIcon />
             <TextField
               label="Movie Name"
+              name="movienamesearch"
               fullWidth
               onChange={(e) => {
                 this.search("movie", e.target.value);
@@ -235,6 +241,7 @@ class AllMovies extends Component {
             <TextField
               label="Director Name"
               fullWidth
+              name="directornamesearch"
               onChange={(e) => {
                 this.search("director", e.target.value);
               }}
@@ -242,6 +249,7 @@ class AllMovies extends Component {
             <TextField
               label="Owner Name"
               fullWidth
+              name="ownernamesearch"
               onChange={(e) => {
                 this.search("owner", e.target.value);
               }}
@@ -250,9 +258,39 @@ class AllMovies extends Component {
           <div className="table">
             <table>
               <tr>
-                <th>Movie Name</th>
-                <th style={{ textAlign: "center" }}>Director</th>
-                <th style={{ textAlign: "center" }}>Owner</th>
+                <th>
+                  <a
+                    onClick={() => {
+                      this.getAllMovies();
+                      this.setState({ active: "movie" });
+                    }}
+                    className={this.state.active === "movie" ? "active" : ""}
+                  >
+                    Movie Name +
+                  </a>
+                </th>
+                <th style={{ textAlign: "center" }}>
+                  <a
+                    onClick={() => {
+                      this.getAllMovies("director");
+                      this.setState({ active: "director" });
+                    }}
+                    className={this.state.active === "director" ? "active" : ""}
+                  >
+                    Director +
+                  </a>
+                </th>
+                <th style={{ textAlign: "center" }}>
+                  <a
+                    onClick={() => {
+                      this.getAllMovies("owner");
+                      this.setState({ active: "owner" });
+                    }}
+                    className={this.state.active === "owner" ? "active" : ""}
+                  >
+                    Owner +
+                  </a>
+                </th>
                 <th style={{ textAlign: "center" }}>Edit</th>
                 <th style={{ textAlign: "center" }}>Delete</th>
               </tr>

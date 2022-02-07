@@ -11,11 +11,34 @@ newMovie = async (name, director, owner, res) => {
   });
 };
 
-getAllMovies = async () => {
+getAllMovies = async (order) => {
   let allMovies;
-  allMovies = await db.sequelize.query("SELECT * FROM movies ORDER BY name ;", {
-    type: db.sequelize.QueryTypes.SELECT,
-  });
+  switch (order) {
+    case "director":
+      allMovies = await db.sequelize.query(
+        "SELECT * FROM movies ORDER BY director ;",
+        {
+          type: db.sequelize.QueryTypes.SELECT,
+        }
+      );
+      break;
+    case "owner":
+      allMovies = await db.sequelize.query(
+        "SELECT * FROM movies ORDER BY owner ;",
+        {
+          type: db.sequelize.QueryTypes.SELECT,
+        }
+      );
+      break;
+    default:
+      allMovies = await db.sequelize.query(
+        "SELECT * FROM movies ORDER BY name ;",
+        {
+          type: db.sequelize.QueryTypes.SELECT,
+        }
+      );
+      break;
+  }
   return allMovies;
 };
 

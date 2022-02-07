@@ -52,7 +52,7 @@ getAllProductsForMovie = (req, res) => {
   let payload = req.body;
   if (payload.id) {
     productRepository
-      .getAllProductsFromMovieId(payload.id)
+      .getAllProductsFromMovieId(payload.id, payload.order)
       .then((AllProducts) => res.status(200).send(AllProducts))
       .catch(() => {
         res.status(500).send("Something went wrong");

@@ -3,7 +3,7 @@ const router = express.Router();
 const stageController = require("../controllers").stageController;
 const authentication = require("../config/authentication");
 
-router.get(
+router.post(
   "/allStages",
   authentication.ensureAdmin,
   stageController.getAllStages
@@ -13,6 +13,12 @@ router.delete(
   "/deleteStage",
   authentication.ensureAdmin,
   stageController.deleteStage
+);
+
+router.post(
+  "/search",
+  authentication.ensureAdmin,
+  stageController.searchStageByName
 );
 
 module.exports = router;

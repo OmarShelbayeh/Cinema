@@ -11,7 +11,6 @@ import AuthenticationService from "../../Services/AuthenticationService";
 //Material UI
 import StorefrontIcon from "@mui/icons-material/Storefront";
 import OpenInNewIcon from "@mui/icons-material/OpenInNew";
-import LocalMoviesIcon from "@mui/icons-material/LocalMovies";
 import Backdrop from "@mui/material/Backdrop";
 import Modal from "@mui/material/Modal";
 import Fade from "@mui/material/Fade";
@@ -22,6 +21,8 @@ import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 import DeleteForever from "@mui/icons-material/DeleteForever";
+import SearchIcon from "@mui/icons-material/Search";
+import MovieIcon from "@mui/icons-material/Movie";
 
 class Shops extends Component {
   state = {
@@ -38,7 +39,8 @@ class Shops extends Component {
       available_pcs: null,
       price: null,
     },
-
+    activeProduct: "name",
+    active: "movie",
     openConfirmation: false,
     deleteId: null,
   };
@@ -47,16 +49,24 @@ class Shops extends Component {
     this.getAllMovies();
   }
 
-  getAllMovies() {
+  getAllMovies(order) {
     axios({
       url: URL + "/movies/allMovies",
-      method: "GET",
+      method: "POST",
       headers: {
         authorization: localStorage.getItem("token"),
+      },
+      data: {
+        order: order,
       },
     }).then((response) => {
       this.setState({ allMovies: response.data });
     });
+    if (order) {
+      this.setState({ active: order });
+    } else {
+      this.setState({ active: "movie" });
+    }
   }
 
   getShop(id, name) {
@@ -80,7 +90,12 @@ class Shops extends Component {
       })
       .catch((error) => {
         if (error.response.data === "Shop not found") {
-          this.setState({ newShop: true, shopName: name, movie_id: id });
+          this.setState({
+            newShop: true,
+            shopName: name,
+            movie_id: id,
+            shop: null,
+          });
         }
         this.props.warning(error.response.data);
       });
@@ -104,7 +119,7 @@ class Shops extends Component {
       });
   }
 
-  addNewShop() {
+  addNewShop(name) {
     axios({
       url: URL + "/shops/newShop",
       method: "POST",
@@ -124,15 +139,16 @@ class Shops extends Component {
           shop: null,
           storage: null,
           storage_id: 0,
+          shopName: name,
         });
-        await this.getShop(this.state.movie_id);
+        await this.getShop(this.state.movie_id, name);
       })
       .catch((error) => {
         this.props.error(error.response.data);
       });
   }
 
-  getAllProducts(id) {
+  getAllProducts(id, order) {
     axios({
       url: URL + "/products/allProducts",
       method: "POST",
@@ -141,6 +157,7 @@ class Shops extends Component {
       },
       data: {
         id: id,
+        order: order,
       },
     })
       .then((response) => {
@@ -149,6 +166,11 @@ class Shops extends Component {
       .catch((error) => {
         this.props.error(error.response.data);
       });
+    if (order) {
+      this.setState({ activeProduct: order });
+    } else {
+      this.setState({ activeProduct: "name" });
+    }
   }
 
   addNewProduct() {
@@ -245,6 +267,34 @@ class Shops extends Component {
     }
   }
 
+  search(param, string) {
+    let items = this.state.allMovies;
+    let matches = [];
+    if (string === "") {
+      this.setState({ search: false, allMovies: items });
+      this.getAllMovies();
+    } else {
+      switch (param) {
+        case "movie":
+          matches = items.filter((s) =>
+            s.name.toLowerCase().includes(string.toLowerCase())
+          );
+          break;
+        case "director":
+          matches = items.filter((s) =>
+            s.director.toLowerCase().includes(string.toLowerCase())
+          );
+          break;
+        case "owner":
+          matches = items.filter((s) =>
+            s.owner.toLowerCase().includes(string.toLowerCase())
+          );
+          break;
+      }
+      this.setState({ allMovies: matches, search: true });
+    }
+  }
+
   render() {
     if (!AuthenticationService.isUserLoggedIn()) {
       window.location.href = "/login";
@@ -261,15 +311,78 @@ class Shops extends Component {
               <div className="allMovies">
                 <div className="table-container">
                   <div className="title">
-                    <LocalMoviesIcon />
+                    <MovieIcon />
                     <div className="text">All movies</div>
+                  </div>
+                  <div className="search TextField-radius" autocomplete="off">
+                    <SearchIcon />
+                    <TextField
+                      label="Movie Name"
+                      name="movienamesearch"
+                      fullWidth
+                      onChange={(e) => {
+                        this.search("movie", e.target.value);
+                      }}
+                    />
+                    <TextField
+                      label="Director Name"
+                      fullWidth
+                      name="directornamesearch"
+                      onChange={(e) => {
+                        this.search("director", e.target.value);
+                      }}
+                    />
+                    <TextField
+                      label="Owner Name"
+                      fullWidth
+                      name="ownernamesearch"
+                      onChange={(e) => {
+                        this.search("owner", e.target.value);
+                      }}
+                    />
                   </div>
                   <div className="table">
                     <table>
                       <tr>
-                        <th>Movie Name</th>
-                        <th style={{ textAlign: "center" }}>Director</th>
-                        <th style={{ textAlign: "center" }}>Owner</th>
+                        <th>
+                          <a
+                            onClick={() => {
+                              this.getAllMovies();
+                              this.setState({ active: "movie" });
+                            }}
+                            className={
+                              this.state.active === "movie" ? "active" : ""
+                            }
+                          >
+                            Movie Name +
+                          </a>
+                        </th>
+                        <th style={{ textAlign: "center" }}>
+                          <a
+                            onClick={() => {
+                              this.getAllMovies("director");
+                              this.setState({ active: "director" });
+                            }}
+                            className={
+                              this.state.active === "director" ? "active" : ""
+                            }
+                          >
+                            Director +
+                          </a>
+                        </th>
+                        <th style={{ textAlign: "center" }}>
+                          <a
+                            onClick={() => {
+                              this.getAllMovies("owner");
+                              this.setState({ active: "owner" });
+                            }}
+                            className={
+                              this.state.active === "owner" ? "active" : ""
+                            }
+                          >
+                            Owner +
+                          </a>
+                        </th>
                         <th style={{ textAlign: "center" }}>Open Shop</th>
                       </tr>
                       {this.state.allMovies.map((movie) => (
@@ -283,6 +396,7 @@ class Shops extends Component {
                             <button
                               onClick={() => {
                                 this.getShop(movie.id, movie.name);
+                                this.setState({ movie_id: movie.id });
                               }}
                             >
                               <OpenInNewIcon />
@@ -334,10 +448,53 @@ class Shops extends Component {
                       <div className="table">
                         <table>
                           <tr>
-                            <th>Name</th>
-                            <th style={{ textAlign: "center" }}>Price</th>
+                            <th>
+                              <a
+                                onClick={() => {
+                                  this.getAllProducts(this.state.movie_id);
+                                }}
+                                className={
+                                  this.state.activeProduct === "name"
+                                    ? "active"
+                                    : ""
+                                }
+                              >
+                                Name +
+                              </a>
+                            </th>
                             <th style={{ textAlign: "center" }}>
-                              Available Pieces
+                              <a
+                                onClick={() => {
+                                  this.getAllProducts(
+                                    this.state.movie_id,
+                                    "price"
+                                  );
+                                }}
+                                className={
+                                  this.state.activeProduct === "price"
+                                    ? "active"
+                                    : ""
+                                }
+                              >
+                                Price +
+                              </a>
+                            </th>
+                            <th style={{ textAlign: "center" }}>
+                              <a
+                                onClick={() => {
+                                  this.getAllProducts(
+                                    this.state.movie_id,
+                                    "availablePcs"
+                                  );
+                                }}
+                                className={
+                                  this.state.activeProduct === "availablePcs"
+                                    ? "active"
+                                    : ""
+                                }
+                              >
+                                Available Pieces +
+                              </a>
                             </th>
                             <th style={{ textAlign: "center" }}>Delete</th>
                           </tr>
@@ -449,7 +606,7 @@ class Shops extends Component {
                 <button
                   className="button"
                   onClick={() => {
-                    this.addNewShop();
+                    this.addNewShop(this.state.shopName);
                   }}
                 >
                   Add new shop

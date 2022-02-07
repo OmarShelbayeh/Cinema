@@ -3,7 +3,7 @@ const router = express.Router();
 const scheduleController = require("../controllers").scheduleController;
 const authentication = require("../config/authentication");
 
-router.get("/allSchedules", scheduleController.getAllSchedules);
+router.post("/allSchedules", scheduleController.getAllSchedules);
 router.post(
   "/newSchedule",
   authentication.ensureAdmin,

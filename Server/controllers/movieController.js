@@ -6,7 +6,7 @@ const ticketRepository = require("../Repository").ticketRepository;
 
 const getAllMovies = (req, res) => {
   movieRepository
-    .getAllMovies()
+    .getAllMovies(req.body.order)
     .then((movies) => {
       res.status(200).send(movies);
     })

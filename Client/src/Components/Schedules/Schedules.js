@@ -23,6 +23,7 @@ import InputAdornment from "@mui/material/InputAdornment";
 import AdapterDateFns from "@mui/lab/AdapterDateFns";
 import LocalizationProvider from "@mui/lab/LocalizationProvider";
 import DateTimePicker from "@mui/lab/DateTimePicker";
+import SearchIcon from "@mui/icons-material/Search";
 
 class Schedules extends Component {
   state = {
@@ -35,9 +36,16 @@ class Schedules extends Component {
     },
 
     deleteId: null,
-
+    active: "date",
     openConfirmation: false,
     openNewSchedule: false,
+
+    search: {
+      date: new Date(),
+      movieName: 0,
+    },
+
+    searching: false,
   };
 
   componentDidMount() {
@@ -100,19 +108,41 @@ class Schedules extends Component {
         price: null,
       },
       openNewSchedule: false,
+      search: {
+        date: null,
+        movieName: null,
+      },
     });
   }
 
-  getSchedule() {
-    axios({
-      url: URL + "/schedules/allSchedules",
-      method: "GET",
-      headers: {
-        authorization: localStorage.getItem("token"),
-      },
-    }).then((response) => {
-      this.setState({ allSchedules: response.data });
-    });
+  async getSchedule(order) {
+    if (!this.state.searching) {
+      axios({
+        url: URL + "/schedules/allSchedules",
+        method: "POST",
+        headers: {
+          authorization: localStorage.getItem("token"),
+        },
+        data: {
+          order: order,
+        },
+      }).then((response) => {
+        this.setState({ allSchedules: response.data });
+      });
+      if (order) {
+        this.setState({ active: order });
+      } else {
+        this.setState({ active: "date" });
+      }
+    } else {
+      if (order) {
+        await this.setState({ active: order });
+        this.search(order);
+      } else {
+        await this.setState({ active: "date" });
+        this.search();
+      }
+    }
   }
 
   addNewSchedule() {
@@ -168,6 +198,27 @@ class Schedules extends Component {
       });
   }
 
+  search(order) {
+    axios({
+      url: URL + "/schedules/search",
+      method: "POST",
+      headers: {
+        authorization: localStorage.getItem("token"),
+      },
+      data: {
+        search: this.state.search,
+        order:
+          this.state.active === "date"
+            ? null
+            : order
+            ? order
+            : this.state.active,
+      },
+    }).then((response) => {
+      this.setState({ allSchedules: response.data, searching: true });
+    });
+  }
+
   render() {
     return (
       <div className="allMovies">
@@ -176,15 +227,119 @@ class Schedules extends Component {
             <DateRangeIcon />
             <div className="text">All Schedules</div>
           </div>
+          <div className="search TextField-radius">
+            <SearchIcon />
+            <LocalizationProvider dateAdapter={AdapterDateFns}>
+              <DateTimePicker
+                label="Date"
+                minDate={new Date()}
+                value={this.state.search.date}
+                onChange={(value) =>
+                  this.setState({
+                    search: {
+                      date: value,
+                      movieName: this.state.search.movieName,
+                    },
+                  })
+                }
+                renderInput={(params) => <TextField fullWidth {...params} />}
+              />
+            </LocalizationProvider>
+            <FormControl fullWidth>
+              <InputLabel>Movie Name</InputLabel>
+              <Select
+                value={this.state.search.movieName}
+                label="Movie Name"
+                onChange={(e) =>
+                  this.setState({
+                    search: {
+                      date: this.state.search.date,
+                      movieName: e.target.value,
+                    },
+                  })
+                }
+              >
+                <MenuItem value={0}>All Movies</MenuItem>
+                {this.props.allMovies.length > 0 ? (
+                  this.props.allMovies.map((movie) => (
+                    <MenuItem value={movie.name}>{movie.name}</MenuItem>
+                  ))
+                ) : (
+                  <MenuItem></MenuItem>
+                )}
+              </Select>
+            </FormControl>
+            <button
+              className="button"
+              onClick={() => {
+                this.search();
+              }}
+              style={{ marginTop: "0px" }}
+            >
+              Search
+            </button>
+          </div>
+
           <div className="table">
             <table>
               <tr>
-                <th>Movie Name</th>
-                <th style={{ textAlign: "center" }}>Stage Name</th>
-                <th style={{ textAlign: "center" }}>Date</th>
+                <th>
+                  <a
+                    onClick={() => {
+                      this.getSchedule("movieName");
+                    }}
+                    className={
+                      this.state.active === "movieName" ? "active" : ""
+                    }
+                  >
+                    Movie Name +
+                  </a>
+                </th>
+                <th style={{ textAlign: "center" }}>
+                  <a
+                    onClick={() => {
+                      this.getSchedule("stageName");
+                    }}
+                    className={
+                      this.state.active === "stageName" ? "active" : ""
+                    }
+                  >
+                    Stage Name +
+                  </a>
+                </th>
+                <th style={{ textAlign: "center" }}>
+                  <a
+                    onClick={() => {
+                      this.getSchedule();
+                    }}
+                    className={this.state.active === "date" ? "active" : ""}
+                  >
+                    Date +
+                  </a>
+                </th>
                 <th style={{ textAlign: "center" }}>Time</th>
-                <th style={{ textAlign: "center" }}>Price</th>
-                <th style={{ textAlign: "center" }}>Available Tickets</th>
+                <th style={{ textAlign: "center" }}>
+                  <a
+                    onClick={() => {
+                      this.getSchedule("price");
+                    }}
+                    className={this.state.active === "price" ? "active" : ""}
+                  >
+                    Price +
+                  </a>
+                </th>
+                <th style={{ textAlign: "center" }}>
+                  <a
+                    onClick={() => {
+                      this.getSchedule("availableSeats");
+                    }}
+                    className={
+                      this.state.active === "availableSeats" ? "active" : ""
+                    }
+                  >
+                    Available Tickets +
+                  </a>
+                </th>
                 <th style={{ textAlign: "center" }}>Delete</th>
               </tr>
               {this.state.allSchedules.map((schedule) => (

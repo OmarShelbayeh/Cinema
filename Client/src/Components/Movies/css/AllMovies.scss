@@ -38,10 +38,19 @@
         text-align: left;
         width: 100%;
         border-collapse: collapse;
-
         tr {
           margin: 8px;
           border-bottom: 1px solid #e8e8e8;
+        }
+        a {
+          font-weight: bold;
+          color: black;
+          transition: all 0.3s;
+        }
+
+        a:hover,
+        .active {
+          color: #638dfc;
         }
       }
     }

@@ -24,10 +24,13 @@ class UserSchedules extends Component {
     allSchedules: [],
     allMovies: [],
 
+    active: "date",
     search: {
       date: new Date(),
       movieName: 0,
     },
+
+    searching: false,
   };
 
   async componentDidMount() {
@@ -51,22 +54,40 @@ class UserSchedules extends Component {
     });
   }
 
-  getSchedule() {
-    axios({
-      url: URL + "/schedules/allSchedules",
-      method: "GET",
-      headers: {
-        authorization: localStorage.getItem("token"),
-      },
-    }).then((response) => {
-      this.setState({ allSchedules: response.data });
-    });
+  async getSchedule(order) {
+    if (!this.state.searching) {
+      axios({
+        url: URL + "/schedules/allSchedules",
+        method: "POST",
+        headers: {
+          authorization: localStorage.getItem("token"),
+        },
+        data: {
+          order: order,
+        },
+      }).then((response) => {
+        this.setState({ allSchedules: response.data });
+      });
+      if (order) {
+        this.setState({ active: order });
+      } else {
+        this.setState({ active: "date" });
+      }
+    } else {
+      if (order) {
+        await this.setState({ active: order });
+        this.search(order);
+      } else {
+        await this.setState({ active: "date" });
+        this.search();
+      }
+    }
   }
 
   getAllMovies() {
     axios({
       url: URL + "/movies/allMovies",
-      method: "GET",
+      method: "POST",
       headers: {
         authorization: localStorage.getItem("token"),
       },
@@ -79,16 +100,24 @@ class UserSchedules extends Component {
     window.location.href = "/buy?id=" + id;
   }
 
-  search() {
+  search(order) {
     axios({
       url: URL + "/schedules/search",
       method: "POST",
       headers: {
         authorization: localStorage.getItem("token"),
       },
-      data: this.state.search,
+      data: {
+        search: this.state.search,
+        order:
+          this.state.active === "date"
+            ? null
+            : order
+            ? order
+            : this.state.active,
+      },
     }).then((response) => {
-      this.setState({ allSchedules: response.data });
+      this.setState({ allSchedules: response.data, searching: true });
     });
   }
 
@@ -154,12 +183,63 @@ class UserSchedules extends Component {
             {this.state.allSchedules.length > 0 ? (
               <table>
                 <tr>
-                  <th>Movie Name</th>
-                  <th style={{ textAlign: "center" }}>Stage Name</th>
-                  <th style={{ textAlign: "center" }}>Date</th>
+                  <th>
+                    <a
+                      onClick={() => {
+                        this.getSchedule("movieName");
+                      }}
+                      className={
+                        this.state.active === "movieName" ? "active" : ""
+                      }
+                    >
+                      Movie Name +
+                    </a>
+                  </th>
+                  <th style={{ textAlign: "center" }}>
+                    <a
+                      onClick={() => {
+                        this.getSchedule("stageName");
+                      }}
+                      className={
+                        this.state.active === "stageName" ? "active" : ""
+                      }
+                    >
+                      Stage Name +
+                    </a>
+                  </th>
+                  <th style={{ textAlign: "center" }}>
+                    <a
+                      onClick={() => {
+                        this.getSchedule();
+                      }}
+                      className={this.state.active === "date" ? "active" : ""}
+                    >
+                      Date +
+                    </a>
+                  </th>
                   <th style={{ textAlign: "center" }}>Time</th>
-                  <th style={{ textAlign: "center" }}>Price</th>
-                  <th style={{ textAlign: "center" }}>Available tickets</th>
+                  <th style={{ textAlign: "center" }}>
+                    <a
+                      onClick={() => {
+                        this.getSchedule("price");
+                      }}
+                      className={this.state.active === "price" ? "active" : ""}
+                    >
+                      Price +
+                    </a>
+                  </th>
+                  <th style={{ textAlign: "center" }}>
+                    <a
+                      onClick={() => {
+                        this.getSchedule("availableSeats");
+                      }}
+                      className={
+                        this.state.active === "availableSeats" ? "active" : ""
+                      }
+                    >
+                      Available Tickets +
+                    </a>
+                  </th>
                   <th style={{ textAlign: "center" }}>Buy</th>
                 </tr>
                 {this.state.allSchedules.map((schedule) => (

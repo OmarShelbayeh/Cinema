@@ -7,7 +7,7 @@ const ticketRepository = require("../Repository").ticketRepository;
 
 const getAllStages = (req, res) => {
   stageRepository
-    .getAllStages()
+    .getAllStages(req.body.order)
     .then((stages) => {
       res.status(200).send(stages);
     })
@@ -71,8 +71,25 @@ const deleteStage = (req, res) => {
   }
 };
 
+const searchStageByName = (req, res) => {
+  let payload = req.body;
+  if (payload.name) {
+    stageRepository.searchStageByName(payload.name).then((stages) => {
+      console.log(stages);
+      if (stages.length > 0) {
+        res.status(200).send(stages);
+      } else {
+        res.status(500).send("Couldn't find a stage with that name");
+      }
+    });
+  } else {
+    res.status(500).send("Missing data");
+  }
+};
+
 module.exports = {
   getAllStages,
   newStage,
   deleteStage,
+  searchStageByName,
 };

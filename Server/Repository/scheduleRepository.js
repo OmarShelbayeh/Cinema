@@ -5,17 +5,66 @@ newSchedule = async (payload) => {
   await schedule.create(payload);
 };
 
-getAllSchedules = async () => {
+getAllSchedules = async (order) => {
   let allSchedules;
-  allSchedules = await db.sequelize.query(
-    "SELECT s.id, s.showing_at as date, s.price as price, m.name as movieName, st.stage_name as stageName, (st.number_of_seats - (SELECT count(*) FROM tickets WHERE schedule_id = s.id)) as available_seats from schedules s inner join movies m on s.movie_id = m.id inner join stages st on s.stage_id = st.id where s.showing_at >= :date order by s.showing_at;",
-    {
-      replacements: {
-        date: new Date(),
-      },
-      type: db.sequelize.QueryTypes.SELECT,
-    }
-  );
+  switch (order) {
+    case "movieName":
+      allSchedules = await db.sequelize.query(
+        "SELECT s.id, s.showing_at as date, s.price as price, m.name as movieName, st.stage_name as stageName, (st.number_of_seats - (SELECT count(*) FROM tickets WHERE schedule_id = s.id)) as available_seats from schedules s inner join movies m on s.movie_id = m.id inner join stages st on s.stage_id = st.id where s.showing_at >= :date order by m.name, s.showing_at;",
+        {
+          replacements: {
+            date: new Date(),
+          },
+          type: db.sequelize.QueryTypes.SELECT,
+        }
+      );
+      break;
+    case "stageName":
+      allSchedules = await db.sequelize.query(
+        "SELECT s.id, s.showing_at as date, s.price as price, m.name as movieName, st.stage_name as stageName, (st.number_of_seats - (SELECT count(*) FROM tickets WHERE schedule_id = s.id)) as available_seats from schedules s inner join movies m on s.movie_id = m.id inner join stages st on s.stage_id = st.id where s.showing_at >= :date order by st.stage_name, s.showing_at;",
+        {
+          replacements: {
+            date: new Date(),
+          },
+          type: db.sequelize.QueryTypes.SELECT,
+        }
+      );
+      break;
+    case "price":
+      allSchedules = await db.sequelize.query(
+        "SELECT s.id, s.showing_at as date, s.price as price, m.name as movieName, st.stage_name as stageName, (st.number_of_seats - (SELECT count(*) FROM tickets WHERE schedule_id = s.id)) as available_seats from schedules s inner join movies m on s.movie_id = m.id inner join stages st on s.stage_id = st.id where s.showing_at >= :date order by s.price, s.showing_at;",
+        {
+          replacements: {
+            date: new Date(),
+          },
+          type: db.sequelize.QueryTypes.SELECT,
+        }
+      );
+      break;
+    case "availableSeats":
+      allSchedules = await db.sequelize.query(
+        "SELECT s.id, s.showing_at as date, s.price as price, m.name as movieName, st.stage_name as stageName, (st.number_of_seats - (SELECT count(*) FROM tickets WHERE schedule_id = s.id)) as available_seats from schedules s inner join movies m on s.movie_id = m.id inner join stages st on s.stage_id = st.id where s.showing_at >= :date order by (st.number_of_seats - (SELECT count(*) FROM tickets WHERE schedule_id = s.id)), s.showing_at;",
+        {
+          replacements: {
+            date: new Date(),
+          },
+          type: db.sequelize.QueryTypes.SELECT,
+        }
+      );
+      break;
+    default:
+      allSchedules = await db.sequelize.query(
+        "SELECT s.id, s.showing_at as date, s.price as price, m.name as movieName, st.stage_name as stageName, (st.number_of_seats - (SELECT count(*) FROM tickets WHERE schedule_id = s.id)) as available_seats from schedules s inner join movies m on s.movie_id = m.id inner join stages st on s.stage_id = st.id where s.showing_at >= :date order by s.showing_at;",
+        {
+          replacements: {
+            date: new Date(),
+          },
+          type: db.sequelize.QueryTypes.SELECT,
+        }
+      );
+      break;
+  }
+
   return allSchedules;
 };
 
@@ -117,37 +166,173 @@ getSchudeleInfoForUser = async (id) => {
   return Schedule;
 };
 
-searchSchedulesByDate = async (date) => {
-  let AllSchedules = await db.sequelize.query(
-    "SELECT s.id, s.showing_at as date, s.price as price, m.name as movieName, st.stage_name as stageName, (st.number_of_seats - (SELECT count(*) FROM tickets WHERE schedule_id = s.id)) as available_seats from schedules s inner join movies m on s.movie_id = m.id inner join stages st on s.stage_id = st.id where s.showing_at >= :date order by s.showing_at;",
-    {
-      replacements: { date: date },
-      type: db.sequelize.QueryTypes.SELECT,
-    }
-  );
-  return AllSchedules;
+searchSchedulesByDate = async (date, order) => {
+  let allSchedules;
+  switch (order) {
+    case "movieName":
+      allSchedules = await db.sequelize.query(
+        "SELECT s.id, s.showing_at as date, s.price as price, m.name as movieName, st.stage_name as stageName, (st.number_of_seats - (SELECT count(*) FROM tickets WHERE schedule_id = s.id)) as available_seats from schedules s inner join movies m on s.movie_id = m.id inner join stages st on s.stage_id = st.id where s.showing_at >= :date order by m.name, s.showing_at;",
+        {
+          replacements: {
+            date: date,
+          },
+          type: db.sequelize.QueryTypes.SELECT,
+        }
+      );
+      break;
+    case "stageName":
+      allSchedules = await db.sequelize.query(
+        "SELECT s.id, s.showing_at as date, s.price as price, m.name as movieName, st.stage_name as stageName, (st.number_of_seats - (SELECT count(*) FROM tickets WHERE schedule_id = s.id)) as available_seats from schedules s inner join movies m on s.movie_id = m.id inner join stages st on s.stage_id = st.id where s.showing_at >= :date order by st.stage_name, s.showing_at;",
+        {
+          replacements: {
+            date: date,
+          },
+          type: db.sequelize.QueryTypes.SELECT,
+        }
+      );
+      break;
+    case "price":
+      allSchedules = await db.sequelize.query(
+        "SELECT s.id, s.showing_at as date, s.price as price, m.name as movieName, st.stage_name as stageName, (st.number_of_seats - (SELECT count(*) FROM tickets WHERE schedule_id = s.id)) as available_seats from schedules s inner join movies m on s.movie_id = m.id inner join stages st on s.stage_id = st.id where s.showing_at >= :date order by s.price, s.showing_at;",
+        {
+          replacements: {
+            date: date,
+          },
+          type: db.sequelize.QueryTypes.SELECT,
+        }
+      );
+      break;
+    case "availableSeats":
+      allSchedules = await db.sequelize.query(
+        "SELECT s.id, s.showing_at as date, s.price as price, m.name as movieName, st.stage_name as stageName, (st.number_of_seats - (SELECT count(*) FROM tickets WHERE schedule_id = s.id)) as available_seats from schedules s inner join movies m on s.movie_id = m.id inner join stages st on s.stage_id = st.id where s.showing_at >= :date order by (st.number_of_seats - (SELECT count(*) FROM tickets WHERE schedule_id = s.id)), s.showing_at;",
+        {
+          replacements: {
+            date: date,
+          },
+          type: db.sequelize.QueryTypes.SELECT,
+        }
+      );
+      break;
+    default:
+      allSchedules = await db.sequelize.query(
+        "SELECT s.id, s.showing_at as date, s.price as price, m.name as movieName, st.stage_name as stageName, (st.number_of_seats - (SELECT count(*) FROM tickets WHERE schedule_id = s.id)) as available_seats from schedules s inner join movies m on s.movie_id = m.id inner join stages st on s.stage_id = st.id where s.showing_at >= :date order by s.showing_at;",
+        {
+          replacements: {
+            date: date,
+          },
+          type: db.sequelize.QueryTypes.SELECT,
+        }
+      );
+      break;
+  }
+
+  return allSchedules;
 };
 
-searchSchedulesByMovie = async (movieName) => {
-  let AllSchedules = await db.sequelize.query(
-    "SELECT s.id, s.showing_at as date, s.price as price, m.name as movieName, st.stage_name as stageName, (st.number_of_seats - (SELECT count(*) FROM tickets WHERE schedule_id = s.id)) as available_seats from schedules s inner join movies m on s.movie_id = m.id inner join stages st on s.stage_id = st.id where m.name = :movie_name s.showing_at >= :date order by s.showing_at;",
-    {
-      replacements: { movie_name: movieName, date: new Date() },
-      type: db.sequelize.QueryTypes.SELECT,
-    }
-  );
-  return AllSchedules;
+searchSchedulesByMovie = async (movieName, order) => {
+  let allSchedules;
+  switch (order) {
+    case "movieName":
+      allSchedules = await db.sequelize.query(
+        "SELECT s.id, s.showing_at as date, s.price as price, m.name as movieName, st.stage_name as stageName, (st.number_of_seats - (SELECT count(*) FROM tickets WHERE schedule_id = s.id)) as available_seats from schedules s inner join movies m on s.movie_id = m.id inner join stages st on s.stage_id = st.id where m.name = :movie_name s.showing_at >= :date order by m.name, s.showing_at;",
+        {
+          replacements: { movie_name: movieName, date: new Date() },
+          type: db.sequelize.QueryTypes.SELECT,
+        }
+      );
+      break;
+    case "stageName":
+      allSchedules = await db.sequelize.query(
+        "SELECT s.id, s.showing_at as date, s.price as price, m.name as movieName, st.stage_name as stageName, (st.number_of_seats - (SELECT count(*) FROM tickets WHERE schedule_id = s.id)) as available_seats from schedules s inner join movies m on s.movie_id = m.id inner join stages st on s.stage_id = st.id where m.name = :movie_name s.showing_at >= :date order by st.stage_name, s.showing_at;",
+        {
+          replacements: { movie_name: movieName, date: new Date() },
+          type: db.sequelize.QueryTypes.SELECT,
+        }
+      );
+      break;
+    case "price":
+      allSchedules = await db.sequelize.query(
+        "SELECT s.id, s.showing_at as date, s.price as price, m.name as movieName, st.stage_name as stageName, (st.number_of_seats - (SELECT count(*) FROM tickets WHERE schedule_id = s.id)) as available_seats from schedules s inner join movies m on s.movie_id = m.id inner join stages st on s.stage_id = st.id where m.name = :movie_name s.showing_at >= :date order by s.price, s.showing_at;",
+        {
+          replacements: { movie_name: movieName, date: new Date() },
+          type: db.sequelize.QueryTypes.SELECT,
+        }
+      );
+      break;
+    case "availableSeats":
+      allSchedules = await db.sequelize.query(
+        "SELECT s.id, s.showing_at as date, s.price as price, m.name as movieName, st.stage_name as stageName, (st.number_of_seats - (SELECT count(*) FROM tickets WHERE schedule_id = s.id)) as available_seats from schedules s inner join movies m on s.movie_id = m.id inner join stages st on s.stage_id = st.id where m.name = :movie_name s.showing_at >= :date order by (st.number_of_seats - (SELECT count(*) FROM tickets WHERE schedule_id = s.id)), s.showing_at;",
+        {
+          replacements: { movie_name: movieName, date: new Date() },
+          type: db.sequelize.QueryTypes.SELECT,
+        }
+      );
+      break;
+    default:
+      allSchedules = await db.sequelize.query(
+        "SELECT s.id, s.showing_at as date, s.price as price, m.name as movieName, st.stage_name as stageName, (st.number_of_seats - (SELECT count(*) FROM tickets WHERE schedule_id = s.id)) as available_seats from schedules s inner join movies m on s.movie_id = m.id inner join stages st on s.stage_id = st.id where m.name = :movie_name s.showing_at >= :date order by s.showing_at;",
+        {
+          replacements: { movie_name: movieName, date: new Date() },
+          type: db.sequelize.QueryTypes.SELECT,
+        }
+      );
+      break;
+  }
+
+  return allSchedules;
 };
 
-searchSchedulesByDateAndMovie = async (movieName, date) => {
-  let AllSchedules = await db.sequelize.query(
-    "SELECT s.id, s.showing_at as date, s.price as price, m.name as movieName, st.stage_name as stageName, (st.number_of_seats - (SELECT count(*) FROM tickets WHERE schedule_id = s.id)) as available_seats from schedules s inner join movies m on s.movie_id = m.id inner join stages st on s.stage_id = st.id where m.name = :movie_name and s.showing_at >= :date order by s.showing_at;",
-    {
-      replacements: { movie_name: movieName, date: date },
-      type: db.sequelize.QueryTypes.SELECT,
-    }
-  );
-  return AllSchedules;
+searchSchedulesByDateAndMovie = async (movieName, date, order) => {
+  let allSchedules;
+  switch (order) {
+    case "movieName":
+      allSchedules = await db.sequelize.query(
+        "SELECT s.id, s.showing_at as date, s.price as price, m.name as movieName, st.stage_name as stageName, (st.number_of_seats - (SELECT count(*) FROM tickets WHERE schedule_id = s.id)) as available_seats from schedules s inner join movies m on s.movie_id = m.id inner join stages st on s.stage_id = st.id where m.name = :movie_name and s.showing_at >= :date order by m.name, s.showing_at;",
+        {
+          replacements: { movie_name: movieName, date: date },
+          type: db.sequelize.QueryTypes.SELECT,
+        }
+      );
+      break;
+    case "stageName":
+      allSchedules = await db.sequelize.query(
+        "SELECT s.id, s.showing_at as date, s.price as price, m.name as movieName, st.stage_name as stageName, (st.number_of_seats - (SELECT count(*) FROM tickets WHERE schedule_id = s.id)) as available_seats from schedules s inner join movies m on s.movie_id = m.id inner join stages st on s.stage_id = st.id where m.name = :movie_name and s.showing_at >= :date order by st.stage_name, s.showing_at;",
+        {
+          replacements: { movie_name: movieName, date: date },
+          type: db.sequelize.QueryTypes.SELECT,
+        }
+      );
+      break;
+    case "price":
+      allSchedules = await db.sequelize.query(
+        "SELECT s.id, s.showing_at as date, s.price as price, m.name as movieName, st.stage_name as stageName, (st.number_of_seats - (SELECT count(*) FROM tickets WHERE schedule_id = s.id)) as available_seats from schedules s inner join movies m on s.movie_id = m.id inner join stages st on s.stage_id = st.id where m.name = :movie_name and s.showing_at >= :date order by s.price, s.showing_at;",
+        {
+          replacements: { movie_name: movieName, date: date },
+          type: db.sequelize.QueryTypes.SELECT,
+        }
+      );
+      break;
+    case "availableSeats":
+      allSchedules = await db.sequelize.query(
+        "SELECT s.id, s.showing_at as date, s.price as price, m.name as movieName, st.stage_name as stageName, (st.number_of_seats - (SELECT count(*) FROM tickets WHERE schedule_id = s.id)) as available_seats from schedules s inner join movies m on s.movie_id = m.id inner join stages st on s.stage_id = st.id where m.name = :movie_name and s.showing_at >= :date order by (st.number_of_seats - (SELECT count(*) FROM tickets WHERE schedule_id = s.id)), s.showing_at;",
+        {
+          replacements: { movie_name: movieName, date: date },
+          type: db.sequelize.QueryTypes.SELECT,
+        }
+      );
+      break;
+    default:
+      allSchedules = await db.sequelize.query(
+        "SELECT s.id, s.showing_at as date, s.price as price, m.name as movieName, st.stage_name as stageName, (st.number_of_seats - (SELECT count(*) FROM tickets WHERE schedule_id = s.id)) as available_seats from schedules s inner join movies m on s.movie_id = m.id inner join stages st on s.stage_id = st.id where m.name = :movie_name and s.showing_at >= :date order by s.showing_at;",
+        {
+          replacements: { movie_name: movieName, date: date },
+          type: db.sequelize.QueryTypes.SELECT,
+        }
+      );
+      break;
+  }
+
+  return allSchedules;
 };
 
 module.exports = {

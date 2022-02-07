@@ -21,24 +21,30 @@ class AdminDashboard extends Component {
     allStages: [],
   };
 
-  getAllMovies() {
+  getAllMovies(order) {
     axios({
       url: URL + "/movies/allMovies",
-      method: "GET",
+      method: "POST",
       headers: {
         authorization: localStorage.getItem("token"),
+      },
+      data: {
+        order: order,
       },
     }).then((response) => {
       this.setState({ allMovies: response.data });
     });
   }
 
-  getAllStages() {
+  getAllStages(order) {
     axios({
       url: URL + "/stages/allStages",
-      method: "GET",
+      method: "POST",
       headers: {
         authorization: localStorage.getItem("token"),
+      },
+      data: {
+        order: order,
       },
     }).then((response) => {
       this.setState({ allStages: response.data });
@@ -63,7 +69,7 @@ class AdminDashboard extends Component {
                 warning={(msg) => this.props.warning(msg)}
                 success={(msg) => this.props.success(msg)}
                 allMovies={this.state.allMovies}
-                getAllMovies={() => this.getAllMovies()}
+                getAllMovies={(order) => this.getAllMovies(order)}
               />
               <Schedules
                 error={(msg) => this.props.error(msg)}
@@ -79,7 +85,7 @@ class AdminDashboard extends Component {
                 warning={(msg) => this.props.warning(msg)}
                 success={(msg) => this.props.success(msg)}
                 allStages={this.state.allStages}
-                getAllStages={() => this.getAllStages()}
+                getAllStages={(order) => this.getAllStages(order)}
               />
             </div>
           </div>

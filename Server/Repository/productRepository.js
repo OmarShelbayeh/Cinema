@@ -66,14 +66,36 @@ returnProduct = async (id, number_of_pieces) => {
   );
 };
 
-getAllProductsFromMovieId = async (id) => {
-  let AllProducts = await db.sequelize.query(
-    "SELECT p.id, p.name, p.available_pcs, p.shop_id, p.price FROM products p INNER JOIN shops s ON p.shop_id = s.id WHERE s.movie_id = :id ;",
-    {
-      replacements: { id: id },
-      type: db.sequelize.QueryTypes.SELECT,
-    }
-  );
+getAllProductsFromMovieId = async (id, order) => {
+  let AllProducts;
+  switch (order) {
+    case "price":
+      AllProducts = await db.sequelize.query(
+        "SELECT p.id, p.name, p.available_pcs, p.shop_id, p.price FROM products p INNER JOIN shops s ON p.shop_id = s.id WHERE s.movie_id = :id ORDER BY p.price, p.name;",
+        {
+          replacements: { id: id },
+          type: db.sequelize.QueryTypes.SELECT,
+        }
+      );
+      break;
+    case "availablePcs":
+      AllProducts = await db.sequelize.query(
+        "SELECT p.id, p.name, p.available_pcs, p.shop_id, p.price FROM products p INNER JOIN shops s ON p.shop_id = s.id WHERE s.movie_id = :id ORDER BY p.available_pcs, p.name;",
+        {
+          replacements: { id: id },
+          type: db.sequelize.QueryTypes.SELECT,
+        }
+      );
+      break;
+    default:
+      AllProducts = await db.sequelize.query(
+        "SELECT p.id, p.name, p.available_pcs, p.shop_id, p.price FROM products p INNER JOIN shops s ON p.shop_id = s.id WHERE s.movie_id = :id ORDER BY p.name;",
+        {
+          replacements: { id: id },
+          type: db.sequelize.QueryTypes.SELECT,
+        }
+      );
+  }
   return AllProducts;
 };
 
