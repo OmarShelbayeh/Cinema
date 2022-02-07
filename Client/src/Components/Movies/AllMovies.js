@@ -124,6 +124,7 @@ class AllMovies extends Component {
       },
       openEdit: false,
       openNewMovie: false,
+      openConfirmation: false,
     });
   }
 
