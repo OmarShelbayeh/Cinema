@@ -36,16 +36,24 @@ class AddAdmin extends Component {
     this.setState({ email: null, openNewAdmin: false });
   }
 
-  getAdmins() {
+  getAdmins(order) {
     axios({
       url: URL + "/user/allAdmins",
-      method: "GET",
+      method: "POST",
       headers: {
         authorization: localStorage.getItem("token"),
+      },
+      data: {
+        order: order,
       },
     }).then((response) => {
       this.setState({ allAdmins: response.data });
     });
+    if (order) {
+      this.setState({ active: order });
+    } else {
+      this.setState({ active: "name" });
+    }
   }
 
   deleteAdmin() {
@@ -162,8 +170,36 @@ class AddAdmin extends Component {
           <div className="table">
             <table>
               <tr>
-                <th>Full Name</th>
-                <th>Email</th>
+                <th>
+                  <a
+                    onClick={() => {
+                      this.getAdmins();
+                    }}
+                    className={this.state.active === "name" ? "active" : ""}
+                  >
+                    Name +
+                  </a>
+                </th>
+                <th>
+                  <a
+                    onClick={() => {
+                      this.getAdmins("surname");
+                    }}
+                    className={this.state.active === "surname" ? "active" : ""}
+                  >
+                    Surname +
+                  </a>
+                </th>
+                <th>
+                  <a
+                    onClick={() => {
+                      this.getAdmins("email");
+                    }}
+                    className={this.state.active === "email" ? "active" : ""}
+                  >
+                    Email +
+                  </a>
+                </th>
                 <th style={{ textAlign: "center" }}>Status</th>
                 <th style={{ textAlign: "center" }}>Control</th>
                 <th style={{ textAlign: "center" }}>Delete</th>
@@ -174,16 +210,25 @@ class AddAdmin extends Component {
                       <td>
                         {admin.active ? (
                           admin.disabled ? (
-                            <p style={{ color: "red" }}>
-                              {admin.name + " " + admin.surname}
-                            </p>
+                            <p style={{ color: "red" }}>{admin.name}</p>
                           ) : (
-                            admin.name + " " + admin.surname
+                            admin.name
                           )
                         ) : (
                           <p style={{ color: "red" }}>
                             User not registered yet
                           </p>
+                        )}
+                      </td>
+                      <td>
+                        {admin.active ? (
+                          admin.disabled ? (
+                            <p style={{ color: "red" }}>{admin.surname}</p>
+                          ) : (
+                            admin.surname
+                          )
+                        ) : (
+                          <p style={{ color: "red" }}></p>
                         )}
                       </td>
                       <td>

@@ -60,7 +60,6 @@ cancelOrder = async (req, res) => {
         res.status(500).send("Order cannot be cancelled");
       } else {
         await orderRepository.deleteOrder(order.id);
-        await deliveryRepository.deleteDeliveryByOrderId(order.id);
         await productRepository.returnProduct(
           order.product_id,
           order.number_of_pieces

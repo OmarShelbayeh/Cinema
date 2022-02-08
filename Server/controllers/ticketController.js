@@ -6,7 +6,7 @@ const authentication = require("../config/authentication");
 const history = (req, res) => {
   let user = authentication.getUserObjectFromToken(req);
   ticketRepository
-    .history(user.id)
+    .history(user.id, req.body.order)
     .then((history) => {
       res.status(200).send(history);
     })
@@ -16,7 +16,7 @@ const history = (req, res) => {
 const getTickets = (req, res) => {
   let user = authentication.getUserObjectFromToken(req);
   ticketRepository
-    .showTickets(user.id)
+    .showTickets(user.id, req.body.order)
     .then((tickets) => {
       res.status(200).send(tickets);
     })

@@ -86,13 +86,35 @@ makeAdmin = async (id) => {
   });
 };
 
-getAllAdmins = async () => {
-  let allAdmins = await db.sequelize.query(
-    "SELECT id, name, surname, email, active, disabled FROM users WHERE role = 'ADMIN' order by id;",
-    {
-      type: db.sequelize.QueryTypes.SELECT,
-    }
-  );
+getAllAdmins = async (order) => {
+  let allAdmins;
+  switch (order) {
+    case "surname":
+      allAdmins = await db.sequelize.query(
+        "SELECT id, name, surname, email, active, disabled FROM users WHERE role = 'ADMIN' order by surname, id;",
+        {
+          type: db.sequelize.QueryTypes.SELECT,
+        }
+      );
+      break;
+    case "email":
+      allAdmins = await db.sequelize.query(
+        "SELECT id, name, surname, email, active, disabled FROM users WHERE role = 'ADMIN' order by email, id;",
+        {
+          type: db.sequelize.QueryTypes.SELECT,
+        }
+      );
+
+      break;
+    default:
+      allAdmins = await db.sequelize.query(
+        "SELECT id, name, surname, email, active, disabled FROM users WHERE role = 'ADMIN' order by name, id;",
+        {
+          type: db.sequelize.QueryTypes.SELECT,
+        }
+      );
+      break;
+  }
   return allAdmins;
 };
 

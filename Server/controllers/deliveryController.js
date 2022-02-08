@@ -17,6 +17,19 @@ newDelivery = (req, res) => {
   }
 };
 
+const getAllDeliveries = (req, res) => {
+  let payload = req.body;
+  deliveryRepository
+    .getAllDeliveries(payload.order)
+    .then((deliveries) => {
+      res.status(200).send(deliveries);
+    })
+    .catch((e) => {
+      res.status(500).send("Something went wrong");
+    });
+};
+
 module.exports = {
   newDelivery,
+  getAllDeliveries,
 };

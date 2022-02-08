@@ -8,6 +8,7 @@ const orderRoutes = require("./orderRoutes");
 const storageRoutes = require("./storageRoutes");
 const shopRoutes = require("./shopRoutes");
 const productRoutes = require("./productRoutes");
+const deliveryRoutes = require("./deliveryRoutes");
 const passport = require("passport");
 require("../config/passport")(passport);
 const cors = require("cors");
@@ -60,5 +61,10 @@ module.exports = (app) => {
     "/products",
     passport.authenticate("jwt", { session: false }),
     productRoutes
+  );
+  app.use(
+    "/delivery",
+    passport.authenticate("jwt", { session: false }),
+    deliveryRoutes
   );
 };

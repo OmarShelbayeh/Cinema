@@ -15,7 +15,6 @@ module.exports = (sequelize, DataTypes) => {
     {
       order_id: DataTypes.INTEGER,
       storage_id: DataTypes.INTEGER,
-      driver_id: DataTypes.INTEGER,
     },
     {
       sequelize,

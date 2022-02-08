@@ -4,7 +4,7 @@ const usersController = require("../controllers").usersController;
 const authentication = require("../config/authentication");
 
 router.get("/info", usersController.getUserInfo);
-router.get(
+router.post(
   "/allAdmins",
   authentication.ensureOwner,
   usersController.getAllAdmins

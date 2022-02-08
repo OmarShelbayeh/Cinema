@@ -24,16 +24,22 @@ class CurrentTickets extends Component {
     this.getTickets();
   }
 
-  getTickets() {
+  getTickets(order) {
     axios({
       url: URL + "/tickets/getTickets",
-      method: "GET",
+      method: "POST",
       headers: {
         authorization: localStorage.getItem("token"),
       },
+      data: { order: order },
     }).then((response) => {
       this.setState({ CurrentTickets: response.data });
     });
+    if (order) {
+      this.setState({ active: order });
+    } else {
+      this.setState({ active: "date" });
+    }
   }
 
   deleteTicket() {
@@ -70,8 +76,28 @@ class CurrentTickets extends Component {
           <div className="table">
             <table>
               <tr>
-                <th>Movie Name</th>
-                <th style={{ textAlign: "center" }}>Date</th>
+                <th>
+                  <a
+                    onClick={() => {
+                      this.getTickets("movieName");
+                    }}
+                    className={
+                      this.state.active === "movieName" ? "active" : ""
+                    }
+                  >
+                    Movie Name +
+                  </a>
+                </th>
+                <th style={{ textAlign: "center" }}>
+                  <a
+                    onClick={() => {
+                      this.getTickets();
+                    }}
+                    className={this.state.active === "date" ? "active" : ""}
+                  >
+                    Date +
+                  </a>
+                </th>
                 <th style={{ textAlign: "center" }}>Time</th>
                 <th style={{ textAlign: "center" }}>Seat</th>
                 <th style={{ textAlign: "center" }}>Buy Merch</th>

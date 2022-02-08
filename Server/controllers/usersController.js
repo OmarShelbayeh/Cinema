@@ -11,7 +11,7 @@ const getAllUsers = (req, res) => {
 
 const getAllAdmins = (req, res) => {
   usersRepository
-    .getAllAdmins()
+    .getAllAdmins(req.body.order)
     .then((allAdmins) => res.status(200).send(allAdmins));
 };
 

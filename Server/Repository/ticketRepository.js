@@ -10,28 +10,56 @@ buyTicket = async (schedule_id, seat_id, who_id) => {
   });
 };
 
-history = async (id) => {
+history = async (id, order) => {
   let History;
   let date = new Date();
-  History = await db.sequelize.query(
-    "select m.name as name,  count(t.seat_id) as tickets, s.showing_at as date from tickets t INNER JOIN schedules s on t.schedule_id = s.id INNER JOIN movies m on s.movie_id = m.id WHERE who_id = :id and s.showing_at < :date GROUP BY m.name, s.showing_at;",
-    {
-      replacements: { id: id, date: date },
-      type: db.sequelize.QueryTypes.SELECT,
-    }
-  );
+  switch (order) {
+    case "movie":
+      History = await db.sequelize.query(
+        "select m.name as name,  count(t.seat_id) as tickets, s.showing_at as date from tickets t INNER JOIN schedules s on t.schedule_id = s.id INNER JOIN movies m on s.movie_id = m.id WHERE who_id = :id and s.showing_at < :date GROUP BY m.name, s.showing_at ORDER BY m.name, s.showing_at DESC;",
+        {
+          replacements: { id: id, date: date },
+          type: db.sequelize.QueryTypes.SELECT,
+        }
+      );
+
+      break;
+    default:
+      History = await db.sequelize.query(
+        "select m.name as name,  count(t.seat_id) as tickets, s.showing_at as date from tickets t INNER JOIN schedules s on t.schedule_id = s.id INNER JOIN movies m on s.movie_id = m.id WHERE who_id = :id and s.showing_at < :date GROUP BY m.name, s.showing_at ORDER BY s.showing_at DESC;",
+        {
+          replacements: { id: id, date: date },
+          type: db.sequelize.QueryTypes.SELECT,
+        }
+      );
+
+      break;
+  }
   return History;
 };
 
-showTickets = async (id) => {
+showTickets = async (id, order) => {
   let Tickets;
-  Tickets = await db.sequelize.query(
-    "select t.id,  m.name as name, t.seat_id as seat, s.showing_at as date from tickets t INNER JOIN schedules s on t.schedule_id = s.id INNER JOIN movies m on s.movie_id = m.id WHERE who_id = :id AND showing_at > :date;",
-    {
-      replacements: { id: id, date: new Date() },
-      type: db.sequelize.QueryTypes.SELECT,
-    }
-  );
+  switch (order) {
+    case "movieName":
+      Tickets = await db.sequelize.query(
+        "select t.id,  m.name as name, t.seat_id as seat, s.showing_at as date from tickets t INNER JOIN schedules s on t.schedule_id = s.id INNER JOIN movies m on s.movie_id = m.id WHERE who_id = :id AND showing_at > :date ORDER BY m.name, s.showing_at ;",
+        {
+          replacements: { id: id, date: new Date() },
+          type: db.sequelize.QueryTypes.SELECT,
+        }
+      );
+      break;
+    default:
+      Tickets = await db.sequelize.query(
+        "select t.id,  m.name as name, t.seat_id as seat, s.showing_at as date from tickets t INNER JOIN schedules s on t.schedule_id = s.id INNER JOIN movies m on s.movie_id = m.id WHERE who_id = :id AND showing_at > :date ORDER BY s.showing_at ;",
+        {
+          replacements: { id: id, date: new Date() },
+          type: db.sequelize.QueryTypes.SELECT,
+        }
+      );
+      break;
+  }
   return Tickets;
 };
 

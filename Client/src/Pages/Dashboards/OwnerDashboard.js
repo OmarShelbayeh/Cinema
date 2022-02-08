@@ -14,6 +14,7 @@ import Header from "../../Components/General/Header";
 import Stages from "../../Components/Stages/Stages";
 import Schedules from "../../Components/Schedules/Schedules";
 import AddAdmin from "../../Components/AddAdmin/AddAdmin";
+import Deliveries from "../../Components/Deliveries/Deliveries";
 
 class OwnerDashboard extends Component {
   state = {
@@ -40,7 +41,13 @@ class OwnerDashboard extends Component {
                 success={(msg) => this.props.success(msg)}
               />
             </div>
-            <div className="column"></div>
+            <div className="column">
+              <Deliveries
+                error={(msg) => this.props.error(msg)}
+                warning={(msg) => this.props.warning(msg)}
+                success={(msg) => this.props.success(msg)}
+              />
+            </div>
           </div>
         </div>
       </div>
