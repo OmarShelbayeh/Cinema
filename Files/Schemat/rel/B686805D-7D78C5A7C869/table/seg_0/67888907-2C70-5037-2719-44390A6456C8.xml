@@ -1,0 +1,83 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Table class="oracle.dbtools.crest.model.design.relational.Table" directorySegmentName="seg_0" id="67888907-2C70-5037-2719-44390A6456C8" name="Shops">
+<createdBy>omar</createdBy>
+<createdTime>2022-01-11 18:38:21 UTC</createdTime>
+<ownerDesignName>Schemat</ownerDesignName>
+<ordsAlias>table_13</ordsAlias>
+<allowColumnReorder>false</allowColumnReorder>
+<existDependencyGenerateInDDl>true</existDependencyGenerateInDDl>
+<parsed>true</parsed>
+<columns itemClass="oracle.dbtools.crest.model.design.relational.Column">
+<Column name="ShopNumber" id="578E9F16-E2F1-2FF8-9FC6-B4063AB1DC9B">
+<createdBy>omar</createdBy>
+<createdTime>2022-01-11 18:38:39 UTC</createdTime>
+<ownerDesignName>Schemat</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT027</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="Storage_FacilityNUmber" id="38BB7AE0-F0D0-7560-E3F7-0264204DFA9E">
+<createdBy>omar</createdBy>
+<createdTime>2022-01-11 18:43:40 UTC</createdTime>
+<ownerDesignName>Schemat</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT027</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<previousColumn>false</previousColumn>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="88FEEAD7-D7B0-B976-3DE2-956BC31F8CB5" referredColumn="9786C415-E8FB-0B29-E3CA-C7F6DDF9F32E"/>
+</associations>
+</Column>
+<Column name="Movies_MovieNumber" id="04A56399-10B9-E4D1-365F-3C665ED7070B">
+<createdBy>omar</createdBy>
+<createdTime>2022-02-08 12:36:53 UTC</createdTime>
+<ownerDesignName>Schemat</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT027</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<previousColumn>false</previousColumn>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="9EBB8564-3B1E-9F84-A310-4CD4AB3E0AC5" referredColumn="BE82B176-D1BE-05CA-CEEE-36255296EB90"/>
+</associations>
+</Column>
+</columns>
+<indexes itemClass="oracle.dbtools.crest.model.design.relational.Index">
+<ind_PK_UK id="FC022C4B-7002-5255-80A0-799E36EA63DB" name="Shops_PK">
+<createdBy>omar</createdBy>
+<createdTime>2022-01-11 18:38:39 UTC</createdTime>
+<ownerDesignName>Schemat</ownerDesignName>
+<pk>true</pk>
+<indexState>Primary Constraint</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="578E9F16-E2F1-2FF8-9FC6-B4063AB1DC9B"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="C7B4CBB3-A103-AF5C-FA7E-34A96A465289" name="Shops_Movies_FK">
+<createdBy>omar</createdBy>
+<createdTime>2022-01-11 18:38:47 UTC</createdTime>
+<ownerDesignName>Schemat</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="04A56399-10B9-E4D1-365F-3C665ED7070B"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="790D930E-70E2-254E-F385-944DAB953AA9" name="Shops_Storage_FK">
+<createdBy>omar</createdBy>
+<createdTime>2022-01-11 18:43:40 UTC</createdTime>
+<ownerDesignName>Schemat</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="38BB7AE0-F0D0-7560-E3F7-0264204DFA9E"/>
+</indexColumnUsage>
+</ind_PK_UK>
+</indexes>
+</Table>

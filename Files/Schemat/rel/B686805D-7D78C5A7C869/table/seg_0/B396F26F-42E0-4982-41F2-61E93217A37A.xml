@@ -1,0 +1,83 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Table class="oracle.dbtools.crest.model.design.relational.Table" directorySegmentName="seg_0" id="B396F26F-42E0-4982-41F2-61E93217A37A" name="Delivery">
+<createdBy>omar</createdBy>
+<createdTime>2022-01-11 18:41:43 UTC</createdTime>
+<ownerDesignName>Schemat</ownerDesignName>
+<ordsAlias>table_16</ordsAlias>
+<allowColumnReorder>false</allowColumnReorder>
+<existDependencyGenerateInDDl>true</existDependencyGenerateInDDl>
+<parsed>true</parsed>
+<columns itemClass="oracle.dbtools.crest.model.design.relational.Column">
+<Column name="DeliveryNumber" id="4FD31397-08B8-ABF4-A28F-757F879ACCBD">
+<createdBy>omar</createdBy>
+<createdTime>2022-01-11 18:42:06 UTC</createdTime>
+<ownerDesignName>Schemat</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT027</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="Order_OrderNumber" id="1E62E223-8571-9A2E-618F-6B68A44213F0">
+<createdBy>omar</createdBy>
+<createdTime>2022-01-11 18:42:17 UTC</createdTime>
+<ownerDesignName>Schemat</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT027</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<previousColumn>false</previousColumn>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="645B5BBF-2454-C036-6339-FA8DE0B9E1DC" referredColumn="DAA0135C-0AA8-FC78-2ABF-2172D45DFCF6"/>
+</associations>
+</Column>
+<Column name="Storage_FacilityNUmber" id="AE9303DA-0B7C-5B9F-0E9F-2C71077A28BB">
+<createdBy>omar</createdBy>
+<createdTime>2022-01-11 18:43:29 UTC</createdTime>
+<ownerDesignName>Schemat</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT027</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<previousColumn>false</previousColumn>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="4D685997-AAC9-3235-DDCA-D0597028B49C" referredColumn="9786C415-E8FB-0B29-E3CA-C7F6DDF9F32E"/>
+</associations>
+</Column>
+</columns>
+<indexes itemClass="oracle.dbtools.crest.model.design.relational.Index">
+<ind_PK_UK id="CCD79FA7-E202-D5BC-594D-80952DADE83C" name="Delivery_PK">
+<createdBy>omar</createdBy>
+<createdTime>2022-01-11 18:42:06 UTC</createdTime>
+<ownerDesignName>Schemat</ownerDesignName>
+<pk>true</pk>
+<indexState>Primary Constraint</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="4FD31397-08B8-ABF4-A28F-757F879ACCBD"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="3AC4CDEE-8963-BC11-188B-8A227C7EA663" name="Delivery_Order_FK">
+<createdBy>omar</createdBy>
+<createdTime>2022-01-11 18:42:17 UTC</createdTime>
+<ownerDesignName>Schemat</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="1E62E223-8571-9A2E-618F-6B68A44213F0"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="AB931060-781B-106D-4B72-36D794239E13" name="Delivery_Storage_FK">
+<createdBy>omar</createdBy>
+<createdTime>2022-01-11 18:43:29 UTC</createdTime>
+<ownerDesignName>Schemat</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="AE9303DA-0B7C-5B9F-0E9F-2C71077A28BB"/>
+</indexColumnUsage>
+</ind_PK_UK>
+</indexes>
+</Table>

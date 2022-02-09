@@ -1,0 +1,36 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Relation class="oracle.dbtools.crest.model.design.logical.Relation" name="Relation_21" directorySegmentName="seg_0" id="8D7C21CE-0185-B4DC-BD1C-3195D30A8358">
+<createdBy>omar</createdBy>
+<createdTime>2021-12-08 16:23:30 UTC</createdTime>
+<ownerDesignName>Schemat</ownerDesignName>
+<engineerTo>
+<item key="B686805D-2CC8-9C4E-09D8-7D78C5A7C869" value="true"/>
+</engineerTo>
+<sourcePk>10211A6C-B86D-0615-422C-94D9F4F94DA7</sourcePk>
+<identifying>true</identifying>
+<nameOnSource>This shop sells</nameOnSource>
+<nameOnTarget>this product</nameOnTarget>
+<optionalSource>true</optionalSource>
+<optionalTarget>false</optionalTarget>
+<sourceCardinality>1</sourceCardinality>
+<sourceEntity>2EE83E80-9AC6-9832-AE8D-5AF10019E9CA</sourceEntity>
+<targetCardinalityString>*</targetCardinalityString>
+<targetEntity>84BEE2E1-C9AD-B4AB-0E45-F9919FFB775D</targetEntity>
+<transferable>true</transferable>
+<deleteRule>NO ACTION</deleteRule>
+<attributes itemClass="oracle.dbtools.crest.model.design.logical.Attribute">
+<attribute name="ShopNumber" id="C5517A19-F6F4-50D0-9D1F-3E5450FD1082">
+<createdBy>omar</createdBy>
+<createdTime>2021-12-08 16:23:34 UTC</createdTime>
+<ownerDesignName>Schemat</ownerDesignName>
+<engineerTo>
+<item key="B686805D-2CC8-9C4E-09D8-7D78C5A7C869" value="true"/>
+</engineerTo>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT027</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</attribute>
+</attributes>
+</Relation>

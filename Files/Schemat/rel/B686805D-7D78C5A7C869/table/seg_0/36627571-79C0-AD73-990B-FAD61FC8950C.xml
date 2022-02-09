@@ -1,0 +1,107 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Table class="oracle.dbtools.crest.model.design.relational.Table" directorySegmentName="seg_0" id="36627571-79C0-AD73-990B-FAD61FC8950C" name="users">
+<createdBy>omar</createdBy>
+<createdTime>2021-11-29 11:56:38 UTC</createdTime>
+<ownerDesignName>Schemat</ownerDesignName>
+<ordsAlias>table_1</ordsAlias>
+<allowColumnReorder>false</allowColumnReorder>
+<existDependencyGenerateInDDl>true</existDependencyGenerateInDDl>
+<parsed>true</parsed>
+<columns itemClass="oracle.dbtools.crest.model.design.relational.Column">
+<Column name="id" id="87111E58-8948-DFA9-01EA-E683EF57CE01">
+<createdBy>omar</createdBy>
+<createdTime>2021-11-29 11:57:53 UTC</createdTime>
+<ownerDesignName>Schemat</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT027</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="Name" id="77029392-6AAD-EF88-F507-BCF102551998">
+<createdBy>omar</createdBy>
+<createdTime>2021-11-29 11:57:36 UTC</createdTime>
+<ownerDesignName>Schemat</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT025</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="Surname" id="EB8DB259-20DA-A655-7433-147D1BBD1E7D">
+<createdBy>omar</createdBy>
+<createdTime>2021-11-29 11:57:36 UTC</createdTime>
+<ownerDesignName>Schemat</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT025</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="Role" id="55D48DB3-122B-D739-9BF5-E4E7B2E34CF5">
+<createdBy>omar</createdBy>
+<createdTime>2021-11-29 11:57:36 UTC</createdTime>
+<ownerDesignName>Schemat</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT025</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="Password" id="95BCFA5A-9809-558D-132A-2AC865CEFD76">
+<createdBy>omar</createdBy>
+<createdTime>2022-01-11 18:29:51 UTC</createdTime>
+<ownerDesignName>Schemat</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT025</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="Email" id="1D416757-4EBE-764C-65E8-B540F78B5DEE">
+<createdBy>omar</createdBy>
+<createdTime>2022-02-08 12:31:25 UTC</createdTime>
+<ownerDesignName>Schemat</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT025</logicalDatatype>
+<dataTypeSize>255</dataTypeSize>
+<ownDataTypeParameters>255,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="active" id="8B9DD211-7659-8C67-D4B5-36E7C85FEA64">
+<createdBy>omar</createdBy>
+<createdTime>2022-02-08 12:31:55 UTC</createdTime>
+<ownerDesignName>Schemat</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT006</logicalDatatype>
+<dataTypeSize>1</dataTypeSize>
+<ownDataTypeParameters>1,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="disabled" id="6F4A38C9-80BA-F74D-1777-78648B6974CD">
+<createdBy>omar</createdBy>
+<createdTime>2022-02-08 12:31:55 UTC</createdTime>
+<ownerDesignName>Schemat</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+</columns>
+<indexes itemClass="oracle.dbtools.crest.model.design.relational.Index">
+<ind_PK_UK id="789FC972-D148-7EC7-D8E6-E2967F10D7FE" name="users_PK">
+<createdBy>omar</createdBy>
+<createdTime>2021-11-29 12:18:54 UTC</createdTime>
+<ownerDesignName>Schemat</ownerDesignName>
+<pk>true</pk>
+<indexState>Primary Constraint</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="87111E58-8948-DFA9-01EA-E683EF57CE01"/>
+</indexColumnUsage>
+</ind_PK_UK>
+</indexes>
+</Table>

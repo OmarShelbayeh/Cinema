@@ -1,0 +1,137 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Entity class="oracle.dbtools.crest.model.design.logical.Entity" directorySegmentName="seg_0" id="A693F7D0-ED19-8ABE-2EA4-5AEC5157FA64" name="users">
+<createdBy>omar</createdBy>
+<createdTime>2021-12-08 14:22:24 UTC</createdTime>
+<ownerDesignName>Schemat</ownerDesignName>
+<engineerTo>
+<item key="B686805D-2CC8-9C4E-09D8-7D78C5A7C869" value="true"/>
+</engineerTo>
+<adequatelyNormalized>NO</adequatelyNormalized>
+<expectedVolumes>0</expectedVolumes>
+<fwdEngineeringStrategyName>Single Table</fwdEngineeringStrategyName>
+<growthPercent>0</growthPercent>
+<growthType>Year</growthType>
+<maxVolumes>9999999</maxVolumes>
+<minVolumes>0</minVolumes>
+<normalForm>Third</normalForm>
+<attributes itemClass="oracle.dbtools.crest.model.design.logical.Attribute">
+<Attribute name="id" id="B6B6910F-629B-735D-3D84-8C8384167E2B">
+<createdBy>omar</createdBy>
+<createdTime>2021-12-08 14:23:15 UTC</createdTime>
+<ownerDesignName>Schemat</ownerDesignName>
+<engineerTo>
+<item key="B686805D-2CC8-9C4E-09D8-7D78C5A7C869" value="true"/>
+</engineerTo>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT027</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="Name" id="20DC6F15-DCBC-140C-8B6E-07C46EB5089D">
+<createdBy>omar</createdBy>
+<createdTime>2021-12-08 14:23:44 UTC</createdTime>
+<ownerDesignName>Schemat</ownerDesignName>
+<engineerTo>
+<item key="B686805D-2CC8-9C4E-09D8-7D78C5A7C869" value="true"/>
+</engineerTo>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT025</logicalDatatype>
+<dataTypeSize>255</dataTypeSize>
+<ownDataTypeParameters>255,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="Surname" id="FDD5178E-150D-DE3F-434D-F6C0DFAA971A">
+<createdBy>omar</createdBy>
+<createdTime>2021-12-08 14:24:12 UTC</createdTime>
+<ownerDesignName>Schemat</ownerDesignName>
+<engineerTo>
+<item key="B686805D-2CC8-9C4E-09D8-7D78C5A7C869" value="true"/>
+</engineerTo>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT025</logicalDatatype>
+<dataTypeSize>255</dataTypeSize>
+<ownDataTypeParameters>255,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="Role" id="3942EE98-8CC5-C338-6779-CA49024BE8C8">
+<createdBy>omar</createdBy>
+<createdTime>2021-12-08 14:24:29 UTC</createdTime>
+<ownerDesignName>Schemat</ownerDesignName>
+<engineerTo>
+<item key="B686805D-2CC8-9C4E-09D8-7D78C5A7C869" value="true"/>
+</engineerTo>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT025</logicalDatatype>
+<dataTypeSize>255</dataTypeSize>
+<ownDataTypeParameters>255,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="Password" id="0D373B51-04F8-77C6-E447-492859290585">
+<createdBy>omar</createdBy>
+<createdTime>2021-12-08 16:39:35 UTC</createdTime>
+<ownerDesignName>Schemat</ownerDesignName>
+<engineerTo>
+<item key="B686805D-2CC8-9C4E-09D8-7D78C5A7C869" value="true"/>
+</engineerTo>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT025</logicalDatatype>
+<dataTypeSize>255</dataTypeSize>
+<ownDataTypeParameters>255,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="email" id="3C36E726-4A27-FD81-8654-597DBC6C293F">
+<createdBy>omar</createdBy>
+<createdTime>2022-02-08 12:40:12 UTC</createdTime>
+<ownerDesignName>Schemat</ownerDesignName>
+<engineerTo>
+<item key="B686805D-2CC8-9C4E-09D8-7D78C5A7C869" value="true"/>
+</engineerTo>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT025</logicalDatatype>
+<dataTypeSize>255</dataTypeSize>
+<ownDataTypeParameters>255,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="active" id="26158462-FC90-7155-EE43-DD41A6F3AEA3">
+<createdBy>omar</createdBy>
+<createdTime>2022-02-08 12:40:37 UTC</createdTime>
+<ownerDesignName>Schemat</ownerDesignName>
+<engineerTo>
+<item key="B686805D-2CC8-9C4E-09D8-7D78C5A7C869" value="true"/>
+</engineerTo>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT006</logicalDatatype>
+<dataTypeSize>1</dataTypeSize>
+<ownDataTypeParameters>1,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="disabled" id="B3B03EBE-06BB-7CDA-7FD8-A037FFC26C72">
+<createdBy>omar</createdBy>
+<createdTime>2022-02-08 12:40:58 UTC</createdTime>
+<ownerDesignName>Schemat</ownerDesignName>
+<engineerTo>
+<item key="B686805D-2CC8-9C4E-09D8-7D78C5A7C869" value="true"/>
+</engineerTo>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT006</logicalDatatype>
+<dataTypeSize>1</dataTypeSize>
+<ownDataTypeParameters>1,,</ownDataTypeParameters>
+</Attribute>
+</attributes>
+<identifiers itemClass="oracle.dbtools.crest.model.design.logical.CandidateKey">
+<identifier id="B50824DB-EE21-5CF2-D5FE-366A7DF7A05A" name="users PK">
+<createdBy>omar</createdBy>
+<createdTime>2021-12-08 14:23:39 UTC</createdTime>
+<ownerDesignName>Schemat</ownerDesignName>
+<engineerTo>
+<item key="B686805D-2CC8-9C4E-09D8-7D78C5A7C869" value="true"/>
+</engineerTo>
+<pk>true</pk>
+<usedAttributes>
+<attributeRef>B6B6910F-629B-735D-3D84-8C8384167E2B</attributeRef>
+</usedAttributes>
+</identifier>
+</identifiers>
+</Entity>

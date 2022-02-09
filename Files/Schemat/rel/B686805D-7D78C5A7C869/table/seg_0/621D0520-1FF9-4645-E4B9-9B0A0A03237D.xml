@@ -1,0 +1,89 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Table class="oracle.dbtools.crest.model.design.relational.Table" directorySegmentName="seg_0" id="621D0520-1FF9-4645-E4B9-9B0A0A03237D" name="Products">
+<createdBy>omar</createdBy>
+<createdTime>2022-01-11 18:39:02 UTC</createdTime>
+<ownerDesignName>Schemat</ownerDesignName>
+<ordsAlias>table_14</ordsAlias>
+<allowColumnReorder>false</allowColumnReorder>
+<existDependencyGenerateInDDl>true</existDependencyGenerateInDDl>
+<parsed>true</parsed>
+<columns itemClass="oracle.dbtools.crest.model.design.relational.Column">
+<Column name="ProductNumber" id="27B5EC42-6582-BF6C-86B5-78DAF425F47A">
+<createdBy>omar</createdBy>
+<createdTime>2022-01-11 18:39:43 UTC</createdTime>
+<ownerDesignName>Schemat</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT027</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="Name" id="B3E8F68D-415C-D0E6-8C83-6C3591F6F27F">
+<createdBy>omar</createdBy>
+<createdTime>2022-01-11 18:39:43 UTC</createdTime>
+<ownerDesignName>Schemat</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT025</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="AvailablePcs" id="F5B110B8-D563-15F8-6F49-57778C6B6234">
+<createdBy>omar</createdBy>
+<createdTime>2022-01-11 18:39:43 UTC</createdTime>
+<ownerDesignName>Schemat</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT027</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="Shops_ShopNumber" id="A66413CB-0C5F-2535-8802-675FE4564290">
+<createdBy>omar</createdBy>
+<createdTime>2022-01-11 18:39:54 UTC</createdTime>
+<ownerDesignName>Schemat</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT027</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<previousColumn>false</previousColumn>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="F6A86F83-578E-9E7D-979B-8C5DCEB6128B" referredColumn="578E9F16-E2F1-2FF8-9FC6-B4063AB1DC9B"/>
+</associations>
+</Column>
+<Column name="Price" id="585DFD25-DF8F-C53B-53AF-98CF6D88F25E">
+<createdBy>omar</createdBy>
+<createdTime>2022-02-08 12:34:16 UTC</createdTime>
+<ownerDesignName>Schemat</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT027</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+</columns>
+<indexes itemClass="oracle.dbtools.crest.model.design.relational.Index">
+<ind_PK_UK id="10ADBADB-2C87-D332-2A50-F243DA56933F" name="Products_PK">
+<createdBy>omar</createdBy>
+<createdTime>2022-01-11 18:39:43 UTC</createdTime>
+<ownerDesignName>Schemat</ownerDesignName>
+<pk>true</pk>
+<indexState>Primary Constraint</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="27B5EC42-6582-BF6C-86B5-78DAF425F47A"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="6C1BA911-4A0F-59D3-48C9-26EE37EF9CE1" name="Products_Shops_FK">
+<createdBy>omar</createdBy>
+<createdTime>2022-01-11 18:39:54 UTC</createdTime>
+<ownerDesignName>Schemat</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="A66413CB-0C5F-2535-8802-675FE4564290"/>
+</indexColumnUsage>
+</ind_PK_UK>
+</indexes>
+</Table>

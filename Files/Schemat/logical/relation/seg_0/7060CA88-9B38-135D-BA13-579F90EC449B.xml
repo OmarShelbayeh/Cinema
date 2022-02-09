@@ -1,0 +1,37 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Relation class="oracle.dbtools.crest.model.design.logical.Relation" name="Relation_13" directorySegmentName="seg_0" id="7060CA88-9B38-135D-BA13-579F90EC449B">
+<createdBy>omar</createdBy>
+<createdTime>2021-12-08 14:52:03 UTC</createdTime>
+<ownerDesignName>Schemat</ownerDesignName>
+<engineerTo>
+<item key="B686805D-2CC8-9C4E-09D8-7D78C5A7C869" value="true"/>
+</engineerTo>
+<sourcePk>DCCB4268-57E2-4CF0-A8C1-8B8A680C166A</sourcePk>
+<targetPk>3959BE77-DCF7-4930-EB12-35E86D031143</targetPk>
+<identifying>false</identifying>
+<nameOnSource>has this delivery number</nameOnSource>
+<nameOnTarget>This order</nameOnTarget>
+<optionalSource>false</optionalSource>
+<optionalTarget>false</optionalTarget>
+<sourceCardinality>1</sourceCardinality>
+<sourceEntity>06FE41CE-58F4-9A13-A562-2F11A634F013</sourceEntity>
+<targetCardinalityString>1</targetCardinalityString>
+<targetEntity>0C6E3177-535E-230A-A9ED-B39F2827E3BC</targetEntity>
+<transferable>true</transferable>
+<deleteRule>NO ACTION</deleteRule>
+<attributes itemClass="oracle.dbtools.crest.model.design.logical.Attribute">
+<attribute name="DeliveryLocation" id="00BD4901-A942-6B36-54C4-7613D4F30C38">
+<createdBy>omar</createdBy>
+<createdTime>2021-12-08 14:52:11 UTC</createdTime>
+<ownerDesignName>Schemat</ownerDesignName>
+<engineerTo>
+<item key="B686805D-2CC8-9C4E-09D8-7D78C5A7C869" value="true"/>
+</engineerTo>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT025</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</attribute>
+</attributes>
+</Relation>

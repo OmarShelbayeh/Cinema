@@ -1,0 +1,1046 @@
+--
+-- PostgreSQL database dump
+--
+
+-- Dumped from database version 13.5 (Ubuntu 13.5-0ubuntu0.21.04.1)
+-- Dumped by pg_dump version 13.5 (Ubuntu 13.5-0ubuntu0.21.04.1)
+
+-- Started on 2022-02-08 13:49:11 CET
+
+SET statement_timeout = 0;
+SET lock_timeout = 0;
+SET idle_in_transaction_session_timeout = 0;
+SET client_encoding = 'UTF8';
+SET standard_conforming_strings = on;
+SELECT pg_catalog.set_config('search_path', '', false);
+SET check_function_bodies = false;
+SET xmloption = content;
+SET client_min_messages = warning;
+SET row_security = off;
+
+--
+-- TOC entry 233 (class 1255 OID 97812)
+-- Name: add_movie(character varying, character varying, character varying); Type: PROCEDURE; Schema: public; Owner: postgres
+--
+
+CREATE PROCEDURE public.add_movie(m_name character varying, d_name character varying, o_name character varying)
+    LANGUAGE plpgsql
+    AS $$BEGIN
+    INSERT INTO movies VALUES(
+        (SELECT MAX(id) + 1 FROM movies), 
+        m_name, 
+        d_name, 
+        o_name,
+        CURRENT_DATE,
+        CURRENT_DATE);
+END;
+$$;
+
+
+ALTER PROCEDURE public.add_movie(m_name character varying, d_name character varying, o_name character varying) OWNER TO postgres;
+
+--
+-- TOC entry 232 (class 1255 OID 97811)
+-- Name: available_seats(bigint); Type: FUNCTION; Schema: public; Owner: postgres
+--
+
+CREATE FUNCTION public.available_seats(s_id bigint) RETURNS bigint
+    LANGUAGE plpgsql
+    AS $$declare
+    vAvailable int;
+    
+begin
+SELECT s.number_of_seats - (SELECT COUNT(*) FROM tickets WHERE tickets.schedule_id = s_id) INTO vAvailable FROM schedules sc INNER JOIN stages s ON sc.stage_id = s.id WHERE sc.id = s_id ;
+    
+    RETURN vAvailable;
+end;$$;
+
+
+ALTER FUNCTION public.available_seats(s_id bigint) OWNER TO postgres;
+
+SET default_tablespace = '';
+
+SET default_table_access_method = heap;
+
+--
+-- TOC entry 200 (class 1259 OID 96814)
+-- Name: SequelizeMeta; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public."SequelizeMeta" (
+    name character varying(255) NOT NULL
+);
+
+
+ALTER TABLE public."SequelizeMeta" OWNER TO postgres;
+
+--
+-- TOC entry 218 (class 1259 OID 96894)
+-- Name: deliveries; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.deliveries (
+    id integer NOT NULL,
+    storage_id integer,
+    "createdAt" timestamp with time zone NOT NULL,
+    "updatedAt" timestamp with time zone NOT NULL,
+    order_id integer
+);
+
+
+ALTER TABLE public.deliveries OWNER TO postgres;
+
+--
+-- TOC entry 217 (class 1259 OID 96892)
+-- Name: deliveries_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.deliveries_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.deliveries_id_seq OWNER TO postgres;
+
+--
+-- TOC entry 3274 (class 0 OID 0)
+-- Dependencies: 217
+-- Name: deliveries_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.deliveries_id_seq OWNED BY public.deliveries.id;
+
+
+--
+-- TOC entry 204 (class 1259 OID 96832)
+-- Name: movies; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.movies (
+    id integer NOT NULL,
+    name character varying(255) NOT NULL,
+    director character varying(255) NOT NULL,
+    owner character varying(255) NOT NULL,
+    "createdAt" timestamp with time zone NOT NULL,
+    "updatedAt" timestamp with time zone NOT NULL
+);
+
+
+ALTER TABLE public.movies OWNER TO postgres;
+
+--
+-- TOC entry 203 (class 1259 OID 96830)
+-- Name: movies_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.movies_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.movies_id_seq OWNER TO postgres;
+
+--
+-- TOC entry 3275 (class 0 OID 0)
+-- Dependencies: 203
+-- Name: movies_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.movies_id_seq OWNED BY public.movies.id;
+
+
+--
+-- TOC entry 212 (class 1259 OID 96870)
+-- Name: orders; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.orders (
+    id integer NOT NULL,
+    who_id integer,
+    product_id integer,
+    "createdAt" timestamp with time zone NOT NULL,
+    "updatedAt" timestamp with time zone NOT NULL,
+    status boolean,
+    number_of_pieces integer
+);
+
+
+ALTER TABLE public.orders OWNER TO postgres;
+
+--
+-- TOC entry 211 (class 1259 OID 96868)
+-- Name: orders_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.orders_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.orders_id_seq OWNER TO postgres;
+
+--
+-- TOC entry 3276 (class 0 OID 0)
+-- Dependencies: 211
+-- Name: orders_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.orders_id_seq OWNED BY public.orders.id;
+
+
+--
+-- TOC entry 214 (class 1259 OID 96878)
+-- Name: products; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.products (
+    id integer NOT NULL,
+    name character varying(255),
+    available_pcs integer,
+    shop_id integer,
+    "createdAt" timestamp with time zone NOT NULL,
+    "updatedAt" timestamp with time zone NOT NULL,
+    price integer
+);
+
+
+ALTER TABLE public.products OWNER TO postgres;
+
+--
+-- TOC entry 213 (class 1259 OID 96876)
+-- Name: products_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.products_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.products_id_seq OWNER TO postgres;
+
+--
+-- TOC entry 3277 (class 0 OID 0)
+-- Dependencies: 213
+-- Name: products_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.products_id_seq OWNED BY public.products.id;
+
+
+--
+-- TOC entry 206 (class 1259 OID 96843)
+-- Name: schedules; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.schedules (
+    id integer NOT NULL,
+    showing_at timestamp with time zone,
+    price integer,
+    movie_id integer,
+    stage_id integer,
+    "createdAt" timestamp with time zone NOT NULL,
+    "updatedAt" timestamp with time zone NOT NULL
+);
+
+
+ALTER TABLE public.schedules OWNER TO postgres;
+
+--
+-- TOC entry 205 (class 1259 OID 96841)
+-- Name: schedules_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.schedules_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.schedules_id_seq OWNER TO postgres;
+
+--
+-- TOC entry 3278 (class 0 OID 0)
+-- Dependencies: 205
+-- Name: schedules_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.schedules_id_seq OWNED BY public.schedules.id;
+
+
+--
+-- TOC entry 216 (class 1259 OID 96886)
+-- Name: shops; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.shops (
+    id integer NOT NULL,
+    movie_id integer,
+    storage_id integer,
+    "createdAt" timestamp with time zone NOT NULL,
+    "updatedAt" timestamp with time zone NOT NULL
+);
+
+
+ALTER TABLE public.shops OWNER TO postgres;
+
+--
+-- TOC entry 215 (class 1259 OID 96884)
+-- Name: shops_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.shops_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.shops_id_seq OWNER TO postgres;
+
+--
+-- TOC entry 3279 (class 0 OID 0)
+-- Dependencies: 215
+-- Name: shops_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.shops_id_seq OWNED BY public.shops.id;
+
+
+--
+-- TOC entry 208 (class 1259 OID 96851)
+-- Name: stages; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.stages (
+    id integer NOT NULL,
+    stage_name character varying(255) NOT NULL,
+    rows integer NOT NULL,
+    seats_in_row integer NOT NULL,
+    number_of_seats integer NOT NULL,
+    "createdAt" timestamp with time zone NOT NULL,
+    "updatedAt" timestamp with time zone NOT NULL
+);
+
+
+ALTER TABLE public.stages OWNER TO postgres;
+
+--
+-- TOC entry 207 (class 1259 OID 96849)
+-- Name: stages_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.stages_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.stages_id_seq OWNER TO postgres;
+
+--
+-- TOC entry 3280 (class 0 OID 0)
+-- Dependencies: 207
+-- Name: stages_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.stages_id_seq OWNED BY public.stages.id;
+
+
+--
+-- TOC entry 220 (class 1259 OID 96902)
+-- Name: storages; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.storages (
+    id integer NOT NULL,
+    capacity integer,
+    "createdAt" timestamp with time zone NOT NULL,
+    "updatedAt" timestamp with time zone NOT NULL
+);
+
+
+ALTER TABLE public.storages OWNER TO postgres;
+
+--
+-- TOC entry 219 (class 1259 OID 96900)
+-- Name: storages_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.storages_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.storages_id_seq OWNER TO postgres;
+
+--
+-- TOC entry 3281 (class 0 OID 0)
+-- Dependencies: 219
+-- Name: storages_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.storages_id_seq OWNED BY public.storages.id;
+
+
+--
+-- TOC entry 210 (class 1259 OID 96862)
+-- Name: tickets; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.tickets (
+    id integer NOT NULL,
+    schedule_id integer,
+    seat_id integer,
+    who_id integer,
+    "createdAt" timestamp with time zone NOT NULL,
+    "updatedAt" timestamp with time zone NOT NULL
+);
+
+
+ALTER TABLE public.tickets OWNER TO postgres;
+
+--
+-- TOC entry 209 (class 1259 OID 96860)
+-- Name: tickets_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.tickets_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.tickets_id_seq OWNER TO postgres;
+
+--
+-- TOC entry 3282 (class 0 OID 0)
+-- Dependencies: 209
+-- Name: tickets_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.tickets_id_seq OWNED BY public.tickets.id;
+
+
+--
+-- TOC entry 202 (class 1259 OID 96821)
+-- Name: users; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.users (
+    id integer NOT NULL,
+    email character varying(255) NOT NULL,
+    name character varying(255),
+    surname character varying(255),
+    password character varying(255),
+    role character varying(255) NOT NULL,
+    "createdAt" timestamp with time zone NOT NULL,
+    "updatedAt" timestamp with time zone NOT NULL,
+    active boolean NOT NULL,
+    disabled boolean
+);
+
+
+ALTER TABLE public.users OWNER TO postgres;
+
+--
+-- TOC entry 201 (class 1259 OID 96819)
+-- Name: users_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.users_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.users_id_seq OWNER TO postgres;
+
+--
+-- TOC entry 3283 (class 0 OID 0)
+-- Dependencies: 201
+-- Name: users_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.users_id_seq OWNED BY public.users.id;
+
+
+--
+-- TOC entry 3083 (class 2604 OID 96897)
+-- Name: deliveries id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.deliveries ALTER COLUMN id SET DEFAULT nextval('public.deliveries_id_seq'::regclass);
+
+
+--
+-- TOC entry 3076 (class 2604 OID 96835)
+-- Name: movies id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.movies ALTER COLUMN id SET DEFAULT nextval('public.movies_id_seq'::regclass);
+
+
+--
+-- TOC entry 3080 (class 2604 OID 96873)
+-- Name: orders id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.orders ALTER COLUMN id SET DEFAULT nextval('public.orders_id_seq'::regclass);
+
+
+--
+-- TOC entry 3081 (class 2604 OID 96881)
+-- Name: products id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.products ALTER COLUMN id SET DEFAULT nextval('public.products_id_seq'::regclass);
+
+
+--
+-- TOC entry 3077 (class 2604 OID 96846)
+-- Name: schedules id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.schedules ALTER COLUMN id SET DEFAULT nextval('public.schedules_id_seq'::regclass);
+
+
+--
+-- TOC entry 3082 (class 2604 OID 96889)
+-- Name: shops id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.shops ALTER COLUMN id SET DEFAULT nextval('public.shops_id_seq'::regclass);
+
+
+--
+-- TOC entry 3078 (class 2604 OID 96854)
+-- Name: stages id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.stages ALTER COLUMN id SET DEFAULT nextval('public.stages_id_seq'::regclass);
+
+
+--
+-- TOC entry 3084 (class 2604 OID 96905)
+-- Name: storages id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.storages ALTER COLUMN id SET DEFAULT nextval('public.storages_id_seq'::regclass);
+
+
+--
+-- TOC entry 3079 (class 2604 OID 96865)
+-- Name: tickets id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.tickets ALTER COLUMN id SET DEFAULT nextval('public.tickets_id_seq'::regclass);
+
+
+--
+-- TOC entry 3075 (class 2604 OID 96824)
+-- Name: users id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.users ALTER COLUMN id SET DEFAULT nextval('public.users_id_seq'::regclass);
+
+
+--
+-- TOC entry 3248 (class 0 OID 96814)
+-- Dependencies: 200
+-- Data for Name: SequelizeMeta; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public."SequelizeMeta" (name) FROM stdin;
+20211210201001-create-users.js
+20211211195916-create-movies.js
+20211211201556-create-schedule.js
+20211211201659-create-stage.js
+20211211201819-create-tickets.js
+20220108142121-create-order.js
+20220108142247-create-products.js
+20220108142526-create-shop.js
+20220108142609-create-delivery.js
+20220108143445-create-storage.js
+\.
+
+
+--
+-- TOC entry 3266 (class 0 OID 96894)
+-- Dependencies: 218
+-- Data for Name: deliveries; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.deliveries (id, storage_id, "createdAt", "updatedAt", order_id) FROM stdin;
+35	1	2022-02-07 22:12:57.278+01	2022-02-07 22:12:57.278+01	45
+\.
+
+
+--
+-- TOC entry 3252 (class 0 OID 96832)
+-- Dependencies: 204
+-- Data for Name: movies; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.movies (id, name, director, owner, "createdAt", "updatedAt") FROM stdin;
+25	Mo' money Mo' problems	Hubert	Da best	2022-01-08 14:39:41.455+01	2022-01-08 14:39:41.455+01
+4	SpiderMan Homecoming 21	Omar	something	2021-12-11 21:54:15.969+01	2021-12-11 21:54:15.969+01
+26	zzz	aaa	eee	2022-02-07 01:00:00+01	2022-02-07 01:00:00+01
+\.
+
+
+--
+-- TOC entry 3260 (class 0 OID 96870)
+-- Dependencies: 212
+-- Data for Name: orders; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.orders (id, who_id, product_id, "createdAt", "updatedAt", status, number_of_pieces) FROM stdin;
+45	26	19	2022-02-07 22:12:57.271+01	2022-02-07 22:12:57.271+01	f	3
+\.
+
+
+--
+-- TOC entry 3262 (class 0 OID 96878)
+-- Dependencies: 214
+-- Data for Name: products; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.products (id, name, available_pcs, shop_id, "createdAt", "updatedAt", price) FROM stdin;
+19	Hoodie	20	2	2022-01-19 21:22:53.197+01	2022-01-19 21:22:53.197+01	123
+15	Product 2	123	4	2022-01-12 17:45:43.18+01	2022-01-12 17:45:43.18+01	123
+12	T-Shirt2	1	1	2022-01-12 17:10:49.374+01	2022-01-12 17:10:49.374+01	150
+\.
+
+
+--
+-- TOC entry 3254 (class 0 OID 96843)
+-- Dependencies: 206
+-- Data for Name: schedules; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.schedules (id, showing_at, price, movie_id, stage_id, "createdAt", "updatedAt") FROM stdin;
+60	2022-06-17 16:24:53+02	2	25	5	2022-02-07 20:18:01.209+01	2022-02-07 20:18:01.209+01
+61	2022-02-26 17:26:24+01	6	4	8	2022-02-07 20:22:30.48+01	2022-02-07 20:22:30.48+01
+29	2022-01-20 17:31:34+01	50	4	7	2022-01-19 21:14:02.451+01	2022-01-19 21:14:02.451+01
+41	2022-01-28 17:25:00+01	123	4	8	2022-01-22 20:12:26.256+01	2022-01-22 20:12:26.256+01
+49	2022-01-28 20:35:31+01	123	25	7	2022-01-24 00:37:39.17+01	2022-01-24 00:37:39.17+01
+54	2022-01-24 12:48:52+01	12	4	5	2022-01-24 00:46:23.394+01	2022-01-24 00:46:23.394+01
+55	2022-01-24 00:56:00+01	123	4	5	2022-01-24 00:55:18.977+01	2022-01-24 00:55:18.977+01
+56	2022-01-24 00:59:25+01	1	25	6	2022-01-24 00:58:40.247+01	2022-01-24 00:58:40.247+01
+57	2022-02-22 18:34:15+01	3456	4	8	2022-02-02 17:50:20.438+01	2022-02-02 17:50:20.438+01
+58	2022-02-20 16:22:00+01	123	25	7	2022-02-02 18:17:06.087+01	2022-02-02 18:17:06.087+01
+\.
+
+
+--
+-- TOC entry 3264 (class 0 OID 96886)
+-- Dependencies: 216
+-- Data for Name: shops; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.shops (id, movie_id, storage_id, "createdAt", "updatedAt") FROM stdin;
+1	4	1	2022-01-08 17:01:45.303+01	2022-01-08 17:01:45.303+01
+2	25	1	2022-01-10 15:53:07.27+01	2022-01-10 15:53:07.27+01
+4	31	1	2022-01-12 17:42:35.854+01	2022-01-12 17:42:35.854+01
+11	26	1	2022-02-08 00:02:47.042+01	2022-02-08 00:02:47.042+01
+\.
+
+
+--
+-- TOC entry 3256 (class 0 OID 96851)
+-- Dependencies: 208
+-- Data for Name: stages; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.stages (id, stage_name, rows, seats_in_row, number_of_seats, "createdAt", "updatedAt") FROM stdin;
+5	The smallest	5	15	75	2021-12-14 18:47:07.543+01	2021-12-14 18:47:07.543+01
+6	Size doesn't matter	6	20	120	2021-12-14 18:47:40.338+01	2021-12-14 18:47:40.338+01
+8	HUGE	20	40	800	2021-12-14 18:48:21.67+01	2021-12-14 18:48:21.67+01
+9	The Titanic	30	50	1500	2021-12-14 18:48:50.626+01	2021-12-14 18:48:50.626+01
+7	Size DOES Matter HAHA	10	20	200	2021-12-14 18:47:57.928+01	2021-12-14 18:47:57.928+01
+\.
+
+
+--
+-- TOC entry 3268 (class 0 OID 96902)
+-- Dependencies: 220
+-- Data for Name: storages; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.storages (id, capacity, "createdAt", "updatedAt") FROM stdin;
+1	1000	2022-01-08 16:52:17.583+01	2022-01-08 16:52:17.583+01
+\.
+
+
+--
+-- TOC entry 3258 (class 0 OID 96862)
+-- Dependencies: 210
+-- Data for Name: tickets; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.tickets (id, schedule_id, seat_id, who_id, "createdAt", "updatedAt") FROM stdin;
+149	57	261	26	2022-02-02 18:22:49.978+01	2022-02-02 18:22:49.978+01
+150	57	263	26	2022-02-02 18:22:49.987+01	2022-02-02 18:22:49.987+01
+151	57	262	26	2022-02-02 18:22:49.991+01	2022-02-02 18:22:49.991+01
+152	58	53	26	2022-02-02 18:39:57.021+01	2022-02-02 18:39:57.021+01
+153	58	52	26	2022-02-02 18:39:57.029+01	2022-02-02 18:39:57.029+01
+154	58	54	26	2022-02-02 18:39:57.032+01	2022-02-02 18:39:57.032+01
+155	58	69	26	2022-02-07 22:09:26.23+01	2022-02-07 22:09:26.23+01
+156	58	70	26	2022-02-07 22:09:26.233+01	2022-02-07 22:09:26.233+01
+157	58	71	26	2022-02-07 22:09:26.234+01	2022-02-07 22:09:26.234+01
+137	41	40	26	2022-01-24 00:23:54.923+01	2022-01-24 00:23:54.923+01
+139	41	61	26	2022-01-24 00:44:46.175+01	2022-01-24 00:44:46.175+01
+140	41	62	26	2022-01-24 00:44:46.177+01	2022-01-24 00:44:46.177+01
+141	54	8	26	2022-01-24 00:46:37.941+01	2022-01-24 00:46:37.941+01
+142	55	9	26	2022-01-24 00:55:31.589+01	2022-01-24 00:55:31.589+01
+143	56	12	26	2022-01-24 00:58:59.357+01	2022-01-24 00:58:59.357+01
+144	56	32	26	2022-01-24 00:58:59.359+01	2022-01-24 00:58:59.359+01
+145	56	112	26	2022-01-24 00:58:59.362+01	2022-01-24 00:58:59.362+01
+146	56	52	26	2022-01-24 00:58:59.364+01	2022-01-24 00:58:59.364+01
+147	56	72	26	2022-01-24 00:58:59.365+01	2022-01-24 00:58:59.365+01
+148	56	92	26	2022-01-24 00:58:59.367+01	2022-01-24 00:58:59.367+01
+\.
+
+
+--
+-- TOC entry 3250 (class 0 OID 96821)
+-- Dependencies: 202
+-- Data for Name: users; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.users (id, email, name, surname, password, role, "createdAt", "updatedAt", active, disabled) FROM stdin;
+26	user@cinema.com	Hubert	Szczepaniak	$2a$10$v6WtSvlnMKvy6gGJgzZfh.wsSQu/HIdpoy4Bq/Qo0L8o3Uq1hxYuq	USER	2021-12-11 22:42:43.31+01	2021-12-11 22:42:43.31+01	t	f
+25	admin@cinema.com	Omar	Shelbayeh	$2a$10$ligFp5wtWmC3o8JEnhq8L.yvjuQUaDsoZdlxgoPBJ9Y.Wc2GHz88G	ADMIN	2021-12-11 22:42:16.736+01	2021-12-11 22:42:16.736+01	t	f
+45	omar@tf.co	\N	\N	$2a$10$HaSLawmJafCOBxt2f7EsHOsyY/2tUnFEcqI5S1k/nwbIBTWCavFIC	USER	2022-02-08 00:13:32.063+01	2022-02-08 00:13:32.063+01	f	f
+36	owner@cinema.com	Omar	Shelbayeh	$2a$10$J0rnCwHzw38BUFUDrMQMR.U03HAfWFR3uDqBiv/c2Ng3HpdoDw7a2	OWNER	2021-12-17 21:35:49.403+01	2021-12-17 21:35:49.403+01	t	f
+\.
+
+
+--
+-- TOC entry 3284 (class 0 OID 0)
+-- Dependencies: 217
+-- Name: deliveries_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.deliveries_id_seq', 35, true);
+
+
+--
+-- TOC entry 3285 (class 0 OID 0)
+-- Dependencies: 203
+-- Name: movies_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.movies_id_seq', 42, true);
+
+
+--
+-- TOC entry 3286 (class 0 OID 0)
+-- Dependencies: 211
+-- Name: orders_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.orders_id_seq', 45, true);
+
+
+--
+-- TOC entry 3287 (class 0 OID 0)
+-- Dependencies: 213
+-- Name: products_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.products_id_seq', 38, true);
+
+
+--
+-- TOC entry 3288 (class 0 OID 0)
+-- Dependencies: 205
+-- Name: schedules_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.schedules_id_seq', 61, true);
+
+
+--
+-- TOC entry 3289 (class 0 OID 0)
+-- Dependencies: 215
+-- Name: shops_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.shops_id_seq', 11, true);
+
+
+--
+-- TOC entry 3290 (class 0 OID 0)
+-- Dependencies: 207
+-- Name: stages_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.stages_id_seq', 38, true);
+
+
+--
+-- TOC entry 3291 (class 0 OID 0)
+-- Dependencies: 219
+-- Name: storages_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.storages_id_seq', 1, true);
+
+
+--
+-- TOC entry 3292 (class 0 OID 0)
+-- Dependencies: 209
+-- Name: tickets_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.tickets_id_seq', 157, true);
+
+
+--
+-- TOC entry 3293 (class 0 OID 0)
+-- Dependencies: 201
+-- Name: users_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.users_id_seq', 45, true);
+
+
+--
+-- TOC entry 3086 (class 2606 OID 96818)
+-- Name: SequelizeMeta SequelizeMeta_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public."SequelizeMeta"
+    ADD CONSTRAINT "SequelizeMeta_pkey" PRIMARY KEY (name);
+
+
+--
+-- TOC entry 3104 (class 2606 OID 96899)
+-- Name: deliveries deliveries_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.deliveries
+    ADD CONSTRAINT deliveries_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 3090 (class 2606 OID 96840)
+-- Name: movies movies_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.movies
+    ADD CONSTRAINT movies_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 3098 (class 2606 OID 96875)
+-- Name: orders orders_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.orders
+    ADD CONSTRAINT orders_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 3100 (class 2606 OID 96883)
+-- Name: products products_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.products
+    ADD CONSTRAINT products_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 3092 (class 2606 OID 96848)
+-- Name: schedules schedules_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.schedules
+    ADD CONSTRAINT schedules_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 3102 (class 2606 OID 96891)
+-- Name: shops shops_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.shops
+    ADD CONSTRAINT shops_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 3094 (class 2606 OID 96856)
+-- Name: stages stages_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.stages
+    ADD CONSTRAINT stages_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 3106 (class 2606 OID 96907)
+-- Name: storages storages_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.storages
+    ADD CONSTRAINT storages_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 3096 (class 2606 OID 96867)
+-- Name: tickets tickets_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.tickets
+    ADD CONSTRAINT tickets_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 3088 (class 2606 OID 96829)
+-- Name: users users_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.users
+    ADD CONSTRAINT users_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 3107 (class 2606 OID 96989)
+-- Name: schedules movie_id; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.schedules
+    ADD CONSTRAINT movie_id FOREIGN KEY (movie_id) REFERENCES public.movies(id) ON UPDATE CASCADE ON DELETE CASCADE NOT VALID;
+
+
+--
+-- TOC entry 3114 (class 2606 OID 96999)
+-- Name: shops movie_id; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.shops
+    ADD CONSTRAINT movie_id FOREIGN KEY (movie_id) REFERENCES public.movies(id) ON UPDATE CASCADE ON DELETE CASCADE NOT VALID;
+
+
+--
+-- TOC entry 3116 (class 2606 OID 96969)
+-- Name: deliveries order_id; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.deliveries
+    ADD CONSTRAINT order_id FOREIGN KEY (order_id) REFERENCES public.orders(id) ON UPDATE CASCADE ON DELETE CASCADE NOT VALID;
+
+
+--
+-- TOC entry 3111 (class 2606 OID 96964)
+-- Name: orders product_id; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.orders
+    ADD CONSTRAINT product_id FOREIGN KEY (product_id) REFERENCES public.products(id) ON UPDATE CASCADE ON DELETE CASCADE NOT VALID;
+
+
+--
+-- TOC entry 3113 (class 2606 OID 96984)
+-- Name: products products_shop_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.products
+    ADD CONSTRAINT products_shop_id_fkey FOREIGN KEY (shop_id) REFERENCES public.shops(id) ON UPDATE CASCADE ON DELETE CASCADE NOT VALID;
+
+
+--
+-- TOC entry 3109 (class 2606 OID 97009)
+-- Name: tickets schedule_id; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.tickets
+    ADD CONSTRAINT schedule_id FOREIGN KEY (schedule_id) REFERENCES public.schedules(id) ON UPDATE CASCADE ON DELETE CASCADE NOT VALID;
+
+
+--
+-- TOC entry 3108 (class 2606 OID 96994)
+-- Name: schedules stage_id; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.schedules
+    ADD CONSTRAINT stage_id FOREIGN KEY (stage_id) REFERENCES public.stages(id) ON UPDATE CASCADE ON DELETE CASCADE NOT VALID;
+
+
+--
+-- TOC entry 3117 (class 2606 OID 96974)
+-- Name: deliveries storage_id; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.deliveries
+    ADD CONSTRAINT storage_id FOREIGN KEY (storage_id) REFERENCES public.storages(id) ON UPDATE CASCADE ON DELETE CASCADE NOT VALID;
+
+
+--
+-- TOC entry 3115 (class 2606 OID 97004)
+-- Name: shops storage_id; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.shops
+    ADD CONSTRAINT storage_id FOREIGN KEY (storage_id) REFERENCES public.storages(id) ON UPDATE CASCADE ON DELETE CASCADE NOT VALID;
+
+
+--
+-- TOC entry 3112 (class 2606 OID 96979)
+-- Name: orders who_id; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.orders
+    ADD CONSTRAINT who_id FOREIGN KEY (who_id) REFERENCES public.users(id) ON UPDATE CASCADE ON DELETE CASCADE NOT VALID;
+
+
+--
+-- TOC entry 3110 (class 2606 OID 97014)
+-- Name: tickets who_id; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.tickets
+    ADD CONSTRAINT who_id FOREIGN KEY (who_id) REFERENCES public.users(id) ON UPDATE CASCADE ON DELETE CASCADE NOT VALID;
+
+
+-- Completed on 2022-02-08 13:49:11 CET
+
+--
+-- PostgreSQL database dump complete
+--
+

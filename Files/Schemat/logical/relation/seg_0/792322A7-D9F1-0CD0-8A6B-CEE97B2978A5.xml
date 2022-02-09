@@ -1,0 +1,36 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Relation class="oracle.dbtools.crest.model.design.logical.Relation" name="StorgaeNumber" directorySegmentName="seg_0" id="792322A7-D9F1-0CD0-8A6B-CEE97B2978A5">
+<createdBy>omar</createdBy>
+<createdTime>2021-12-08 14:49:29 UTC</createdTime>
+<ownerDesignName>Schemat</ownerDesignName>
+<engineerTo>
+<item key="B686805D-2CC8-9C4E-09D8-7D78C5A7C869" value="true"/>
+</engineerTo>
+<sourcePk>DAC56E2F-EB68-1873-F3D1-28A6C555A828</sourcePk>
+<identifying>false</identifying>
+<nameOnSource>This storage facility</nameOnSource>
+<nameOnTarget>Shop Stores in</nameOnTarget>
+<optionalSource>true</optionalSource>
+<optionalTarget>false</optionalTarget>
+<sourceCardinality>1</sourceCardinality>
+<sourceEntity>2518D807-E281-78AF-E3CE-556717D52A13</sourceEntity>
+<targetCardinalityString>*</targetCardinalityString>
+<targetEntity>2EE83E80-9AC6-9832-AE8D-5AF10019E9CA</targetEntity>
+<transferable>true</transferable>
+<deleteRule>NO ACTION</deleteRule>
+<attributes itemClass="oracle.dbtools.crest.model.design.logical.Attribute">
+<attribute name="StorgaeNumber" id="074FBB99-BDE3-EA1B-97FE-831C4607C3DA">
+<createdBy>omar</createdBy>
+<createdTime>2021-12-08 14:49:38 UTC</createdTime>
+<ownerDesignName>Schemat</ownerDesignName>
+<engineerTo>
+<item key="B686805D-2CC8-9C4E-09D8-7D78C5A7C869" value="true"/>
+</engineerTo>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT027</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</attribute>
+</attributes>
+</Relation>

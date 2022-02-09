@@ -1,0 +1,73 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Entity class="oracle.dbtools.crest.model.design.logical.Entity" directorySegmentName="seg_0" id="06FE41CE-58F4-9A13-A562-2F11A634F013" name="Delivery">
+<createdBy>omar</createdBy>
+<createdTime>2021-12-08 14:44:52 UTC</createdTime>
+<ownerDesignName>Schemat</ownerDesignName>
+<engineerTo>
+<item key="B686805D-2CC8-9C4E-09D8-7D78C5A7C869" value="true"/>
+</engineerTo>
+<adequatelyNormalized>NO</adequatelyNormalized>
+<expectedVolumes>0</expectedVolumes>
+<fwdEngineeringStrategyName>Single Table</fwdEngineeringStrategyName>
+<growthPercent>0</growthPercent>
+<growthType>Year</growthType>
+<maxVolumes>9999999</maxVolumes>
+<minVolumes>0</minVolumes>
+<normalForm>Third</normalForm>
+<attributes itemClass="oracle.dbtools.crest.model.design.logical.Attribute">
+<Attribute name="StorageNumber" id="CD63168C-E8B3-8498-14BB-B4A22913A4C3">
+<createdBy>omar</createdBy>
+<createdTime>2021-12-08 14:53:09 UTC</createdTime>
+<generatorID>4BF1A6A1-DF69-4BC5-B121-A1230D115A65</generatorID>
+<ownerDesignName>Schemat</ownerDesignName>
+<engineerTo>
+<item key="B686805D-2CC8-9C4E-09D8-7D78C5A7C869" value="true"/>
+</engineerTo>
+<referedAttribute>952C4647-6498-D8F3-EC78-F865D42D5222</referedAttribute>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT027</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="DeliveryNumber" id="6124BD17-0E37-5D14-F5AE-5228A2C51833">
+<createdBy>omar</createdBy>
+<createdTime>2021-12-08 14:53:39 UTC</createdTime>
+<ownerDesignName>Schemat</ownerDesignName>
+<engineerTo>
+<item key="B686805D-2CC8-9C4E-09D8-7D78C5A7C869" value="true"/>
+</engineerTo>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT027</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="OrderNumber" id="099125BD-1EF3-5B97-AF7F-17BD7741E8C5">
+<createdBy>omar</createdBy>
+<createdTime>2021-12-08 16:34:49 UTC</createdTime>
+<generatorID>7060CA88-9B38-135D-BA13-579F90EC449B</generatorID>
+<ownerDesignName>Schemat</ownerDesignName>
+<engineerTo>
+<item key="B686805D-2CC8-9C4E-09D8-7D78C5A7C869" value="true"/>
+</engineerTo>
+<referedAttribute>CF87ED6D-A1C6-8A84-A6A3-36AFE20E0EE6</referedAttribute>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT027</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+</attributes>
+<identifiers itemClass="oracle.dbtools.crest.model.design.logical.CandidateKey">
+<identifier id="DCCB4268-57E2-4CF0-A8C1-8B8A680C166A" name="Delivery PK">
+<createdBy>omar</createdBy>
+<createdTime>2021-12-08 14:53:55 UTC</createdTime>
+<ownerDesignName>Schemat</ownerDesignName>
+<engineerTo>
+<item key="B686805D-2CC8-9C4E-09D8-7D78C5A7C869" value="true"/>
+</engineerTo>
+<pk>true</pk>
+<usedAttributes>
+<attributeRef>6124BD17-0E37-5D14-F5AE-5228A2C51833</attributeRef>
+</usedAttributes>
+</identifier>
+</identifiers>
+</Entity>

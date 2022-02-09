@@ -1,0 +1,132 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Entity class="oracle.dbtools.crest.model.design.logical.Entity" directorySegmentName="seg_0" id="61510F02-7139-F005-CA8E-8A40B290D9F3" name="Tickets">
+<createdBy>omar</createdBy>
+<createdTime>2021-12-08 14:38:41 UTC</createdTime>
+<ownerDesignName>Schemat</ownerDesignName>
+<engineerTo>
+<item key="B686805D-2CC8-9C4E-09D8-7D78C5A7C869" value="true"/>
+</engineerTo>
+<adequatelyNormalized>NO</adequatelyNormalized>
+<expectedVolumes>0</expectedVolumes>
+<fwdEngineeringStrategyName>Single Table</fwdEngineeringStrategyName>
+<growthPercent>0</growthPercent>
+<growthType>Year</growthType>
+<maxVolumes>9999999</maxVolumes>
+<minVolumes>0</minVolumes>
+<normalForm>Third</normalForm>
+<attributes itemClass="oracle.dbtools.crest.model.design.logical.Attribute">
+<Attribute name="Name" id="F27BDF3D-0DA9-04C0-6C9E-E798511BD019">
+<createdBy>omar</createdBy>
+<createdTime>2021-12-08 16:36:36 UTC</createdTime>
+<generatorID>5ED4B346-D54B-497D-A374-A088342F2CD6</generatorID>
+<ownerDesignName>Schemat</ownerDesignName>
+<engineerTo>
+<item key="B686805D-2CC8-9C4E-09D8-7D78C5A7C869" value="true"/>
+</engineerTo>
+<referedAttribute>18E5BFBC-E762-08FC-6F4F-7A1A8E1DFE32</referedAttribute>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT025</logicalDatatype>
+<dataTypeSize>255</dataTypeSize>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="StageNumber1" id="7CA25733-AA8D-DD9D-25B8-4772260B9411">
+<createdBy>omar</createdBy>
+<createdTime>2021-12-08 16:36:36 UTC</createdTime>
+<generatorID>5ED4B346-D54B-497D-A374-A088342F2CD6</generatorID>
+<ownerDesignName>Schemat</ownerDesignName>
+<engineerTo>
+<item key="B686805D-2CC8-9C4E-09D8-7D78C5A7C869" value="true"/>
+</engineerTo>
+<referedAttribute>8E3E336B-EA40-D7F1-50E7-EC4343F81203</referedAttribute>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT027</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="id" id="87FA576B-5900-1FA8-6E2D-0AAFC820BD04">
+<createdBy>omar</createdBy>
+<createdTime>2021-12-08 16:37:43 UTC</createdTime>
+<generatorID>C6BFA0D5-775A-2F3C-6733-F2DD903DE7AF</generatorID>
+<ownerDesignName>Schemat</ownerDesignName>
+<engineerTo>
+<item key="B686805D-2CC8-9C4E-09D8-7D78C5A7C869" value="true"/>
+</engineerTo>
+<referedAttribute>B6B6910F-629B-735D-3D84-8C8384167E2B</referedAttribute>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT027</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="ticket_number" id="7CE1CE8C-929F-61A5-95A3-F61281743035">
+<createdBy>omar</createdBy>
+<createdTime>2022-02-08 12:41:53 UTC</createdTime>
+<ownerDesignName>Schemat</ownerDesignName>
+<engineerTo>
+<item key="B686805D-2CC8-9C4E-09D8-7D78C5A7C869" value="true"/>
+</engineerTo>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT027</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="seat_number" id="C2C46033-ADFB-A894-7A60-3A37C5AE2BEE">
+<createdBy>omar</createdBy>
+<createdTime>2022-02-08 12:42:22 UTC</createdTime>
+<ownerDesignName>Schemat</ownerDesignName>
+<engineerTo>
+<item key="B686805D-2CC8-9C4E-09D8-7D78C5A7C869" value="true"/>
+</engineerTo>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT027</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="schedule_number" id="C083F342-FE06-1F27-B899-8D1D01F4961F">
+<createdBy>omar</createdBy>
+<createdTime>2022-02-08 12:44:01 UTC</createdTime>
+<generatorID>5ED4B346-D54B-497D-A374-A088342F2CD6</generatorID>
+<ownerDesignName>Schemat</ownerDesignName>
+<engineerTo>
+<item key="B686805D-2CC8-9C4E-09D8-7D78C5A7C869" value="true"/>
+</engineerTo>
+<referedAttribute>CC80CFA0-B4B4-B22F-A2B5-39B0DC1522D5</referedAttribute>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT027</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="movie_number" id="B286A3D5-65B7-AF4E-2E26-CF88A8FC6533">
+<createdBy>omar</createdBy>
+<createdTime>2022-02-08 12:44:30 UTC</createdTime>
+<generatorID>5ED4B346-D54B-497D-A374-A088342F2CD6</generatorID>
+<ownerDesignName>Schemat</ownerDesignName>
+<engineerTo>
+<item key="B686805D-2CC8-9C4E-09D8-7D78C5A7C869" value="true"/>
+</engineerTo>
+<referedAttribute>B2528FF8-A3B8-9F26-48E3-716548EC1BB0</referedAttribute>
+<use>1</use>
+<logicalDatatype>LOGDT027</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+</attributes>
+<identifiers itemClass="oracle.dbtools.crest.model.design.logical.CandidateKey">
+<identifier id="868F4686-73EC-A9B4-0098-5E5942C78BD3" name="History PK">
+<createdBy>omar</createdBy>
+<createdTime>2021-12-08 14:39:02 UTC</createdTime>
+<ownerDesignName>Schemat</ownerDesignName>
+<engineerTo>
+<item key="B686805D-2CC8-9C4E-09D8-7D78C5A7C869" value="true"/>
+</engineerTo>
+<pk>true</pk>
+<usedAttributes>
+<attributeRef>F27BDF3D-0DA9-04C0-6C9E-E798511BD019</attributeRef>
+<attributeRef>7CA25733-AA8D-DD9D-25B8-4772260B9411</attributeRef>
+<attributeRef>C083F342-FE06-1F27-B899-8D1D01F4961F</attributeRef>
+<attributeRef>B286A3D5-65B7-AF4E-2E26-CF88A8FC6533</attributeRef>
+<attributeRef>87FA576B-5900-1FA8-6E2D-0AAFC820BD04</attributeRef>
+<attributeRef>7CE1CE8C-929F-61A5-95A3-F61281743035</attributeRef>
+</usedAttributes>
+</identifier>
+</identifiers>
+</Entity>

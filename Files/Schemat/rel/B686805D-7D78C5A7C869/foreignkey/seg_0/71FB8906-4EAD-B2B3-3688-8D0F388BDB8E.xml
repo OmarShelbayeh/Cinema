@@ -1,0 +1,16 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<FKIndexAssociation class="oracle.dbtools.crest.model.design.relational.FKIndexAssociation" directorySegmentName="seg_0" id="71FB8906-4EAD-B2B3-3688-8D0F388BDB8E" containerWithKeyObject="2C19D252-A895-0949-7A88-487C7087B277" localFKIndex="B296BF94-B096-5A5A-0CB5-45B5A2878B8F" name="Schedule_Stages_FK">
+<createdBy>omar</createdBy>
+<createdTime>2022-01-11 18:36:51 UTC</createdTime>
+<ownerDesignName>Schemat</ownerDesignName>
+<referredTableLongName>Stages</referredTableLongName>
+<deleteRule>NO ACTION</deleteRule>
+<referredTableID>4FFD5357-6838-6F3E-5FC3-EECC94C3E251</referredTableID>
+<keyObject>2E6016A2-4340-66D1-9FE9-B8D2A0A90531</keyObject>
+<referredKeyID>2E6016A2-4340-66D1-9FE9-B8D2A0A90531</referredKeyID>
+<mandatory>true</mandatory>
+<refColNames>StageNumber</refColNames>
+<transferable>true</transferable>
+<rely>false</rely>
+<columnDependencyConstraintGenerateInDDL>true</columnDependencyConstraintGenerateInDDL>
+</FKIndexAssociation>

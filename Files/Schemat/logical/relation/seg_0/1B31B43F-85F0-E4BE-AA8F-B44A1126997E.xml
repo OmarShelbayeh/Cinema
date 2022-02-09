@@ -1,0 +1,37 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Relation class="oracle.dbtools.crest.model.design.logical.Relation" name="Relation_1" directorySegmentName="seg_0" id="1B31B43F-85F0-E4BE-AA8F-B44A1126997E">
+<createdBy>omar</createdBy>
+<createdTime>2021-12-08 14:32:51 UTC</createdTime>
+<ownerDesignName>Schemat</ownerDesignName>
+<engineerTo>
+<item key="B686805D-2CC8-9C4E-09D8-7D78C5A7C869" value="true"/>
+</engineerTo>
+<sourcePk>9E56D877-5500-0F70-5F6E-A489B9A66282</sourcePk>
+<identifying>true</identifying>
+<nameOnSource>Which movie</nameOnSource>
+<nameOnTarget>When</nameOnTarget>
+<optionalSource>true</optionalSource>
+<optionalTarget>false</optionalTarget>
+<sourceCardinality>1</sourceCardinality>
+<sourceEntity>D432B74D-0EF6-3896-65DB-571792906467</sourceEntity>
+<targetCardinalityString>*</targetCardinalityString>
+<targetEntity>A3B7A7BE-03E4-727F-D2E8-F3B99E69DFFC</targetEntity>
+<transferable>true</transferable>
+<deleteRule>NO ACTION</deleteRule>
+<attributes itemClass="oracle.dbtools.crest.model.design.logical.Attribute">
+<attribute name="MovieName" id="EEE6BC04-9A23-8D83-4271-BC658CC8CD89">
+<createdBy>omar</createdBy>
+<createdTime>2021-12-08 14:33:14 UTC</createdTime>
+<ownerDesignName>Schemat</ownerDesignName>
+<engineerTo>
+<item key="B686805D-2CC8-9C4E-09D8-7D78C5A7C869" value="true"/>
+</engineerTo>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT025</logicalDatatype>
+<dataTypeSize>255</dataTypeSize>
+<ownDataTypeParameters>255,,</ownDataTypeParameters>
+</attribute>
+</attributes>
+</Relation>

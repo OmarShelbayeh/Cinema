@@ -1,0 +1,114 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Entity class="oracle.dbtools.crest.model.design.logical.Entity" directorySegmentName="seg_0" id="A3B7A7BE-03E4-727F-D2E8-F3B99E69DFFC" name="Schedule">
+<createdBy>omar</createdBy>
+<createdTime>2021-12-08 14:31:44 UTC</createdTime>
+<ownerDesignName>Schemat</ownerDesignName>
+<engineerTo>
+<item key="B686805D-2CC8-9C4E-09D8-7D78C5A7C869" value="true"/>
+</engineerTo>
+<adequatelyNormalized>NO</adequatelyNormalized>
+<expectedVolumes>0</expectedVolumes>
+<fwdEngineeringStrategyName>Single Table</fwdEngineeringStrategyName>
+<growthPercent>0</growthPercent>
+<growthType>Year</growthType>
+<maxVolumes>9999999</maxVolumes>
+<minVolumes>0</minVolumes>
+<normalForm>Third</normalForm>
+<attributes itemClass="oracle.dbtools.crest.model.design.logical.Attribute">
+<Attribute name="Name" id="18E5BFBC-E762-08FC-6F4F-7A1A8E1DFE32">
+<createdBy>omar</createdBy>
+<createdTime>2021-12-08 14:32:51 UTC</createdTime>
+<generatorID>1B31B43F-85F0-E4BE-AA8F-B44A1126997E</generatorID>
+<ownerDesignName>Schemat</ownerDesignName>
+<engineerTo>
+<item key="B686805D-2CC8-9C4E-09D8-7D78C5A7C869" value="true"/>
+</engineerTo>
+<referedAttribute>CEAE3CBF-49D1-3E65-ADDB-8554421283DF</referedAttribute>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT025</logicalDatatype>
+<dataTypeSize>255</dataTypeSize>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="Date" id="F8A985DF-0344-43C0-D41D-6EC1F58008B8">
+<createdBy>omar</createdBy>
+<createdTime>2021-12-08 14:34:24 UTC</createdTime>
+<ownerDesignName>Schemat</ownerDesignName>
+<engineerTo>
+<item key="B686805D-2CC8-9C4E-09D8-7D78C5A7C869" value="true"/>
+</engineerTo>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT008</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="Price" id="BE6BB145-11AE-C337-88E2-003D0A8B94F4">
+<createdBy>omar</createdBy>
+<createdTime>2021-12-08 14:34:40 UTC</createdTime>
+<ownerDesignName>Schemat</ownerDesignName>
+<engineerTo>
+<item key="B686805D-2CC8-9C4E-09D8-7D78C5A7C869" value="true"/>
+</engineerTo>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT027</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="StageNumber" id="8E3E336B-EA40-D7F1-50E7-EC4343F81203">
+<createdBy>omar</createdBy>
+<createdTime>2021-12-08 16:33:35 UTC</createdTime>
+<generatorID>CFCCC968-55A7-5C07-E3F5-8DDD0B1A26DB</generatorID>
+<ownerDesignName>Schemat</ownerDesignName>
+<engineerTo>
+<item key="B686805D-2CC8-9C4E-09D8-7D78C5A7C869" value="true"/>
+</engineerTo>
+<referedAttribute>D1F88CFE-7858-983C-FC5C-EBB5B4DF4A6A</referedAttribute>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT027</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="schedule_number" id="CC80CFA0-B4B4-B22F-A2B5-39B0DC1522D5">
+<createdBy>omar</createdBy>
+<createdTime>2022-02-08 12:43:46 UTC</createdTime>
+<ownerDesignName>Schemat</ownerDesignName>
+<engineerTo>
+<item key="B686805D-2CC8-9C4E-09D8-7D78C5A7C869" value="true"/>
+</engineerTo>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT027</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="movie_number" id="B2528FF8-A3B8-9F26-48E3-716548EC1BB0">
+<createdBy>omar</createdBy>
+<createdTime>2022-02-08 12:44:30 UTC</createdTime>
+<generatorID>1B31B43F-85F0-E4BE-AA8F-B44A1126997E</generatorID>
+<ownerDesignName>Schemat</ownerDesignName>
+<engineerTo>
+<item key="B686805D-2CC8-9C4E-09D8-7D78C5A7C869" value="true"/>
+</engineerTo>
+<referedAttribute>9857A08C-999C-C9D4-A570-87143C08B1B2</referedAttribute>
+<use>1</use>
+<logicalDatatype>LOGDT027</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+</attributes>
+<identifiers itemClass="oracle.dbtools.crest.model.design.logical.CandidateKey">
+<identifier id="40B38D7C-2694-1725-20A4-715434C39657" name="Tickets PK">
+<createdBy>omar</createdBy>
+<createdTime>2021-12-08 14:32:11 UTC</createdTime>
+<ownerDesignName>Schemat</ownerDesignName>
+<engineerTo>
+<item key="B686805D-2CC8-9C4E-09D8-7D78C5A7C869" value="true"/>
+</engineerTo>
+<pk>true</pk>
+<usedAttributes>
+<attributeRef>18E5BFBC-E762-08FC-6F4F-7A1A8E1DFE32</attributeRef>
+<attributeRef>B2528FF8-A3B8-9F26-48E3-716548EC1BB0</attributeRef>
+<attributeRef>8E3E336B-EA40-D7F1-50E7-EC4343F81203</attributeRef>
+<attributeRef>CC80CFA0-B4B4-B22F-A2B5-39B0DC1522D5</attributeRef>
+</usedAttributes>
+</identifier>
+</identifiers>
+</Entity>

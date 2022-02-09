@@ -1,0 +1,21 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Relation class="oracle.dbtools.crest.model.design.logical.Relation" name="Relation_30" directorySegmentName="seg_0" id="C6BFA0D5-775A-2F3C-6733-F2DD903DE7AF">
+<createdBy>omar</createdBy>
+<createdTime>2021-12-08 16:37:43 UTC</createdTime>
+<ownerDesignName>Schemat</ownerDesignName>
+<engineerTo>
+<item key="B686805D-2CC8-9C4E-09D8-7D78C5A7C869" value="true"/>
+</engineerTo>
+<sourcePk>B50824DB-EE21-5CF2-D5FE-366A7DF7A05A</sourcePk>
+<identifying>true</identifying>
+<nameOnSource>User bought</nameOnSource>
+<nameOnTarget>This ticket</nameOnTarget>
+<optionalSource>true</optionalSource>
+<optionalTarget>false</optionalTarget>
+<sourceCardinality>1</sourceCardinality>
+<sourceEntity>A693F7D0-ED19-8ABE-2EA4-5AEC5157FA64</sourceEntity>
+<targetCardinalityString>*</targetCardinalityString>
+<targetEntity>61510F02-7139-F005-CA8E-8A40B290D9F3</targetEntity>
+<transferable>true</transferable>
+<deleteRule>NO ACTION</deleteRule>
+</Relation>

@@ -1,0 +1,66 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Table class="oracle.dbtools.crest.model.design.relational.Table" directorySegmentName="seg_0" id="CD8E9D3A-FA98-9C70-4C7D-02C5EC584D95" name="Movies">
+<createdBy>omar</createdBy>
+<createdTime>2022-01-11 18:34:02 UTC</createdTime>
+<ownerDesignName>Schemat</ownerDesignName>
+<ordsAlias>table_10</ordsAlias>
+<allowColumnReorder>false</allowColumnReorder>
+<existDependencyGenerateInDDl>true</existDependencyGenerateInDDl>
+<parsed>true</parsed>
+<columns itemClass="oracle.dbtools.crest.model.design.relational.Column">
+<Column name="MovieNumber" id="BE82B176-D1BE-05CA-CEEE-36255296EB90">
+<createdBy>omar</createdBy>
+<createdTime>2022-02-08 12:36:45 UTC</createdTime>
+<ownerDesignName>Schemat</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT027</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="MovieName" id="BCD5F701-4E02-2F3F-5B5C-4A83D43702E9">
+<createdBy>omar</createdBy>
+<createdTime>2022-01-11 18:34:46 UTC</createdTime>
+<ownerDesignName>Schemat</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT025</logicalDatatype>
+<dataTypeSize>255</dataTypeSize>
+<ownDataTypeParameters>255,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="Director" id="32BCD4A8-B94A-3588-3A4D-500DCA0BFD56">
+<createdBy>omar</createdBy>
+<createdTime>2022-01-11 18:34:46 UTC</createdTime>
+<ownerDesignName>Schemat</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT025</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="Owner" id="07964B85-2203-639D-D2D9-45FEAE21CD2B">
+<createdBy>omar</createdBy>
+<createdTime>2022-01-11 18:34:46 UTC</createdTime>
+<ownerDesignName>Schemat</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT025</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+</columns>
+<indexes itemClass="oracle.dbtools.crest.model.design.relational.Index">
+<ind_PK_UK id="1C2C8E39-776A-6852-2587-FBDA77FB1F81" name="Movies_PK">
+<createdBy>omar</createdBy>
+<createdTime>2022-01-11 18:34:46 UTC</createdTime>
+<ownerDesignName>Schemat</ownerDesignName>
+<pk>true</pk>
+<indexState>Primary Constraint</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="BE82B176-D1BE-05CA-CEEE-36255296EB90"/>
+</indexColumnUsage>
+</ind_PK_UK>
+</indexes>
+</Table>

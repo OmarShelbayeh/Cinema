@@ -1,0 +1,87 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Entity class="oracle.dbtools.crest.model.design.logical.Entity" directorySegmentName="seg_0" id="2EE83E80-9AC6-9832-AE8D-5AF10019E9CA" name="Shop">
+<createdBy>omar</createdBy>
+<createdTime>2021-12-08 14:42:34 UTC</createdTime>
+<ownerDesignName>Schemat</ownerDesignName>
+<engineerTo>
+<item key="B686805D-2CC8-9C4E-09D8-7D78C5A7C869" value="true"/>
+</engineerTo>
+<adequatelyNormalized>NO</adequatelyNormalized>
+<expectedVolumes>0</expectedVolumes>
+<fwdEngineeringStrategyName>Single Table</fwdEngineeringStrategyName>
+<growthPercent>0</growthPercent>
+<growthType>Year</growthType>
+<maxVolumes>9999999</maxVolumes>
+<minVolumes>0</minVolumes>
+<normalForm>Third</normalForm>
+<attributes itemClass="oracle.dbtools.crest.model.design.logical.Attribute">
+<Attribute name="ShopNumber" id="56C4C62B-8D39-17AA-57D4-2A3B7B0FCAF7">
+<createdBy>omar</createdBy>
+<createdTime>2021-12-08 14:46:26 UTC</createdTime>
+<ownerDesignName>Schemat</ownerDesignName>
+<engineerTo>
+<item key="B686805D-2CC8-9C4E-09D8-7D78C5A7C869" value="true"/>
+</engineerTo>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT027</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="Name" id="72DACC94-3E28-76F3-AD39-596F964AB35C">
+<createdBy>omar</createdBy>
+<createdTime>2021-12-08 14:48:51 UTC</createdTime>
+<generatorID>02B3A003-E4D0-C2BD-56D1-8D5FEE7BF2AC</generatorID>
+<ownerDesignName>Schemat</ownerDesignName>
+<engineerTo>
+<item key="B686805D-2CC8-9C4E-09D8-7D78C5A7C869" value="true"/>
+</engineerTo>
+<referedAttribute>CEAE3CBF-49D1-3E65-ADDB-8554421283DF</referedAttribute>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT025</logicalDatatype>
+<dataTypeSize>255</dataTypeSize>
+<ownDataTypeParameters>255,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="StorageNumber" id="8AC313AC-2D26-DEB1-28EF-16160B457326">
+<createdBy>omar</createdBy>
+<createdTime>2021-12-08 14:49:29 UTC</createdTime>
+<generatorID>792322A7-D9F1-0CD0-8A6B-CEE97B2978A5</generatorID>
+<ownerDesignName>Schemat</ownerDesignName>
+<engineerTo>
+<item key="B686805D-2CC8-9C4E-09D8-7D78C5A7C869" value="true"/>
+</engineerTo>
+<referedAttribute>952C4647-6498-D8F3-EC78-F865D42D5222</referedAttribute>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT027</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="movie_number" id="27A10D43-29E7-AC30-42E9-6C8D80F61AF7">
+<createdBy>omar</createdBy>
+<createdTime>2022-02-08 12:44:30 UTC</createdTime>
+<generatorID>02B3A003-E4D0-C2BD-56D1-8D5FEE7BF2AC</generatorID>
+<ownerDesignName>Schemat</ownerDesignName>
+<engineerTo>
+<item key="B686805D-2CC8-9C4E-09D8-7D78C5A7C869" value="true"/>
+</engineerTo>
+<referedAttribute>9857A08C-999C-C9D4-A570-87143C08B1B2</referedAttribute>
+<use>1</use>
+<logicalDatatype>LOGDT027</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+</attributes>
+<identifiers itemClass="oracle.dbtools.crest.model.design.logical.CandidateKey">
+<identifier id="10211A6C-B86D-0615-422C-94D9F4F94DA7" name="Shop PK">
+<createdBy>omar</createdBy>
+<createdTime>2021-12-08 14:47:08 UTC</createdTime>
+<ownerDesignName>Schemat</ownerDesignName>
+<engineerTo>
+<item key="B686805D-2CC8-9C4E-09D8-7D78C5A7C869" value="true"/>
+</engineerTo>
+<pk>true</pk>
+<usedAttributes>
+<attributeRef>56C4C62B-8D39-17AA-57D4-2A3B7B0FCAF7</attributeRef>
+</usedAttributes>
+</identifier>
+</identifiers>
+</Entity>
