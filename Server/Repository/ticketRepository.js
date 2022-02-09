@@ -102,7 +102,6 @@ getAvailableSeats = async (schedule_id) => {
     },
     type: db.sequelize.QueryTypes.DELETE,
   });
-  console.log(seats);
   return seats[0].available_seats;
 };
 
